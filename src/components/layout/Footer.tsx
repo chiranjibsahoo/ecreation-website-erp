@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import { COMPANY_INFO, SERVICES_DATA } from '@/lib/data/seedData';
+import { Logo } from '@/components/common/Logo';
 
 export const Footer = () => {
   return (
@@ -10,15 +11,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-16 border-b border-neutral-900">
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white font-extrabold text-lg">
-                E
-              </div>
-              <div className="flex flex-col">
-                <span className="font-extrabold text-xl text-white tracking-tight">Ecreation</span>
-                <span className="text-[10px] uppercase font-semibold text-neutral-400 tracking-wider">IT Solution</span>
-              </div>
-            </Link>
+            <Logo size="md" />
             <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
               Engineering high-throughput enterprise software, bespoke cloud architectures, and modern digital platforms for forward-thinking organizations worldwide.
             </p>

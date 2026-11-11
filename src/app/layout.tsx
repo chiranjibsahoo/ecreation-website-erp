@@ -63,6 +63,11 @@ export const metadata: Metadata = {
     description: 'Engineering scalable enterprise systems, bespoke ERP portals, and mission-critical cloud solutions.',
     creator: '@ecreation_it',
   },
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/logo-icon.svg',
+  },
   robots: {
     index: true,
     follow: true,

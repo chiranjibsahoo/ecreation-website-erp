@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Terminal, Activity, ArrowRight } from 'lucide-react';
+import { Logo } from '@/components/common/Logo';
 
 export const OpeningPreloader = () => {
   const [progress, setProgress] = useState(0);
@@ -49,19 +50,7 @@ export const OpeningPreloader = () => {
     >
       {/* Top Header inside Preloader */}
       <div className="w-full max-w-7xl mx-auto px-6 py-8 flex items-center justify-between border-b border-slate-100">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-xl shadow-md shadow-blue-500/20">
-            E
-          </div>
-          <div>
-            <span className="font-extrabold text-base tracking-tight text-slate-900 block leading-tight">
-              Ecreation
-            </span>
-            <span className="text-[10px] uppercase font-bold tracking-widest text-blue-600 block">
-              IT Solution
-            </span>
-          </div>
-        </div>
+        <Logo size="md" href="" />
 
         <div className="flex items-center gap-2 font-mono text-xs text-slate-500">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block" />

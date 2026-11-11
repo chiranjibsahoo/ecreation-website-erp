@@ -22,6 +22,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { CommandMenu } from '@/components/layout/CommandMenu';
+import { Logo } from '@/components/common/Logo';
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -61,24 +62,7 @@ export const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Company Logo & Branding */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 group focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl p-1"
-          aria-label="Ecreation IT Solution Home"
-        >
-          {/* Logo Placeholder: customizable with final image logo */}
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/25 group-hover:scale-105 transition-transform duration-200">
-            E
-          </div>
-          <div className="flex flex-col">
-            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white leading-none">
-              Ecreation
-            </span>
-            <span className="text-[10px] uppercase font-bold tracking-widest text-blue-600 dark:text-blue-400 mt-0.5">
-              IT Solution
-            </span>
-          </div>
-        </Link>
+        <Logo size="md" />
 
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-1 lg:gap-1.5 bg-slate-100/70 dark:bg-slate-900/70 p-1.5 rounded-2xl border border-slate-200/60 dark:border-slate-800/80" aria-label="Main Navigation">
@@ -168,18 +152,8 @@ export const Navbar = () => {
             </SheetTrigger>
             <SheetContent side="right" className="w-[85vw] max-w-sm p-6 flex flex-col justify-between bg-white dark:bg-slate-950">
               <div>
-                <SheetTitle className="text-left flex items-center gap-2.5 mb-6">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-sm">
-                    E
-                  </div>
-                  <div>
-                    <span className="font-extrabold text-base text-slate-900 dark:text-white block leading-tight">
-                      Ecreation
-                    </span>
-                    <span className="text-[10px] uppercase font-bold text-blue-600 tracking-wider block">
-                      IT Solution
-                    </span>
-                  </div>
+                <SheetTitle className="text-left mb-6">
+                  <Logo size="sm" />
                 </SheetTitle>
 
                 <nav className="flex flex-col gap-1">
