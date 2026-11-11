@@ -51,7 +51,7 @@ export default function AdminLayout({
   if (isAuthenticated === null || isAuthenticated === false) {
     return (
       <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 text-center space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-900 flex items-center justify-center text-blue-600 shadow-md">
+        <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900 flex items-center justify-center text-amber-600 shadow-md">
           <Lock className="w-6 h-6 animate-pulse" />
         </div>
         <div className="space-y-1">
@@ -62,7 +62,7 @@ export default function AdminLayout({
             Checking session credentials and role-based permissions...
           </p>
         </div>
-        <Loader2 className="w-5 h-5 text-blue-600 animate-spin" />
+        <Loader2 className="w-5 h-5 text-amber-600 animate-spin" />
       </div>
     );
   }
@@ -124,7 +124,7 @@ export default function AdminLayout({
                 href={item.href}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
                   isActive
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-amber-500 text-slate-950 font-bold'
                     : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
                 }`}
               >
@@ -142,3 +142,4 @@ export default function AdminLayout({
     </div>
   );
 }
+

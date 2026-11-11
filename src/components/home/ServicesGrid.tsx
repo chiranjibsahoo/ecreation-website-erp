@@ -80,7 +80,7 @@ export const ServicesGrid = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <FadeIn>
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-3 py-1 rounded-full border border-blue-200/60">
+            <span className="text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
               Core Capabilities
             </span>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mt-3">
@@ -133,7 +133,7 @@ export const ServicesGrid = () => {
                     </span>
                     <Link
                       href={`/services/${service.slug}`}
-                      className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                      className="text-xs font-bold text-amber-700 dark:text-amber-400 hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                     >
                       Details
                       <ArrowRight className="w-3.5 h-3.5" />

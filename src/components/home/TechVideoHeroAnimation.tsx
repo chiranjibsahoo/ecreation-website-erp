@@ -79,11 +79,11 @@ export const TechVideoHeroAnimation = () => {
           onClick={() => setActiveTab('erp')}
           className={`flex items-center gap-2 py-3 px-3.5 border-b-2 transition-all whitespace-nowrap ${
             activeTab === 'erp'
-              ? 'border-blue-500 text-white font-semibold'
+              ? 'border-amber-500 text-amber-400 font-semibold'
               : 'border-transparent text-neutral-400 hover:text-neutral-200'
           }`}
         >
-          <Layers className="w-3.5 h-3.5 text-blue-400" />
+          <Layers className="w-3.5 h-3.5 text-amber-400" />
           <span>01. High-Throughput ERP Engine</span>
         </button>
 
@@ -123,13 +123,13 @@ export const TechVideoHeroAnimation = () => {
               <div
                 className={`p-4 rounded-xl border transition-all duration-300 ${
                   pulseIndex === 0
-                    ? 'border-blue-500 bg-blue-950/30 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
+                    ? 'border-amber-500 bg-amber-950/30 shadow-[0_0_15px_rgba(245,158,11,0.3)]'
                     : 'border-neutral-800 bg-neutral-900/60'
                 }`}
               >
                 <div className="flex items-center justify-between text-[11px] text-neutral-400 mb-2">
                   <span>ENTRYPOINT</span>
-                  <Globe className="w-3.5 h-3.5 text-blue-400" />
+                  <Globe className="w-3.5 h-3.5 text-amber-400" />
                 </div>
                 <h4 className="font-bold text-white text-sm">Client Portal / Web</h4>
                 <p className="text-[10px] text-neutral-400 mt-1 font-mono">Route: /api/erp/dispatch</p>

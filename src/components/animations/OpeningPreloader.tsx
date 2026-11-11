@@ -65,7 +65,7 @@ export const OpeningPreloader = () => {
           {[40, 75, 25, 90, 60, 100, 45, 80, 30, 95, 55, 85, 70, 35, 90].map((h, i) => (
             <span
               key={i}
-              className="w-1.5 rounded-full bg-gradient-to-t from-blue-600 via-indigo-600 to-cyan-400 transition-all duration-300"
+              className="w-1.5 rounded-full bg-gradient-to-t from-amber-600 via-amber-500 to-yellow-400 transition-all duration-300"
               style={{
                 height: `${Math.max(12, (h * progress) / 100)}px`,
                 opacity: 0.3 + (progress / 100) * 0.7,
@@ -79,7 +79,7 @@ export const OpeningPreloader = () => {
         <div className="space-y-3">
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900">
             Architecting High-Throughput{' '}
-            <span className="text-blue-600">
+            <span className="text-amber-600">
               Digital Systems
             </span>
           </h2>
@@ -92,16 +92,16 @@ export const OpeningPreloader = () => {
         <div className="max-w-md mx-auto space-y-3">
           <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-600">
             <span className="flex items-center gap-1.5">
-              <Activity className="w-3.5 h-3.5 text-blue-600 animate-spin" />
+              <Activity className="w-3.5 h-3.5 text-amber-600 animate-spin" />
               PREPARING WORKSPACE
             </span>
-            <span className="text-blue-600 text-sm font-black">{progress}%</span>
+            <span className="text-amber-600 text-sm font-black">{progress}%</span>
           </div>
 
           {/* Progress Bar Container */}
           <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/80">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 transition-all duration-150 ease-out shadow-xs shadow-blue-500"
+              className="h-full rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-400 transition-all duration-150 ease-out shadow-xs shadow-amber-500/50"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -112,17 +112,17 @@ export const OpeningPreloader = () => {
       <div className="w-full py-4 border-t border-slate-100 overflow-hidden bg-slate-50/70">
         <div className="flex items-center gap-8 whitespace-nowrap text-xs font-mono font-semibold text-slate-500 uppercase tracking-widest animate-[marquee_20s_linear_infinite]">
           <span>Full-Stack Engineering</span>
-          <span className="text-blue-600">•</span>
+          <span className="text-amber-500">•</span>
           <span>Next.js App Router Architecture</span>
-          <span className="text-blue-600">•</span>
+          <span className="text-amber-500">•</span>
           <span>Supabase Enterprise RLS</span>
-          <span className="text-blue-600">•</span>
+          <span className="text-amber-500">•</span>
           <span>Cloud Microservices & DevOps</span>
-          <span className="text-blue-600">•</span>
+          <span className="text-amber-500">•</span>
           <span>Real-Time Business Intelligence</span>
-          <span className="text-blue-600">•</span>
+          <span className="text-amber-500">•</span>
           <span>Bespoke Logistics Portals</span>
-          <span className="text-blue-600">•</span>
+          <span className="text-amber-500">•</span>
           <span>Full-Stack Engineering</span>
         </div>
       </div>

@@ -217,8 +217,8 @@ export const ServicesVideoSlider = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
           <FadeIn>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200/80 dark:border-blue-800 text-xs font-bold text-blue-700 dark:text-blue-300">
-              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 border border-amber-200/80 dark:border-amber-800 text-xs font-bold text-amber-800 dark:text-amber-300">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
               <span>Full-Stack Digital & Growth Powerhouse</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mt-3">
@@ -240,7 +240,7 @@ export const ServicesVideoSlider = () => {
                 onClick={() => selectSlide(idx)}
                 className={`relative px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-200 flex items-center gap-2 ${
                   isSelected
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25 scale-[1.02]'
+                    ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/25 scale-[1.02]'
                     : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200/80 dark:border-slate-800'
                 }`}
               >
@@ -251,7 +251,7 @@ export const ServicesVideoSlider = () => {
                 {idx === 4 && <TrendingUp className="w-3.5 h-3.5 shrink-0" />}
                 <span>{s.category}</span>
                 {isSelected && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse" />
                 )}
               </button>
             );
@@ -282,7 +282,7 @@ export const ServicesVideoSlider = () => {
 
               <button
                 onClick={prevSlide}
-                className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+                className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-amber-600 transition-colors"
                 aria-label="Previous service showcase"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -290,7 +290,7 @@ export const ServicesVideoSlider = () => {
 
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+                className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-amber-600 transition-colors"
                 aria-label={isPlaying ? 'Pause showcase slider' : 'Resume showcase slider'}
               >
                 {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -298,7 +298,7 @@ export const ServicesVideoSlider = () => {
 
               <button
                 onClick={nextSlide}
-                className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors"
+                className="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-amber-600 transition-colors"
                 aria-label="Next service showcase"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -309,7 +309,7 @@ export const ServicesVideoSlider = () => {
           {/* Thin Slide Progress Bar */}
           <div className="w-full h-1 bg-slate-100 dark:bg-slate-800 overflow-hidden">
             <div
-              className="h-full bg-blue-600 transition-all duration-100 ease-linear"
+              className="h-full bg-gradient-to-r from-amber-600 to-amber-500 transition-all duration-100 ease-linear"
               style={{ width: `${slideProgress}%` }}
             />
           </div>
@@ -338,7 +338,7 @@ export const ServicesVideoSlider = () => {
                     key={idx}
                     className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700"
                   >
-                    <div className="text-xl sm:text-2xl font-black text-blue-600 dark:text-blue-400">
+                    <div className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400">
                       {m.value}
                     </div>
                     <div className="text-[11px] font-bold text-slate-900 dark:text-white truncate">
@@ -364,7 +364,7 @@ export const ServicesVideoSlider = () => {
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 pt-4">
                 <Link href={active.ctaHref}>
-                  <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold px-6 py-5 text-xs sm:text-sm shadow-md shadow-blue-500/20 hover:scale-[1.02] transition-all">
+                  <Button className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 rounded-xl font-bold px-6 py-5 text-xs sm:text-sm shadow-md shadow-amber-500/25 hover:scale-[1.02] transition-all">
                     {active.ctaText}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -372,7 +372,7 @@ export const ServicesVideoSlider = () => {
                 <Link href="/contact#enquiry">
                   <Button
                     variant="outline"
-                    className="rounded-xl font-semibold border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs sm:text-sm py-5 hover:bg-slate-50"
+                    className="rounded-xl font-semibold border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs sm:text-sm py-5 hover:bg-slate-50 hover:border-amber-400"
                   >
                     Request Custom Quote
                   </Button>

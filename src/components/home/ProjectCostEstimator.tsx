@@ -62,12 +62,12 @@ export const ProjectCostEstimator = () => {
   return (
     <section className="py-24 bg-white dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800 relative overflow-hidden" id="estimator">
       {/* Ambient background blur */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/10 blur-[130px] rounded-full -z-10 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-amber-500/10 blur-[130px] rounded-full -z-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <FadeIn>
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-3 py-1 rounded-full border border-blue-200/60">
+            <span className="text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
               Interactive Scope Calculator
             </span>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mt-3">
@@ -95,8 +95,8 @@ export const ProjectCostEstimator = () => {
                     onClick={() => setProjectType(pt.id as any)}
                     className={`p-3.5 rounded-xl border text-left text-xs font-semibold transition-all ${
                       projectType === pt.id
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/25'
-                        : 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/80 dark:border-slate-700 hover:border-blue-300'
+                        ? 'bg-amber-500 text-slate-950 font-bold border-amber-500 shadow-sm shadow-amber-500/25'
+                        : 'bg-white dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border-slate-200/80 dark:border-slate-700 hover:border-amber-300'
                     }`}
                   >
                     {pt.label}
@@ -119,14 +119,14 @@ export const ProjectCostEstimator = () => {
                       onClick={() => toggleFeature(feat.id)}
                       className={`flex items-center gap-2.5 p-3 rounded-xl border text-left text-xs transition-all ${
                         isChecked
-                          ? 'bg-blue-50/80 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-800 font-semibold'
+                          ? 'bg-amber-50/80 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-700 font-semibold'
                           : 'bg-white dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 border-slate-200/80 dark:border-slate-700 hover:border-slate-300'
                       }`}
                     >
                       <div
                         className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
                           isChecked
-                            ? 'bg-blue-600 border-blue-600 text-white'
+                            ? 'bg-amber-500 border-amber-500 text-slate-950'
                             : 'border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800'
                         }`}
                       >
@@ -149,12 +149,12 @@ export const ProjectCostEstimator = () => {
                   onClick={() => setSpeed('standard')}
                   className={`p-3.5 rounded-xl border text-left text-xs transition-all ${
                     speed === 'standard'
-                      ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-blue-500 ring-2 ring-blue-500/10 font-bold'
+                      ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-amber-500 ring-2 ring-amber-500/10 font-bold'
                       : 'bg-white dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700'
                   }`}
                 >
                   <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white mb-0.5">
-                    <Clock className="w-3.5 h-3.5 text-blue-600" />
+                    <Clock className="w-3.5 h-3.5 text-amber-600" />
                     Standard Sprints
                   </div>
                   <span className="text-[11px] text-slate-500">Bi-weekly preview releases</span>
@@ -164,7 +164,7 @@ export const ProjectCostEstimator = () => {
                   onClick={() => setSpeed('accelerated')}
                   className={`p-3.5 rounded-xl border text-left text-xs transition-all ${
                     speed === 'accelerated'
-                      ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-blue-500 ring-2 ring-blue-500/10 font-bold'
+                      ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-amber-500 ring-2 ring-amber-500/10 font-bold'
                       : 'bg-white dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700'
                   }`}
                 >
@@ -181,7 +181,7 @@ export const ProjectCostEstimator = () => {
           {/* Right Column: Architectural Blueprint & Summary */}
           <div className="lg:col-span-5 bg-white dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800 rounded-2xl p-6 sm:p-7 shadow-sm space-y-6">
             <div className="pb-4 border-b border-slate-100 dark:border-slate-800">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 block">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block">
                 Engineering Blueprint
               </span>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
@@ -190,9 +190,9 @@ export const ProjectCostEstimator = () => {
             </div>
 
             {/* Timeline Metric */}
-            <div className="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-900/60 space-y-1">
-              <div className="text-xs font-mono font-bold text-blue-700 dark:text-blue-300 flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-blue-600" />
+            <div className="p-4 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-900/60 space-y-1">
+              <div className="text-xs font-mono font-bold text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-amber-600" />
                 ESTIMATED DELIVERY TIMELINE
               </div>
               <div className="text-3xl font-black text-slate-900 dark:text-white">
@@ -209,7 +209,7 @@ export const ProjectCostEstimator = () => {
                 Dedicated Pod Structure:
               </span>
               <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900 p-2.5 rounded-lg border border-slate-200/70 dark:border-slate-800">
-                <Users className="w-4 h-4 text-blue-600 shrink-0" />
+                <Users className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>{currentType.baseTeam}</span>
               </div>
             </div>
@@ -221,7 +221,7 @@ export const ProjectCostEstimator = () => {
                 <span>Comprehensive NDA & IP Assignment</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                <CheckCircle2 className="w-4 h-4 text-amber-600" />
                 <span>Daily Git commits & automated test passes</span>
               </div>
             </div>
@@ -231,7 +231,7 @@ export const ProjectCostEstimator = () => {
               href={`/contact#enquiry`}
               className="block pt-2"
             >
-              <Button className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl py-5 font-bold shadow-md shadow-blue-500/25 text-xs sm:text-sm">
+              <Button className="w-full bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 rounded-xl py-5 font-bold shadow-md shadow-amber-500/25 text-xs sm:text-sm">
                 Discuss This Scope With Our Architect
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>

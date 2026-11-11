@@ -10,7 +10,7 @@ export const StatsSection = () => {
           {COMPANY_INFO.stats.map((stat, idx) => (
             <FadeIn key={stat.label} delay={idx * 0.1} className="pt-4 md:pt-0">
               <div className="space-y-1">
-                <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-linear-to-r from-white via-neutral-100 to-indigo-300 bg-clip-text text-transparent">
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-amber-400">
                   {stat.value}
                 </span>
                 <p className="text-xs sm:text-sm text-neutral-400 font-medium">

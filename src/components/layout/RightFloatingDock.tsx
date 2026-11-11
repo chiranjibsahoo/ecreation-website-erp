@@ -75,7 +75,7 @@ export const RightFloatingDock = () => {
     <>
       {/* Top Scroll Progress Bar */}
       <div
-        className="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 transition-all duration-75 origin-left"
+        className="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-400 transition-all duration-75 origin-left"
         style={{ width: `${scrollProgress}%` }}
         role="progressbar"
         aria-valuenow={Math.round(scrollProgress)}
@@ -88,7 +88,7 @@ export const RightFloatingDock = () => {
         className="fixed right-4 lg:right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center gap-3 select-none"
         aria-label="Section Quick Dock"
       >
-        <div className="flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200/90 shadow-lg shadow-slate-200/50">
+        <div className="flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200/90 shadow-lg shadow-amber-500/10">
           {dockLinks.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -99,7 +99,7 @@ export const RightFloatingDock = () => {
                   aria-label={`Scroll to ${item.label}`}
                   className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 ${
                     isActive
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30 scale-105'
+                      ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/30 scale-105'
                       : 'text-slate-400 hover:text-slate-900 hover:bg-slate-100'
                   }`}
                 >
@@ -124,7 +124,7 @@ export const RightFloatingDock = () => {
                 <button
                   onClick={scrollToTop}
                   aria-label="Back to Top"
-                  className="w-8 h-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all"
+                  className="w-8 h-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-amber-600 hover:bg-amber-50 transition-all"
                 >
                   <ArrowUp className="w-4 h-4" />
                 </button>

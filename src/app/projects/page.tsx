@@ -17,7 +17,7 @@ export default function ProjectsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="max-w-3xl space-y-4">
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
             Portfolio & Impact
           </span>
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground">
@@ -37,7 +37,7 @@ export default function ProjectsPage() {
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
                     {project.category}
                   </span>
                   <span className="text-xs text-muted-foreground font-mono">

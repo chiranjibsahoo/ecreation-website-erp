@@ -17,7 +17,7 @@ export default function ServicesPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="max-w-3xl space-y-4">
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
             What We Engineer
           </span>
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground">
@@ -37,7 +37,7 @@ export default function ServicesPage() {
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 px-2.5 py-1 rounded-md">
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-md">
                     {service.category}
                   </span>
                   <div className="flex gap-1.5 font-mono text-[11px] text-muted-foreground">
@@ -92,8 +92,8 @@ export default function ServicesPage() {
               Our principal engineers regularly handle custom protocols, legacy migrations, and proprietary integrations.
             </p>
           </div>
-          <Link href="/contact">
-            <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold px-6">
+          <Link href="/contact#enquiry">
+            <Button size="lg" className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 font-bold rounded-xl px-6 shadow-md shadow-amber-500/25">
               <Terminal className="w-4 h-4 mr-2" />
               Discuss Custom Architecture
             </Button>

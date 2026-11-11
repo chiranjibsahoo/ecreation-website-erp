@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#4f46e5',
+  themeColor: '#d97706',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -92,7 +92,7 @@ export default function RootLayout({
         <SchemaMarkup type="Organization" />
         <SchemaMarkup type="WebSite" />
       </head>
-      <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen selection:bg-blue-600 selection:text-white">
+      <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen selection:bg-amber-500 selection:text-slate-950">
         <OpeningPreloader />
         <RightFloatingDock />
         <LeftSocialRail />

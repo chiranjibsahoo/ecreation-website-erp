@@ -295,7 +295,7 @@ export const SmartContactForm = () => {
             <span>Strict NDA Protection</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-indigo-500" />
+            <Clock className="w-4 h-4 text-amber-500" />
             <span>&lt; 4hr Response SLA</span>
           </div>
         </div>
@@ -303,7 +303,7 @@ export const SmartContactForm = () => {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full sm:w-auto px-8 py-5 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-blue-500/25 hover:scale-[1.02] transition-all"
+          className="w-full sm:w-auto px-8 py-5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 rounded-xl font-bold shadow-lg shadow-amber-500/25 hover:scale-[1.02] transition-all"
         >
           {loading ? (
             <>

@@ -7,12 +7,12 @@ import { FadeIn } from '@/components/animations/FadeIn';
 export const CtaSection = () => {
   return (
     <section id="contact" className="py-24 bg-gradient-to-b from-slate-900 via-slate-950 to-neutral-950 text-white relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-blue-600/15 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-amber-500/15 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <FadeIn>
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-950/60 border border-blue-800/80 px-3 py-1 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-widest text-amber-400 bg-amber-950/60 border border-amber-800/80 px-3 py-1 rounded-full">
               Ready to Accelerate?
             </span>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mt-4 leading-tight">
@@ -28,7 +28,7 @@ export const CtaSection = () => {
               <Link href="/contact#enquiry" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto h-13 px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-blue-500/25 text-base hover:scale-[1.02] transition-all"
+                  className="w-full sm:w-auto h-13 px-8 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 rounded-xl font-bold shadow-lg shadow-amber-500/25 text-base hover:scale-[1.02] transition-all"
                 >
                   Schedule Technical Discovery
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -59,7 +59,7 @@ export const CtaSection = () => {
                 <span>Strict Mutual Non-Disclosure Agreement (NDA)</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-indigo-400" />
+                <Clock className="w-4 h-4 text-amber-400" />
                 <span>Consultation Response in &lt; 4 Hours</span>
               </div>
             </div>

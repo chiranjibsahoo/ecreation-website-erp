@@ -60,7 +60,7 @@ export const Footer = () => {
                 <li key={service.id}>
                   <Link
                     href={`/services/${service.slug}`}
-                    className="text-neutral-400 hover:text-indigo-400 transition-colors block py-0.5"
+                    className="text-neutral-400 hover:text-amber-400 transition-colors block py-0.5"
                   >
                     {service.title}
                   </Link>
@@ -94,8 +94,8 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/admin" className="text-neutral-400 hover:text-white transition-colors flex items-center gap-1">
-                  Admin ERP
+                <Link href="/login" className="text-neutral-400 hover:text-amber-400 transition-colors flex items-center gap-1">
+                  Staff Login & Admin
                   <ArrowUpRight className="w-3 h-3" />
                 </Link>
               </li>
@@ -107,17 +107,17 @@ export const Footer = () => {
             <h3 className="text-xs font-bold uppercase tracking-wider text-white">Headquarters</h3>
             <ul className="space-y-3 text-sm text-neutral-400">
               <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                 <span>{COMPANY_INFO.headquarters}</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-indigo-400 shrink-0" />
+                <Mail className="w-4 h-4 text-amber-400 shrink-0" />
                 <a href={`mailto:${COMPANY_INFO.email}`} className="hover:text-white transition-colors">
                   {COMPANY_INFO.email}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-indigo-400 shrink-0" />
+                <Phone className="w-4 h-4 text-amber-400 shrink-0" />
                 <a href={`tel:${COMPANY_INFO.phone}`} className="hover:text-white transition-colors">
                   {COMPANY_INFO.phone}
                 </a>

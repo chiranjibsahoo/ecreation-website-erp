@@ -75,7 +75,7 @@ export const Navbar = () => {
                 href={link.href}
                 className={`relative px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
                   active
-                    ? 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-xs border border-slate-200/60 dark:border-slate-700'
+                    ? 'bg-amber-500 text-slate-950 font-bold shadow-xs border border-amber-400/80 dark:border-amber-500'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-800/50'
                 }`}
               >
@@ -90,7 +90,7 @@ export const Navbar = () => {
           {/* Quick Search Palette (Raycast / Linear reference) */}
           <button
             onClick={() => setCommandOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-2xs"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white hover:border-amber-400/50 transition-colors shadow-2xs"
             aria-label="Open command palette search"
           >
             <Search className="w-3.5 h-3.5 text-slate-400" />
@@ -104,9 +104,9 @@ export const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/60 rounded-xl h-9"
+              className="text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50/70 dark:hover:bg-amber-950/40 rounded-xl h-9"
             >
-              <LogIn className="w-3.5 h-3.5 mr-1.5 text-blue-600" />
+              <LogIn className="w-3.5 h-3.5 mr-1.5 text-amber-600 dark:text-amber-400" />
               Login
             </Button>
           </Link>
@@ -115,10 +115,10 @@ export const Navbar = () => {
           <Link href="/contact#enquiry">
             <Button
               size="sm"
-              className="relative group bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold text-xs sm:text-sm px-4 h-9 rounded-xl shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all hover:scale-[1.02]"
+              className="relative group bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 font-bold text-xs sm:text-sm px-4 h-9 rounded-xl shadow-md shadow-amber-500/25 hover:shadow-amber-500/40 transition-all hover:scale-[1.02]"
               aria-label="Redirect to Project Enquiry Page"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-2 inline-block shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-emerald-950 animate-pulse mr-2 inline-block shrink-0" />
               <span>Quick Enquiry</span>
               <Send className="w-3.5 h-3.5 ml-1.5 opacity-90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Button>
@@ -138,7 +138,7 @@ export const Navbar = () => {
           <Link href="/contact#enquiry">
             <Button
               size="sm"
-              className="bg-blue-600 text-white rounded-lg px-2.5 h-8 text-xs font-semibold shadow-xs"
+              className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-slate-950 font-bold rounded-lg px-2.5 h-8 text-xs shadow-xs"
             >
               Enquire
             </Button>
@@ -168,15 +168,15 @@ export const Navbar = () => {
                         onClick={() => setMobileOpen(false)}
                         className={`px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-colors ${
                           active
-                            ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
+                            ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
                             : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-50'
                         }`}
                       >
                         <span className="flex items-center gap-3">
-                          <Icon className={`w-4 h-4 ${active ? 'text-blue-600' : 'text-slate-400'}`} />
+                          <Icon className={`w-4 h-4 ${active ? 'text-slate-950' : 'text-slate-400'}`} />
                           {link.label}
                         </span>
-                        {active && <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />}
+                        {active && <span className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
                       </Link>
                     );
                   })}
@@ -186,9 +186,9 @@ export const Navbar = () => {
                   <Link
                     href="/login"
                     onClick={() => setMobileOpen(false)}
-                    className="px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-blue-50/50 flex items-center gap-3"
+                    className="px-4 py-3 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-amber-700 hover:bg-amber-50/70 flex items-center gap-3"
                   >
-                    <LogIn className="w-4 h-4 text-blue-600" />
+                    <LogIn className="w-4 h-4 text-amber-600" />
                     Staff Login & Admin Portal
                   </Link>
                 </nav>
@@ -201,8 +201,8 @@ export const Navbar = () => {
                   onClick={() => setMobileOpen(false)}
                   className="w-full block"
                 >
-                  <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl py-5 font-bold shadow-md shadow-blue-500/25 text-sm flex items-center justify-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <Button className="w-full bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 rounded-xl py-5 font-bold shadow-md shadow-amber-500/25 text-sm flex items-center justify-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-950 animate-pulse" />
                     <span>Quick Project Enquiry</span>
                     <Send className="w-4 h-4 ml-1" />
                   </Button>

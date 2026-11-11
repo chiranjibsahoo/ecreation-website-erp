@@ -8,7 +8,7 @@ export const TechStackBento = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <FadeIn>
-            <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+            <span className="text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
               Technical Excellence
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground mt-2">

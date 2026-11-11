@@ -44,8 +44,8 @@ export const LeftSocialRail = () => {
     {
       name: 'Direct Email',
       url: 'mailto:contact@ecreationit.com?subject=Project%20Inquiry%20-%20Ecreation%20IT',
-      icon: <Mail className="w-4 h-4 text-blue-600" />,
-      color: 'hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200'
+      icon: <Mail className="w-4 h-4 text-amber-600" />,
+      color: 'hover:text-amber-700 hover:bg-amber-50 hover:border-amber-200'
     }
   ];
 

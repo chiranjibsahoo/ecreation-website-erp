@@ -35,7 +35,7 @@ export default function AboutPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         {/* Header */}
         <div className="max-w-3xl space-y-4">
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
             About Ecreation IT Solution
           </span>
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground">
@@ -50,7 +50,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-3xl bg-neutral-950 text-white">
           {COMPANY_INFO.stats.map((s) => (
             <div key={s.label} className="text-center space-y-1">
-              <span className="text-3xl sm:text-5xl font-black bg-linear-to-r from-white to-indigo-300 bg-clip-text text-transparent">
+              <span className="text-3xl sm:text-5xl font-black text-amber-400">
                 {s.value}
               </span>
               <p className="text-xs sm:text-sm text-neutral-400 font-medium">{s.label}</p>

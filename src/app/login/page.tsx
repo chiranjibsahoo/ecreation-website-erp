@@ -121,12 +121,12 @@ function LoginForm() {
       {/* Main Login Card */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6 relative overflow-hidden">
         {/* Subtle top color bar */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500" />
 
         {/* Demo Credentials Quick Pill */}
-        <div className="p-3 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-900/60 text-xs flex items-center justify-between gap-2">
+        <div className="p-3 rounded-2xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-900/60 text-xs flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <KeyRound className="w-4 h-4 text-blue-600 shrink-0" />
+            <KeyRound className="w-4 h-4 text-amber-600 shrink-0" />
             <div>
               <span className="font-bold text-slate-900 dark:text-white block">Demo Admin Access</span>
               <span className="text-[11px] font-mono text-slate-500">admin@ecreation.in · admin123</span>
@@ -135,7 +135,7 @@ function LoginForm() {
           <button
             type="button"
             onClick={handleQuickDemoLogin}
-            className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[11px] shrink-0 transition-colors shadow-xs"
+            className="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-[11px] shrink-0 transition-colors shadow-xs"
           >
             Auto Fill
           </button>
@@ -182,7 +182,7 @@ function LoginForm() {
               <Label htmlFor="password" className="text-xs font-bold text-slate-700 dark:text-slate-300">
                 Password
               </Label>
-              <span className="text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+              <span className="text-[11px] text-amber-700 dark:text-amber-400 font-semibold">
                 Default: admin123
               </span>
             </div>
@@ -215,7 +215,7 @@ function LoginForm() {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5"
+                className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 w-3.5 h-3.5"
               />
               <span>Remember session (30 days)</span>
             </label>
@@ -225,7 +225,7 @@ function LoginForm() {
           <Button
             type="submit"
             disabled={loading || success}
-            className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl py-5 font-bold shadow-md shadow-blue-500/25 text-xs sm:text-sm hover:scale-[1.01] transition-all"
+            className="w-full bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 rounded-xl py-5 font-bold shadow-md shadow-amber-500/25 text-xs sm:text-sm hover:scale-[1.01] transition-all"
           >
             {loading ? (
               <>
@@ -286,3 +286,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

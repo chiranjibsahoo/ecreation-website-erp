@@ -151,12 +151,12 @@ export const CommandMenu: React.FC<CommandMenuProps> = ({ open, onOpenChange }) 
                   onMouseEnter={() => setSelectedIndex(idx)}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-left text-xs font-semibold transition-all ${
                     isSelected
-                      ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
+                      ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 font-bold'
                       : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-blue-600' : 'text-slate-400'}`} />
+                    <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-amber-600' : 'text-slate-400'}`} />
                     <span className="truncate">{item.label}</span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">

@@ -1,50 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none">
   <defs>
-    <linearGradient id="ec-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0F172A" />
+    <linearGradient id="gold-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0F19" />
       <stop offset="100%" stop-color="#020617" />
     </linearGradient>
-    <linearGradient id="ec-blue" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6" />
-      <stop offset="100%" stop-color="#1D4ED8" />
+    <linearGradient id="gold-main" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="35%" stop-color="#F59E0B" />
+      <stop offset="70%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#92400E" />
     </linearGradient>
-    <linearGradient id="ec-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38BDF8" />
-      <stop offset="100%" stop-color="#06B6D4" />
+    <linearGradient id="gold-arrow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB" />
+      <stop offset="50%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#D97706" />
     </linearGradient>
-    <linearGradient id="ec-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.25" />
-      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0" />
-    </linearGradient>
-    <filter id="ec-shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#2563EB" flood-opacity="0.3" />
+    <filter id="gold-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#D97706" flood-opacity="0.35" />
     </filter>
   </defs>
 
-  <!-- Squircle Base with Ambient Glow -->
-  <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#ec-bg)" stroke="#1E293B" stroke-width="2" />
-  <rect x="6" y="6" width="88" height="88" rx="22" fill="url(#ec-glow)" />
+  <!-- Squircle Base with Gold Rim -->
+  <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#gold-bg)" stroke="#D97706" stroke-width="2" stroke-opacity="0.6" />
 
-  <!-- The E-Creation Monogram (Spine & Futuristic Layered Arms) -->
-  <g filter="url(#ec-shadow)">
+  <!-- The E Monogram in Metallic Gold -->
+  <g filter="url(#gold-shadow)">
     <!-- Vertical Anchor Spine -->
-    <rect x="22" y="24" width="13" height="52" rx="6.5" fill="url(#ec-blue)" />
+    <rect x="22" y="24" width="13" height="52" rx="6.5" fill="url(#gold-main)" />
 
-    <!-- Top Arm with Circuit Node -->
-    <path d="M 28 24 L 64 24 C 68 24 71 27 71 31 C 71 35 68 38 64 38 L 28 38 Z" fill="url(#ec-blue)" />
-    <circle cx="64" cy="31" r="3.5" fill="#FFFFFF" />
+    <!-- Top Arm with Node -->
+    <path d="M 28 24 L 64 24 C 68 24 71 27 71 31 C 71 35 68 38 64 38 L 28 38 Z" fill="url(#gold-main)" />
+    <circle cx="64" cy="31" r="3.5" fill="#FFFBEB" />
 
-    <!-- Middle Dynamic Creation Arrow (Forward Momentum) -->
-    <path d="M 28 44 L 52 44 L 59 50 L 52 56 L 28 56 Z" fill="url(#ec-cyan)" />
-    <circle cx="48" cy="50" r="2.5" fill="#FFFFFF" />
+    <!-- Middle Creation Arrow -->
+    <path d="M 28 44 L 52 44 L 59 50 L 52 56 L 28 56 Z" fill="url(#gold-arrow)" />
+    <circle cx="48" cy="50" r="2.5" fill="#FFFBEB" />
 
-    <!-- Bottom Arm with Connected Endpoint -->
-    <path d="M 28 62 L 64 62 C 68 62 71 65 71 69 C 71 73 68 76 64 76 L 28 76 Z" fill="url(#ec-blue)" />
-    <circle cx="64" cy="69" r="3.5" fill="#FFFFFF" />
+    <!-- Bottom Arm with Node -->
+    <path d="M 28 62 L 64 62 C 68 62 71 65 71 69 C 71 73 68 76 64 76 L 28 76 Z" fill="url(#gold-main)" />
+    <circle cx="64" cy="69" r="3.5" fill="#FFFBEB" />
 
-    <!-- Subtle Connected Signal Pulse Line -->
-    <path d="M 71 35 L 75 42 L 75 58 L 71 65" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
-    <circle cx="75" cy="50" r="2" fill="#38BDF8" />
+    <!-- Golden Data Trail -->
+    <path d="M 71 35 L 75 42 L 75 58 L 71 65" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9" />
+    <circle cx="75" cy="50" r="2" fill="#FDE68A" />
   </g>
 </svg>
-

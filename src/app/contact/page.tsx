@@ -15,7 +15,7 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="max-w-3xl space-y-4">
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
             Let's Collaborate
           </span>
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground">
