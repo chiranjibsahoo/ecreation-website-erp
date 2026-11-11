@@ -1,0 +1,34 @@
+# Vercel AI SDK & Modern Frontend Design Rules
+
+## Core Design Principles
+
+### 1. High Contrast & Visual Hierarchy
+- Maintain strong contrast ratios (meeting or exceeding WCAG AAA standards where possible).
+- Clear visual hierarchy: distinguish between primary, secondary, and tertiary elements using contrast, scale, and weight rather than excessive borders or colored backgrounds.
+- Pure dark or crisp light backgrounds with deliberate foreground elevations and subtle border strokes (`border-neutral-200 dark:border-neutral-800`).
+
+### 2. Mobile-First Responsive Layouts
+- Design and implement mobile-first (`base` -> `sm` -> `md` -> `lg` -> `xl` -> `2xl`).
+- Ensure touch targets are at least 44x44px on mobile viewports.
+- Avoid horizontal scrolling; maintain fluid containers and adaptive spacing (`p-4 sm:p-6 lg:p-8`).
+
+### 3. Tailwind CSS Best Practices
+- Use standard, modern Tailwind utility classes and semantic tokens.
+- Keep classes organized: layout/positioning -> box model -> typography -> visual styling -> state variants (`hover:`, `focus:`, `active:`).
+- Leverage design tokens (`colors`, `spacing`, `radius`, `fontFamily`) defined in the Tailwind configuration.
+- Avoid arbitrary inline values (`w-[347px]`, `text-[#332211]`) unless strictly required; prefer the design token scale.
+
+### 4. Expressive & Large Typography
+- Use bold, confident type scales for headlines with tight tracking (`tracking-tight` or `tracking-tighter` for large headings).
+- Generous line heights for body text (`leading-relaxed` or `leading-normal`) to ensure effortless readability.
+- Strict typographic hierarchy: `h1` (3xl–5xl), `h2` (2xl–3xl), `h3` (xl–2xl), body (base / sm), captions (xs).
+
+### 5. No "Lorem Ipsum" or Generic Placeholders
+- NEVER use "Lorem ipsum dolor sit amet" or generic placeholder text.
+- Always write realistic, contextual product and business copy tailored to Ecreation Website ERP, digital services, website design milestones, and client management.
+- Use authentic mock data, human names, realistic project deliverables, and real dates/currencies.
+
+### 6. Component Quality & Micro-interactions
+- Smooth, purposeful micro-interactions with subtle duration transitions (`transition-colors duration-150`, `ease-out`).
+- Accessible interactive states: clear `:hover`, `:focus-visible` with offset focus rings (`focus-visible:ring-2 focus-visible:ring-offset-2`), and disabled styles.
+- Skeleton and optimistic states for all async actions to provide immediate tactile feedback.
