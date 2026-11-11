@@ -303,7 +303,7 @@ export const SmartContactForm = () => {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full sm:w-auto px-8 py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold shadow-md shadow-indigo-600/20"
+          className="w-full sm:w-auto px-8 py-5 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-blue-500/25 hover:scale-[1.02] transition-all"
         >
           {loading ? (
             <>

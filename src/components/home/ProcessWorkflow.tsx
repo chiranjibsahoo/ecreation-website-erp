@@ -35,17 +35,17 @@ export const ProcessWorkflow = () => {
   ];
 
   return (
-    <section className="py-24 bg-muted/20 border-t border-border">
+    <section id="process" className="py-24 bg-slate-50/70 dark:bg-slate-950 border-t border-slate-200/60 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <FadeIn>
-            <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-3 py-1 rounded-full border border-blue-200/60">
               Methodology
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground mt-2">
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mt-3">
               Predictable, Transparent Delivery
             </h2>
-            <p className="text-muted-foreground text-base sm:text-lg">
+            <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg">
               No guesswork, no bloated meetings. A battle-tested engineering pipeline engineered for clarity, speed, and uncompromising quality.
             </p>
           </FadeIn>

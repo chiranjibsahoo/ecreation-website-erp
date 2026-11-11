@@ -29,12 +29,12 @@ export default function ContactPage() {
         {/* 2-Column Grid: Form and Contact Information */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Form */}
-          <div className="lg:col-span-7">
+          <div id="enquiry" className="lg:col-span-7 scroll-mt-32">
             <Suspense
               fallback={
                 <div className="bg-card border border-border rounded-2xl p-12 flex items-center justify-center text-muted-foreground text-sm">
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin text-indigo-600" />
-                  Loading contact form...
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin text-blue-600" />
+                  Loading enquiry form...
                 </div>
               }
             >

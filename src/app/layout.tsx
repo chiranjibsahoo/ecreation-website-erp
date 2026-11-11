@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { LeftSocialRail } from '@/components/layout/LeftSocialRail';
+import { RightFloatingDock } from '@/components/layout/RightFloatingDock';
+import { OpeningPreloader } from '@/components/animations/OpeningPreloader';
 import { WhatsAppButton } from '@/components/support/WhatsAppButton';
 import { AiChatbot } from '@/components/support/AiChatbot';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
@@ -84,7 +87,10 @@ export default function RootLayout({
         <SchemaMarkup type="Organization" />
         <SchemaMarkup type="WebSite" />
       </head>
-      <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen selection:bg-indigo-500 selection:text-white">
+      <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen selection:bg-blue-600 selection:text-white">
+        <OpeningPreloader />
+        <RightFloatingDock />
+        <LeftSocialRail />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

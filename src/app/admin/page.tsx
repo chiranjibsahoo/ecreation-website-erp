@@ -227,8 +227,8 @@ export default function AdminDashboardPage() {
             <p className="text-xs text-muted-foreground">
               Modify deliverables, technology tags, and feature bullets across the {SERVICES_DATA.length} active service offerings.
             </p>
-            <Link href="/services" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
-              Browse Service Slugs <ArrowUpRight className="w-3 h-3" />
+            <Link href="/admin/services" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
+              Manage Services CMS <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>
 
@@ -240,8 +240,8 @@ export default function AdminDashboardPage() {
             <p className="text-xs text-muted-foreground">
               Publish technical write-ups, maintain reading times, and edit structured JSON-LD Article descriptions.
             </p>
-            <Link href="/blog" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
-              Browse Published Posts <ArrowUpRight className="w-3 h-3" />
+            <Link href="/admin/blog" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
+              Manage Articles CMS <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>
 
@@ -253,8 +253,8 @@ export default function AdminDashboardPage() {
             <p className="text-xs text-muted-foreground">
               Manage client metrics, challenge/solution narratives, and portfolio spotlight selections.
             </p>
-            <Link href="/projects" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
-              Browse Case Studies <ArrowUpRight className="w-3 h-3" />
+            <Link href="/admin/projects" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
+              Manage Case Studies CMS <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>
         </div>
