@@ -16,14 +16,17 @@ import {
   Mail,
   Send,
   Sparkles,
-  PhoneCall
+  PhoneCall,
+  Search
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+import { CommandMenu } from '@/components/layout/CommandMenu';
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [commandOpen, setCommandOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -97,8 +100,21 @@ export const Navbar = () => {
           })}
         </nav>
 
-        {/* Desktop Action Area: Admin Portal & Quick Enquiry Redirection */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Desktop Action Area: Search, Admin Portal & Quick Enquiry */}
+        <div className="hidden md:flex items-center gap-2.5">
+          {/* Quick Search Palette (Raycast / Linear reference) */}
+          <button
+            onClick={() => setCommandOpen(true)}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-2xs"
+            aria-label="Open command palette search"
+          >
+            <Search className="w-3.5 h-3.5 text-slate-400" />
+            <span className="hidden lg:inline text-[11px] font-medium">Search...</span>
+            <kbd className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400">
+              ⌘K
+            </kbd>
+          </button>
+
           <Link href="/admin">
             <Button
               variant="ghost"
@@ -125,7 +141,15 @@ export const Navbar = () => {
         </div>
 
         {/* Mobile Navigation Sheet Trigger */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-1.5">
+          <button
+            onClick={() => setCommandOpen(true)}
+            className="h-8 w-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-slate-100"
+            aria-label="Open search palette"
+          >
+            <Search className="h-3.5 w-3.5" />
+          </button>
+
           <Link href="/contact#enquiry">
             <Button
               size="sm"
@@ -223,6 +247,9 @@ export const Navbar = () => {
           </Sheet>
         </div>
       </div>
+
+      {/* Global Command Menu Dialog (Raycast / Linear Reference) */}
+      <CommandMenu open={commandOpen} onOpenChange={setCommandOpen} />
     </header>
   );
 };

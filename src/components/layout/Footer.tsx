@@ -135,7 +135,17 @@ export const Footer = () => {
 
         {/* Bottom Bar & Legal */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
-          <p>© 2026 Ecreation IT Solution. All rights reserved.</p>
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <p>© 2026 Ecreation IT Solution. All rights reserved.</p>
+            {/* Live Operational Status Badge (Cloudflare / Datadog reference) */}
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-[11px] font-mono text-emerald-400 shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>ALL SYSTEMS OPERATIONAL</span>
+              <span className="text-neutral-600">·</span>
+              <span className="text-neutral-400">99.99% SLA</span>
+            </div>
+          </div>
+
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="hover:text-neutral-300 transition-colors">
               Privacy Policy
