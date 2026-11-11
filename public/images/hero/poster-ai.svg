@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg-glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1E1B4B" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#0F172A" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="1" />
+    </radialGradient>
+    <linearGradient id="gold-amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="neural-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.2" />
+      <stop offset="50%" stop-color="#F59E0B" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.2" />
+    </linearGradient>
+    <pattern id="tech-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#F59E0B" stroke-width="0.7" stroke-opacity="0.08" />
+      <circle cx="60" cy="60" r="1.5" fill="#F59E0B" fill-opacity="0.2" />
+    </pattern>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg-glow)" />
+  <rect width="1920" height="1080" fill="url(#tech-grid)" />
+
+  <!-- Neural Mesh Connections -->
+  <g stroke="url(#neural-line)" stroke-width="1.5" fill="none" opacity="0.6">
+    <path d="M 200 400 Q 500 200 960 450 T 1700 350" />
+    <path d="M 150 700 Q 600 500 1100 650 T 1800 600" />
+    <path d="M 400 250 L 700 550 L 1050 350 L 1400 600 L 1650 300" />
+    <path d="M 300 800 L 650 650 L 960 780 L 1350 550 L 1750 750" />
+    <path d="M 700 550 L 960 450 L 1100 650 L 1400 600" />
+  </g>
+
+  <!-- Glowing Neural Nodes -->
+  <g fill="url(#gold-amber)">
+    <circle cx="400" cy="250" r="6" opacity="0.9" />
+    <circle cx="700" cy="550" r="8" opacity="0.95" />
+    <circle cx="960" cy="450" r="10" opacity="1" />
+    <circle cx="1050" cy="350" r="7" opacity="0.85" />
+    <circle cx="1100" cy="650" r="9" opacity="0.9" />
+    <circle cx="1400" cy="600" r="8" opacity="0.9" />
+    <circle cx="1650" cy="300" r="6" opacity="0.8" />
+  </g>
+  <circle cx="960" cy="450" r="28" fill="none" stroke="#F59E0B" stroke-width="1.5" opacity="0.4" />
+  <circle cx="960" cy="450" r="46" fill="none" stroke="#F59E0B" stroke-width="1" stroke-dasharray="4 6" opacity="0.25" />
+</svg>

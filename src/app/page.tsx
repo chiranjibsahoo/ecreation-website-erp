@@ -1,6 +1,7 @@
 import React from 'react';
-import { HeroSection } from '@/components/home/HeroSection';
+import { FullscreenVideoHero } from '@/components/home/FullscreenVideoHero';
 import { StatsSection } from '@/components/home/StatsSection';
+import { TechEngineSection } from '@/components/home/TechEngineSection';
 import { ServicesVideoSlider } from '@/components/home/ServicesVideoSlider';
 import { ServicesGrid } from '@/components/home/ServicesGrid';
 import { ProjectCostEstimator } from '@/components/home/ProjectCostEstimator';
@@ -13,8 +14,9 @@ import { CtaSection } from '@/components/home/CtaSection';
 export default function HomePage() {
   return (
     <>
-      <HeroSection />
+      <FullscreenVideoHero />
       <StatsSection />
+      <TechEngineSection />
       <ServicesVideoSlider />
       <ServicesGrid />
       <ProjectCostEstimator />

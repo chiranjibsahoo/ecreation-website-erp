@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg-glow-mkt" cx="40%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#1E1B4B" stop-opacity="0.8" />
+      <stop offset="60%" stop-color="#09090B" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="1" />
+    </radialGradient>
+    <linearGradient id="chart-glow" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.2" />
+      <stop offset="40%" stop-color="#8B5CF6" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg-glow-mkt)" />
+
+  <!-- Growth Curve & Telemetry Vectors -->
+  <path d="M 200 850 Q 600 820 900 600 T 1400 400 T 1750 180" fill="none" stroke="url(#chart-glow)" stroke-width="4" opacity="0.75" />
+  <path d="M 200 850 Q 600 820 900 600 T 1400 400 T 1750 180 L 1750 950 L 200 950 Z" fill="url(#chart-glow)" opacity="0.08" />
+
+  <!-- Analytics Data Nodes -->
+  <g fill="#F59E0B">
+    <circle cx="900" cy="600" r="6" />
+    <circle cx="1400" cy="400" r="7" />
+    <circle cx="1750" cy="180" r="9" />
+  </g>
+  <circle cx="1750" cy="180" r="24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5" />
+</svg>
