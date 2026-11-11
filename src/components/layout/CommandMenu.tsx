@@ -40,6 +40,7 @@ export const CommandMenu: React.FC<CommandMenuProps> = ({ open, onOpenChange }) 
     { label: 'About Ecreation IT', href: '/about', category: 'Navigation', icon: Sparkles },
     { label: 'Insights & Technical Blog', href: '/blog', category: 'Navigation', icon: FileText },
     { label: 'Project Enquiry & Contact', href: '/contact#enquiry', category: 'Navigation', icon: Mail },
+    { label: 'Staff Login & Authentication', href: '/login', category: 'Administration', icon: ShieldCheck },
     { label: 'Admin ERP Portal', href: '/admin', category: 'Administration', icon: ShieldCheck },
     { label: 'Leads Pipeline CRM', href: '/admin/leads', category: 'Administration', icon: Terminal },
     { label: 'Services CMS Manager', href: '/admin/services', category: 'Administration', icon: Layers },

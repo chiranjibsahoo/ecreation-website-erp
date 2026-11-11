@@ -17,7 +17,8 @@ import {
   Send,
   Sparkles,
   PhoneCall,
-  Search
+  Search,
+  LogIn
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
@@ -99,14 +100,14 @@ export const Navbar = () => {
             </kbd>
           </button>
 
-          <Link href="/admin">
+          <Link href="/login">
             <Button
               variant="ghost"
               size="sm"
               className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/60 rounded-xl h-9"
             >
-              <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-blue-600" />
-              Admin
+              <LogIn className="w-3.5 h-3.5 mr-1.5 text-blue-600" />
+              Login
             </Button>
           </Link>
 
@@ -183,12 +184,12 @@ export const Navbar = () => {
                   <div className="my-3 border-t border-slate-200 dark:border-slate-800" />
 
                   <Link
-                    href="/admin"
+                    href="/login"
                     onClick={() => setMobileOpen(false)}
                     className="px-4 py-3 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-blue-50/50 flex items-center gap-3"
                   >
-                    <ShieldCheck className="w-4 h-4 text-blue-600" />
-                    Admin ERP & CRM Portal
+                    <LogIn className="w-4 h-4 text-blue-600" />
+                    Staff Login & Admin Portal
                   </Link>
                 </nav>
               </div>
