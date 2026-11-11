@@ -157,3 +157,4 @@ create policy "Admins can manage all blog posts"
     to authenticated
     using (true)
     with check (true);
+

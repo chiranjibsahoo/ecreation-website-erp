@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+import { HeaderEnquiryModal } from '@/components/forms/HeaderEnquiryModal';
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -80,13 +81,21 @@ export const Navbar = () => {
         </nav>
 
         {/* Desktop Action CTAs */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2.5">
           <Link href="/admin">
             <Button variant="ghost" size="sm" className="text-xs text-muted-foreground hover:text-foreground">
               <ShieldCheck className="w-3.5 h-3.5 mr-1" />
-              Admin Portal
+              Admin
             </Button>
           </Link>
+
+          {/* Quick Enquiry Modal to the right of the menu bar */}
+          <HeaderEnquiryModal
+            variant="outline"
+            triggerText="Quick Enquiry"
+            triggerClassName="border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+          />
+
           <Link href="/contact">
             <Button
               size="sm"
@@ -143,8 +152,13 @@ export const Navbar = () => {
                 </nav>
               </div>
 
-              <div className="pt-6 border-t border-border">
-                <Link href="/contact" onClick={() => setMobileOpen(false)} className="w-full">
+              <div className="pt-6 border-t border-border space-y-3">
+                <HeaderEnquiryModal
+                  variant="outline"
+                  triggerText="Quick Project Enquiry"
+                  triggerClassName="w-full justify-center py-5 border-neutral-300 dark:border-neutral-700"
+                />
+                <Link href="/contact" onClick={() => setMobileOpen(false)} className="w-full block">
                   <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-6 font-semibold shadow-md">
                     Discuss Your Project
                     <ArrowRight className="w-4 h-4 ml-2" />

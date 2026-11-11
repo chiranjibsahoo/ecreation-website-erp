@@ -141,3 +141,4 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     </div>
   );
 }
+

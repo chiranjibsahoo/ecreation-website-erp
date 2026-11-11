@@ -52,3 +52,4 @@ export const FadeIn: React.FC<FadeInProps> = ({
     </motion.div>
   );
 };
+

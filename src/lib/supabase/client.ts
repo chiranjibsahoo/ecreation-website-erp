@@ -14,3 +14,4 @@ export const createClient = () => {
 
   return createBrowserClient(url, anonKey);
 };
+

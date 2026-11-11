@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Sparkles, ShieldCheck, Terminal, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FadeIn } from '@/components/animations/FadeIn';
+import { TechVideoHeroAnimation } from '@/components/home/TechVideoHeroAnimation';
 
 export const HeroSection = () => {
   return (
@@ -91,6 +92,11 @@ export const HeroSection = () => {
             </div>
           </FadeIn>
         </div>
+
+        {/* Technology Architecture Video / Interactive Demo Engine */}
+        <FadeIn delay={0.6}>
+          <TechVideoHeroAnimation />
+        </FadeIn>
       </div>
     </section>
   );

@@ -66,3 +66,4 @@ export interface ChatMessage {
   timestamp: string;
   quickReplies?: string[];
 }
+

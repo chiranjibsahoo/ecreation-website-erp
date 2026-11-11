@@ -160,3 +160,4 @@ export default async function BlogPostPage({ params }: PageProps) {
     </article>
   );
 }
+

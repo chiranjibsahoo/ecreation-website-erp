@@ -28,3 +28,4 @@ export const CardHover: React.FC<CardHoverProps> = ({
     </motion.div>
   );
 };
+
