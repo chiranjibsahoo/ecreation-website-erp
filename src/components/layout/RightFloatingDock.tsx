@@ -9,7 +9,9 @@ import {
   GitBranch,
   MessageSquareQuote,
   Send,
-  ArrowUp
+  ArrowUp,
+  Sparkles,
+  Calculator
 } from 'lucide-react';
 
 export const RightFloatingDock = () => {
@@ -27,7 +29,7 @@ export const RightFloatingDock = () => {
       }
 
       // Check section in view
-      const sections = ['hero', 'services', 'tech-engine', 'projects', 'process', 'testimonials', 'contact'];
+      const sections = ['hero', 'tech-engine', 'interactive-showcase', 'services', 'estimator', 'projects', 'process', 'testimonials', 'contact'];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
@@ -46,8 +48,10 @@ export const RightFloatingDock = () => {
 
   const dockLinks = [
     { id: 'hero', label: 'Home', icon: Home },
-    { id: 'services', label: 'Services', icon: Layers },
     { id: 'tech-engine', label: 'Tech Engine', icon: Cpu },
+    { id: 'interactive-showcase', label: 'Solutions Showcase', icon: Sparkles },
+    { id: 'services', label: 'Services', icon: Layers },
+    { id: 'estimator', label: 'Scope Estimator', icon: Calculator },
     { id: 'projects', label: 'Case Studies', icon: Briefcase },
     { id: 'process', label: 'Delivery Process', icon: GitBranch },
     { id: 'testimonials', label: 'Client Reviews', icon: MessageSquareQuote },
