@@ -1,34 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
   <defs>
-    <radialGradient id="bg-glow-web" cx="60%" cy="40%" r="65%">
-      <stop offset="0%" stop-color="#1E293B" stop-opacity="0.85" />
-      <stop offset="50%" stop-color="#0F172A" stop-opacity="0.95" />
-      <stop offset="100%" stop-color="#020617" stop-opacity="1" />
+    <radialGradient id="bg-glow-web" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#292524" stop-opacity="0.95" />
+      <stop offset="60%" stop-color="#1C1917" stop-opacity="0.98" />
+      <stop offset="100%" stop-color="#0C0A09" stop-opacity="1" />
     </radialGradient>
-    <linearGradient id="web-flow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.3" />
-      <stop offset="50%" stop-color="#F59E0B" stop-opacity="0.6" />
-      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.3" />
-    </linearGradient>
+    <pattern id="web-grid" width="72" height="72" patternUnits="userSpaceOnUse">
+      <path d="M 72 0 L 0 0 0 72" fill="none" stroke="#F59E0B" stroke-width="0.6" stroke-opacity="0.08" />
+    </pattern>
   </defs>
 
   <rect width="1920" height="1080" fill="url(#bg-glow-web)" />
+  <rect width="1920" height="1080" fill="url(#web-grid)" />
 
-  <!-- Geometric Web Layout Meshes -->
-  <g stroke="url(#web-flow)" stroke-width="1.5" fill="none" opacity="0.45">
-    <polygon points="300,200 650,150 900,450 500,600" />
-    <polygon points="650,150 1200,220 1450,550 900,450" />
-    <polygon points="900,450 1450,550 1350,850 800,800" />
-    <polygon points="500,600 900,450 800,800 400,850" />
-    <polygon points="1200,220 1650,300 1750,700 1450,550" />
-  </g>
-
-  <!-- Glowing Intersections -->
-  <g fill="#F59E0B">
-    <circle cx="650" cy="150" r="5" opacity="0.9" />
-    <circle cx="900" cy="450" r="8" opacity="1" />
-    <circle cx="1450" cy="550" r="7" opacity="0.9" />
-    <circle cx="800" cy="800" r="6" opacity="0.8" />
-    <circle cx="1200" cy="220" r="6" opacity="0.85" />
+  <!-- Architectural Web Wireframes in Champagne Gold -->
+  <g opacity="0.25" transform="translate(360, 180)" stroke="#F59E0B" fill="none" stroke-width="1.5">
+    <rect x="0" y="0" width="1200" height="720" rx="24" fill="#1C1917" />
+    <line x1="0" y1="64" x2="1200" y2="64" stroke-opacity="0.4" />
+    <rect x="48" y="110" width="520" height="240" rx="16" stroke-opacity="0.5" />
+    <rect x="610" y="110" width="540" height="240" rx="16" stroke-opacity="0.5" />
+    <rect x="48" y="390" width="350" height="260" rx="16" stroke-opacity="0.35" />
+    <rect x="425" y="390" width="350" height="260" rx="16" stroke-opacity="0.35" />
+    <rect x="800" y="390" width="350" height="260" rx="16" stroke-opacity="0.35" />
   </g>
 </svg>

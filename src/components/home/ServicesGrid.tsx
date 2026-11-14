@@ -15,128 +15,123 @@ import { CardHover } from '@/components/animations/CardHover';
 import { FadeIn } from '@/components/animations/FadeIn';
 
 export const ServicesGrid = () => {
-  const getCategoryTheme = (category: string) => {
-    switch (category) {
-      case 'engineering':
-        return {
-          iconBg: 'bg-blue-50 dark:bg-blue-950/50 border-blue-200 dark:border-blue-900/60',
-          iconColor: 'text-blue-600',
-          accent: 'hover:border-blue-400/60 shadow-blue-500/5'
-        };
-      case 'enterprise':
-        return {
-          iconBg: 'bg-indigo-50 dark:bg-indigo-950/50 border-indigo-200 dark:border-indigo-900/60',
-          iconColor: 'text-indigo-600',
-          accent: 'hover:border-indigo-400/60 shadow-indigo-500/5'
-        };
-      case 'cloud':
-        return {
-          iconBg: 'bg-cyan-50 dark:bg-cyan-950/50 border-cyan-200 dark:border-cyan-900/60',
-          iconColor: 'text-cyan-600',
-          accent: 'hover:border-cyan-400/60 shadow-cyan-500/5'
-        };
-      case 'ai':
-        return {
-          iconBg: 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-900/60',
-          iconColor: 'text-emerald-600',
-          accent: 'hover:border-emerald-400/60 shadow-emerald-500/5'
-        };
-      case 'design':
-        return {
-          iconBg: 'bg-purple-50 dark:bg-purple-950/50 border-purple-200 dark:border-purple-900/60',
-          iconColor: 'text-purple-600',
-          accent: 'hover:border-purple-400/60 shadow-purple-500/5'
-        };
+  const getServiceImage = (slug: string) => {
+    switch (slug) {
+      case 'custom-software-engineering':
+        return '/images/showcase/web-design-showcase.jpg';
+      case 'enterprise-erp-crm':
+        return '/images/showcase/erp-automation-showcase.jpg';
+      case 'cloud-devops-infrastructure':
+        return '/images/showcase/cloud-security-showcase.jpg';
+      case 'ai-automation-workflows':
+        return '/images/showcase/ai-workflow-showcase.jpg';
+      case 'mobile-app-development':
+        return '/images/showcase/mobile-app-showcase.jpg';
+      case 'ui-ux-design-modernization':
+        return '/images/showcase/social-marketing-showcase.jpg';
       default:
-        return {
-          iconBg: 'bg-blue-50 dark:bg-blue-950/50 border-blue-200 dark:border-blue-900/60',
-          iconColor: 'text-blue-600',
-          accent: 'hover:border-blue-400/60 shadow-blue-500/5'
-        };
+        return '/images/showcase/web-design-showcase.jpg';
     }
   };
 
-  const getIcon = (iconName: string, iconColor: string) => {
+  const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'Code2':
-        return <Code2 className={`w-6 h-6 ${iconColor}`} />;
+        return <Code2 className="w-5 h-5 text-amber-400" />;
       case 'Building2':
-        return <Building2 className={`w-6 h-6 ${iconColor}`} />;
+        return <Building2 className="w-5 h-5 text-amber-400" />;
       case 'Cloud':
-        return <Cloud className={`w-6 h-6 ${iconColor}`} />;
+        return <Cloud className="w-5 h-5 text-amber-400" />;
       case 'Bot':
-        return <Bot className={`w-6 h-6 ${iconColor}`} />;
+        return <Bot className="w-5 h-5 text-amber-400" />;
       case 'Smartphone':
-        return <Smartphone className={`w-6 h-6 ${iconColor}`} />;
+        return <Smartphone className="w-5 h-5 text-amber-400" />;
       case 'Palette':
-        return <Palette className={`w-6 h-6 ${iconColor}`} />;
+        return <Palette className="w-5 h-5 text-amber-400" />;
       default:
-        return <Code2 className={`w-6 h-6 ${iconColor}`} />;
+        return <Code2 className="w-5 h-5 text-amber-400" />;
     }
   };
 
   return (
-    <section className="py-24 bg-slate-50/60 dark:bg-slate-950 relative border-t border-slate-200/60 dark:border-slate-800" id="services">
+    <section className="py-24 bg-white dark:bg-stone-950 relative border-b border-stone-200/80 dark:border-stone-800" id="services">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <FadeIn>
-            <span className="text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
-              Core Capabilities
+            <span className="text-xs font-bold uppercase tracking-widest text-amber-900 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3.5 py-1 rounded-full border border-amber-300/80">
+              Core IT &amp; Digital Capabilities
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white mt-3">
-              Full-Lifecycle Engineering Services
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-stone-950 dark:text-white mt-3">
+              End-to-End Engineering &amp; Growth Services
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg">
-              We design, build, deploy, and maintain mission-critical software systems that scale with your enterprise ambitions.
+            <p className="text-stone-600 dark:text-stone-400 text-base sm:text-lg">
+              From custom website design and office automation ERPs to mobile apps, cloud infrastructure, and digital marketing—engineered to scale your business.
             </p>
           </FadeIn>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES_DATA.map((service, idx) => {
-            const theme = getCategoryTheme(service.category);
+            const imgSrc = getServiceImage(service.slug);
             return (
-              <FadeIn key={service.id} delay={idx * 0.1}>
-                <CardHover className={`h-full bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-8 rounded-2xl flex flex-col justify-between shadow-xs hover:shadow-xl transition-all duration-300 ${theme.accent}`}>
-                  <div className="space-y-5">
-                    <div className={`w-12 h-12 rounded-xl border flex items-center justify-center shadow-xs ${theme.iconBg}`}>
-                      {getIcon(service.iconName, theme.iconColor)}
+              <FadeIn key={service.id} delay={idx * 0.08}>
+                <CardHover className="group h-full bg-[#FAF8F5] dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 hover:border-amber-500/60 rounded-3xl overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-xl transition-all duration-300">
+                  <div>
+                    {/* Visual Image Header */}
+                    <div className="relative h-48 w-full bg-stone-950 overflow-hidden border-b border-stone-200/60 dark:border-stone-800">
+                      <img
+                        src={imgSrc}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent" />
+                      <div className="absolute bottom-3 left-4 flex items-center gap-2.5">
+                        <div className="w-10 h-10 rounded-xl bg-stone-950/90 border border-amber-500/40 flex items-center justify-center shadow-md">
+                          {getIcon(service.iconName)}
+                        </div>
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-300 bg-stone-950/80 px-2.5 py-1 rounded-md border border-stone-800">
+                          0{idx + 1} · {service.category}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        {service.shortDescription}
-                      </p>
-                    </div>
+                    {/* Card Body */}
+                    <div className="p-7 space-y-4">
+                      <div className="space-y-2">
+                        <h3 className="text-xl font-black text-stone-950 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors">
+                          {service.title}
+                        </h3>
+                        <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                          {service.shortDescription}
+                        </p>
+                      </div>
 
-                    <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                      <span className="text-xs font-semibold text-slate-900 dark:text-slate-200 uppercase tracking-wider block">
-                        Key Capabilities:
-                      </span>
-                      <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
-                        {service.features.slice(0, 3).map((feat) => (
-                          <li key={feat} className="flex items-start gap-2">
-                            <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>{feat}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="space-y-2 pt-3 border-t border-stone-200/80 dark:border-stone-800">
+                        <span className="text-[11px] font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider block">
+                          Included Deliverables:
+                        </span>
+                        <ul className="space-y-1.5 text-xs text-stone-700 dark:text-stone-300 font-medium">
+                          {service.features.slice(0, 3).map((feat) => (
+                            <li key={feat} className="flex items-start gap-2">
+                              <Check className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                              <span>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <span className="text-xs font-mono text-slate-400">
+                  <div className="px-7 py-4 bg-white dark:bg-stone-950/60 border-t border-stone-200/80 dark:border-stone-800 flex items-center justify-between">
+                    <span className="text-[11px] font-mono text-stone-500 font-medium">
                       {service.techStack.slice(0, 3).join(' · ')}
                     </span>
                     <Link
                       href={`/services/${service.slug}`}
-                      className="text-xs font-bold text-amber-700 dark:text-amber-400 hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                      className="text-xs font-bold text-stone-950 dark:text-amber-400 hover:text-amber-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                     >
-                      Details
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      Explore Service
+                      <ArrowRight className="w-3.5 h-3.5 text-amber-600" />
                     </Link>
                   </div>
                 </CardHover>

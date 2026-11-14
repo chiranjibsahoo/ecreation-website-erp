@@ -1,48 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
   <defs>
     <radialGradient id="bg-glow-sw" cx="50%" cy="50%" r="65%">
-      <stop offset="0%" stop-color="#0F172A" stop-opacity="0.9" />
-      <stop offset="60%" stop-color="#020617" stop-opacity="0.98" />
-      <stop offset="100%" stop-color="#000000" stop-opacity="1" />
+      <stop offset="0%" stop-color="#292524" stop-opacity="0.95" />
+      <stop offset="60%" stop-color="#1C1917" stop-opacity="0.98" />
+      <stop offset="100%" stop-color="#0C0A09" stop-opacity="1" />
     </radialGradient>
-    <linearGradient id="code-accent" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#F59E0B" />
-      <stop offset="100%" stop-color="#10B981" />
-    </linearGradient>
     <pattern id="matrix-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#F59E0B" stroke-width="0.8" stroke-opacity="0.06" />
+      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#F59E0B" stroke-width="0.7" stroke-opacity="0.07" />
     </pattern>
   </defs>
 
   <rect width="1920" height="1080" fill="url(#bg-glow-sw)" />
   <rect width="1920" height="1080" fill="url(#matrix-grid)" />
 
-  <!-- Abstract Code Terminal Windows in Background -->
-  <g opacity="0.18" transform="translate(200, 150)">
-    <rect x="0" y="0" width="650" height="380" rx="16" fill="#0B0F19" stroke="#F59E0B" stroke-width="1.5" />
-    <circle cx="30" cy="25" r="5" fill="#EF4444" />
-    <circle cx="50" cy="25" r="5" fill="#F59E0B" />
-    <circle cx="70" cy="25" r="5" fill="#10B981" />
-    <line x1="0" y1="50" x2="650" y2="50" stroke="#F59E0B" stroke-opacity="0.2" />
-    <!-- Code lines -->
-    <rect x="30" y="80" width="220" height="8" rx="4" fill="#3B82F6" />
-    <rect x="260" y="80" width="140" height="8" rx="4" fill="#F59E0B" />
-    <rect x="50" y="110" width="380" height="8" rx="4" fill="#94A3B8" />
-    <rect x="70" y="140" width="280" height="8" rx="4" fill="#10B981" />
-    <rect x="70" y="170" width="340" height="8" rx="4" fill="#F59E0B" />
-    <rect x="50" y="200" width="180" height="8" rx="4" fill="#94A3B8" />
-    <rect x="30" y="230" width="80" height="8" rx="4" fill="#EF4444" />
+  <!-- Executive ERP Window Frame in Warm Obsidian & Gold -->
+  <g opacity="0.28" transform="translate(200, 150)">
+    <rect x="0" y="0" width="650" height="380" rx="16" fill="#1C1917" stroke="#F59E0B" stroke-width="1.5" />
+    <circle cx="30" cy="25" r="5" fill="#78716C" />
+    <circle cx="50" cy="25" r="5" fill="#D97706" />
+    <circle cx="70" cy="25" r="5" fill="#F59E0B" />
+    <line x1="0" y1="50" x2="650" y2="50" stroke="#F59E0B" stroke-opacity="0.25" />
+    <rect x="30" y="80" width="220" height="8" rx="4" fill="#F59E0B" />
+    <rect x="260" y="80" width="140" height="8" rx="4" fill="#A8A29E" />
+    <rect x="50" y="110" width="380" height="8" rx="4" fill="#78716C" />
+    <rect x="70" y="140" width="280" height="8" rx="4" fill="#D97706" />
+    <rect x="70" y="170" width="340" height="8" rx="4" fill="#FDE68A" />
+    <rect x="50" y="200" width="180" height="8" rx="4" fill="#A8A29E" />
   </g>
 
-  <g opacity="0.15" transform="translate(1080, 420)">
-    <rect x="0" y="0" width="600" height="350" rx="16" fill="#0B0F19" stroke="#10B981" stroke-width="1.5" />
-    <circle cx="30" cy="25" r="5" fill="#EF4444" />
-    <circle cx="50" cy="25" r="5" fill="#F59E0B" />
-    <circle cx="70" cy="25" r="5" fill="#10B981" />
-    <line x1="0" y1="50" x2="600" y2="50" stroke="#10B981" stroke-opacity="0.2" />
-    <rect x="30" y="80" width="300" height="8" rx="4" fill="#10B981" />
-    <rect x="50" y="110" width="240" height="8" rx="4" fill="#F59E0B" />
-    <rect x="70" y="140" width="360" height="8" rx="4" fill="#3B82F6" />
-    <rect x="50" y="170" width="160" height="8" rx="4" fill="#94A3B8" />
+  <g opacity="0.22" transform="translate(1080, 420)">
+    <rect x="0" y="0" width="600" height="350" rx="16" fill="#1C1917" stroke="#D97706" stroke-width="1.5" />
+    <line x1="0" y1="50" x2="600" y2="50" stroke="#D97706" stroke-opacity="0.25" />
+    <rect x="30" y="80" width="300" height="8" rx="4" fill="#F59E0B" />
+    <rect x="50" y="110" width="240" height="8" rx="4" fill="#D97706" />
+    <rect x="70" y="140" width="360" height="8" rx="4" fill="#A8A29E" />
+    <rect x="50" y="170" width="160" height="8" rx="4" fill="#78716C" />
   </g>
 </svg>

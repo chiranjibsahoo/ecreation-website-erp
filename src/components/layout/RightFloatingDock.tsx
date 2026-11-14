@@ -11,7 +11,9 @@ import {
   Send,
   ArrowUp,
   Sparkles,
-  Calculator
+  Calculator,
+  Tag,
+  Images
 } from 'lucide-react';
 
 export const RightFloatingDock = () => {
@@ -28,8 +30,19 @@ export const RightFloatingDock = () => {
         setShowBackToTop(window.scrollY > 400);
       }
 
-      // Check section in view
-      const sections = ['hero', 'tech-engine', 'interactive-showcase', 'services', 'estimator', 'projects', 'process', 'testimonials', 'contact'];
+      const sections = [
+        'hero',
+        'visual-gallery',
+        'offers',
+        'services',
+        'interactive-showcase',
+        'tech-engine',
+        'projects',
+        'estimator',
+        'process',
+        'testimonials',
+        'contact'
+      ];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
@@ -48,12 +61,12 @@ export const RightFloatingDock = () => {
 
   const dockLinks = [
     { id: 'hero', label: 'Home', icon: Home },
-    { id: 'tech-engine', label: 'Tech Engine', icon: Cpu },
-    { id: 'interactive-showcase', label: 'Solutions Showcase', icon: Sparkles },
-    { id: 'services', label: 'Services', icon: Layers },
-    { id: 'estimator', label: 'Scope Estimator', icon: Calculator },
+    { id: 'visual-gallery', label: 'Visual Gallery', icon: Images },
+    { id: 'offers', label: '25% Launch Offer', icon: Tag },
+    { id: 'services', label: 'IT Services', icon: Layers },
+    { id: 'interactive-showcase', label: 'Live Simulator', icon: Sparkles },
     { id: 'projects', label: 'Case Studies', icon: Briefcase },
-    { id: 'process', label: 'Delivery Process', icon: GitBranch },
+    { id: 'estimator', label: 'Cost Estimator', icon: Calculator },
     { id: 'testimonials', label: 'Client Reviews', icon: MessageSquareQuote },
     { id: 'contact', label: 'Quick Enquiry', icon: Send }
   ];
@@ -73,7 +86,6 @@ export const RightFloatingDock = () => {
 
   return (
     <>
-      {/* Top Scroll Progress Bar */}
       <div
         className="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-400 transition-all duration-75 origin-left"
         style={{ width: `${scrollProgress}%` }}
@@ -83,12 +95,11 @@ export const RightFloatingDock = () => {
         aria-valuemax={100}
       />
 
-      {/* Right Floating Navigation Dock */}
       <nav
         className="fixed right-4 lg:right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center gap-3 select-none"
         aria-label="Section Quick Dock"
       >
-        <div className="flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200/90 shadow-lg shadow-amber-500/10">
+        <div className="flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/95 backdrop-blur-md border border-stone-200/90 shadow-lg shadow-stone-900/5">
           {dockLinks.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -99,17 +110,16 @@ export const RightFloatingDock = () => {
                   aria-label={`Scroll to ${item.label}`}
                   className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 ${
                     isActive
-                      ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/30 scale-105'
-                      : 'text-slate-400 hover:text-slate-900 hover:bg-slate-100'
+                      ? 'bg-stone-950 text-amber-400 font-bold shadow-md scale-105'
+                      : 'text-stone-400 hover:text-stone-900 hover:bg-stone-100'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
                 </button>
 
-                {/* Left Tooltip */}
                 <span
                   role="tooltip"
-                  className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[11px] font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 shadow-md transform translate-x-1 group-hover:translate-x-0"
+                  className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-stone-950 text-white text-[11px] font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 shadow-md"
                 >
                   {item.label}
                 </span>
@@ -119,18 +129,18 @@ export const RightFloatingDock = () => {
 
           {showBackToTop && (
             <>
-              <div className="w-4 h-[1px] bg-slate-200 my-1" />
+              <div className="w-4 h-[1px] bg-stone-200 my-1" />
               <div className="relative group">
                 <button
                   onClick={scrollToTop}
                   aria-label="Back to Top"
-                  className="w-8 h-8 rounded-xl flex items-center justify-center text-slate-400 hover:text-amber-600 hover:bg-amber-50 transition-all"
+                  className="w-8 h-8 rounded-xl flex items-center justify-center text-stone-400 hover:text-amber-600 hover:bg-amber-50 transition-all"
                 >
                   <ArrowUp className="w-4 h-4" />
                 </button>
                 <span
                   role="tooltip"
-                  className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[11px] font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 shadow-md"
+                  className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-stone-950 text-white text-[11px] font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 shadow-md"
                 >
                   Top
                 </span>
@@ -142,4 +152,3 @@ export const RightFloatingDock = () => {
     </>
   );
 };
-

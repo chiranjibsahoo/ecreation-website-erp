@@ -10,126 +10,175 @@ import {
   ArrowRight,
   Sparkles,
   ShieldCheck,
-  Zap,
+  CheckCircle2,
   Volume2,
   VolumeX,
-  Terminal,
-  Activity,
-  Layers,
-  Cpu,
   Globe,
-  TrendingUp
+  Building2,
+  TrendingUp,
+  Bot,
+  Layers,
+  Tag
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ScrollDownIndicator } from '@/components/home/ScrollDownIndicator';
 
-export interface VideoHeroSlide {
+export interface HeroShowcaseSlide {
   id: string;
+  pillarNumber: string;
+  tabTitle: string;
   badge: string;
   headline: string;
   highlightText: string;
   subheadline: string;
+  deliverables: string[];
+  imageSrc: string;
   videoSrc: string;
   posterSrc: string;
   primaryCtaText: string;
   primaryCtaHref: string;
   secondaryCtaText: string;
   secondaryCtaHref: string;
+  liveCardTitle: string;
+  liveCardSubtitle: string;
+  liveCardBadge: string;
   metrics: { label: string; value: string }[];
-  licenseTag: string;
 }
 
 export const FullscreenVideoHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [showVideoMode, setShowVideoMode] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  const slides: VideoHeroSlide[] = [
+  const slides: HeroShowcaseSlide[] = [
     {
-      id: 'ai-technology',
-      badge: 'Autonomous AI & Neural Vectors',
-      headline: 'Architecting Enterprise AI Systems & ',
-      highlightText: 'Autonomous Workflow Engines',
+      id: 'web-development',
+      pillarNumber: '01',
+      tabTitle: 'Website Design & Dev',
+      badge: 'Website Design & Custom Web Development',
+      headline: 'World-Class Business Websites & ',
+      highlightText: 'High-Converting Web Portals',
       subheadline:
-        'Deploy custom LLM agents, semantic vector databases, and real-time intelligence pipelines that eliminate operational friction and transform enterprise data into competitive dominance.',
-      videoSrc: '/videos/hero/ai-neural-network.webm',
-      posterSrc: '/images/hero/poster-ai.svg',
-      primaryCtaText: 'Deploy AI Architecture',
-      primaryCtaHref: '/services/ai-solutions-workflow-automation',
-      secondaryCtaText: 'Explore Case Studies',
-      secondaryCtaHref: '/projects',
-      metrics: [
-        { label: 'Pipeline Speed', value: '<18ms' },
-        { label: 'Efficiency Gain', value: '+380%' },
-        { label: 'Uptime SLA', value: '99.99%' }
+        'We design and develop luxury corporate websites, custom E-commerce stores, and ultra-fast Next.js web applications that establish instant brand authority and turn visitors into paying clients.',
+      deliverables: [
+        'Bespoke Corporate & Brand Websites',
+        'Custom E-Commerce & Payment Gateways',
+        '100% Mobile Responsive & Ultra-Fast Load',
+        'Admin CMS (Manage Content Without Code)'
       ],
-      licenseTag: 'Creative Commons CC-BY-SA · Royalty-Free'
+      imageSrc: '/images/showcase/web-design-showcase.jpg',
+      videoSrc: '/videos/hero/web-development.webm',
+      posterSrc: '/images/hero/poster-web.svg',
+      primaryCtaText: 'Start Website Project',
+      primaryCtaHref: '/contact#enquiry',
+      secondaryCtaText: 'Explore Web Portfolio',
+      secondaryCtaHref: '/projects',
+      liveCardTitle: 'Corporate & E-Commerce Suite',
+      liveCardSubtitle: '0.4s Page Load · 100/100 Core Web Vitals',
+      liveCardBadge: 'LIVE PREVIEW',
+      metrics: [
+        { label: 'Load Speed', value: '0.4s' },
+        { label: 'Google Score', value: '100/100' },
+        { label: 'Lead Conversion Lift', value: '+68%' }
+      ]
     },
     {
       id: 'software-engineering',
-      badge: 'Mission-Critical Engineering',
-      headline: 'Scalable Enterprise ERP Systems & ',
-      highlightText: 'Custom Cloud Portals',
+      pillarNumber: '02',
+      tabTitle: 'Office Automation & ERP',
+      badge: 'Office Automation & Custom ERP Softwares',
+      headline: 'Automate Your Entire Business With ',
+      highlightText: 'Custom ERP & Billing Software',
       subheadline:
-        'Eliminate legacy system bottlenecks with bespoke ERP software. Synchronize multi-warehouse inventories, automated GST invoicing, and granular role-based security in one resilient stack.',
+        'Replace messy spreadsheets and manual paperwork with custom-built Office Automation Software. Manage GST invoicing, multi-branch inventory, HR attendance, payroll, and client CRM from one secure dashboard.',
+      deliverables: [
+        'Automated Billing & GST Invoicing Software',
+        'Multi-Warehouse Inventory & Stock Alerts',
+        'HR Attendance, Biometric & Payroll System',
+        'Role-Based Staff & Client Portal Access'
+      ],
+      imageSrc: '/images/showcase/erp-automation-showcase.jpg',
       videoSrc: '/videos/hero/software-engineering.webm',
       posterSrc: '/images/hero/poster-software.svg',
-      primaryCtaText: 'Explore ERP Solutions',
-      primaryCtaHref: '/services/enterprise-erp-crm',
-      secondaryCtaText: 'Scope Estimator',
-      secondaryCtaHref: '/#estimator',
+      primaryCtaText: 'Book Free ERP Demo',
+      primaryCtaHref: '/contact#enquiry',
+      secondaryCtaText: 'Explore ERP Solutions',
+      secondaryCtaHref: '/services/enterprise-erp-crm',
+      liveCardTitle: 'Enterprise ERP & GST Billing Hub',
+      liveCardSubtitle: 'Automated Invoicing · Real-Time Inventory Sync',
+      liveCardBadge: '84% TIME SAVED',
       metrics: [
         { label: 'Manual Work Cut', value: '84%' },
-        { label: 'Postgres RLS', value: 'SOC-2 Ready' },
-        { label: 'Deployment', value: 'Zero Downtime' }
-      ],
-      licenseTag: 'Creative Commons Public Domain · Royalty-Free'
-    },
-    {
-      id: 'web-development',
-      badge: 'Next.js App Router Architecture',
-      headline: 'High-Performance Web Platforms & ',
-      highlightText: 'Conversion-Led Experiences',
-      subheadline:
-        'Engineered for 60 FPS fluidity with Next.js, TypeScript, and modern cloud primitives. Sub-second initial paints, 100/100 Core Web Vitals, and bespoke UI crafted without template shortcuts.',
-      videoSrc: '/videos/hero/web-development.webm',
-      posterSrc: '/images/hero/poster-web.svg',
-      primaryCtaText: 'Start Web Engineering',
-      primaryCtaHref: '/services/custom-software-engineering',
-      secondaryCtaText: 'View Tech Stack',
-      secondaryCtaHref: '/services',
-      metrics: [
-        { label: 'Edge First Paint', value: '0.4s' },
-        { label: 'Lighthouse Score', value: '100/100' },
-        { label: 'Avg. Conversion Lift', value: '+68%' }
-      ],
-      licenseTag: 'Creative Commons CC0 · Royalty-Free'
+        { label: 'Data Security', value: 'Bank-Grade' },
+        { label: 'System Uptime', value: '99.99%' }
+      ]
     },
     {
       id: 'digital-marketing',
-      badge: 'High-Intent Revenue Generation',
-      headline: 'Performance Digital Marketing & ',
-      highlightText: 'Technical SEO Dominance',
+      pillarNumber: '03',
+      tabTitle: 'SEO & Social Media',
+      badge: 'Digital Marketing, Technical SEO & Social Media',
+      headline: 'Rank #1 on Google & Dominate ',
+      highlightText: 'Social Media & Lead Generation',
       subheadline:
-        'Transform online clicks into high-value B2B client contracts. Full-funnel precision Google Ads, account-based LinkedIn marketing, and algorithmic search optimization that scales predictable revenue.',
+        'Grow your customer pipeline with full-funnel Digital Marketing. From ranking #1 on Google Search (SEO) to complete Instagram, LinkedIn, and Facebook brand management, reels, and high-ROI paid ads.',
+      deliverables: [
+        'Google #1 Page Technical SEO Dominance',
+        'Instagram, LinkedIn & Facebook Management',
+        'High-ROI Google Ads & Meta Lead Funnels',
+        'Brand Creatives, Reels & Ad Copywriting'
+      ],
+      imageSrc: '/images/showcase/social-marketing-showcase.jpg',
       videoSrc: '/videos/hero/digital-marketing.webm',
       posterSrc: '/images/hero/poster-marketing.svg',
-      primaryCtaText: 'Scale Your Pipeline',
+      primaryCtaText: 'Get Free SEO & Growth Audit',
       primaryCtaHref: '/contact#enquiry',
-      secondaryCtaText: 'Review Testimonials',
-      secondaryCtaHref: '/#testimonials',
+      secondaryCtaText: 'See Marketing Results',
+      secondaryCtaHref: '/#interactive-showcase',
+      liveCardTitle: 'Omnichannel Growth & SEO Engine',
+      liveCardSubtitle: 'Page #1 Google Rankings · 4.8x Ad Return',
+      liveCardBadge: '+340% TRAFFIC',
       metrics: [
-        { label: 'Verified ROAS', value: '4.8x' },
-        { label: 'Organic Traffic Lift', value: '+340%' },
-        { label: 'Lead Velocity', value: '4hr SLA' }
+        { label: 'Organic Traffic', value: '+340%' },
+        { label: 'Average Ad ROAS', value: '4.8x' },
+        { label: 'Qualified Leads', value: '3.2x' }
+      ]
+    },
+    {
+      id: 'ai-technology',
+      pillarNumber: '04',
+      tabTitle: 'AI & Mobile Apps',
+      badge: 'AI Workflow Automation & Mobile App Engineering',
+      headline: '24/7 AI Sales Chatbots, Smart Workflows & ',
+      highlightText: 'iOS / Android Mobile Apps',
+      subheadline:
+        'Deploy intelligent AI assistants on your website and WhatsApp to capture leads 24/7, automate repetitive office tasks, and launch sleek native iOS & Android mobile apps for your customers.',
+      deliverables: [
+        '24/7 AI Customer Support & WhatsApp Bots',
+        'Native iOS & Android Mobile Applications',
+        'Automated Lead Qualification & CRM Sync',
+        'Smart OCR Document & Invoice Processing'
       ],
-      licenseTag: 'Creative Commons CC-BY · Royalty-Free'
+      imageSrc: '/images/showcase/ai-workflow-showcase.jpg',
+      videoSrc: '/videos/hero/ai-neural-network.webm',
+      posterSrc: '/images/hero/poster-ai.svg',
+      primaryCtaText: 'Build AI / Mobile Solution',
+      primaryCtaHref: '/contact#enquiry',
+      secondaryCtaText: 'Calculate Project Cost',
+      secondaryCtaHref: '/#estimator',
+      liveCardTitle: 'Autonomous AI & Mobile Ecosystem',
+      liveCardSubtitle: 'Instant Lead Response · iOS & Android Ready',
+      liveCardBadge: '24/7 ACTIVE AI',
+      metrics: [
+        { label: 'Response Speed', value: '<2 Sec' },
+        { label: 'App Store Rating', value: '4.9 ★' },
+        { label: 'Cost Saved', value: '70%' }
+      ]
     }
   ];
 
-  // Auto-play timer for slide transition (6.5 seconds per slide)
   const SLIDE_DURATION = 6500;
   const TICK_INTERVAL = 50;
 
@@ -149,23 +198,18 @@ export const FullscreenVideoHero = () => {
     return () => clearInterval(interval);
   }, [isPlaying, slides.length]);
 
-  // Synchronize active video playback
   useEffect(() => {
+    if (!showVideoMode) return;
     videoRefs.current.forEach((vid, idx) => {
       if (!vid) return;
       if (idx === currentSlide) {
         vid.currentTime = 0;
-        const playPromise = vid.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // Autoplay blocked by browser policy; poster image fallback remains active
-          });
-        }
+        vid.play().catch(() => {});
       } else {
         vid.pause();
       }
     });
-  }, [currentSlide]);
+  }, [currentSlide, showVideoMode]);
 
   const selectSlide = (idx: number) => {
     setCurrentSlide(idx);
@@ -195,230 +239,311 @@ export const FullscreenVideoHero = () => {
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[100dvh] flex flex-col justify-between overflow-hidden bg-slate-950 text-white select-none pt-24 pb-8 sm:pb-12"
-      aria-label="Full-Screen Video Hero"
+      className="relative w-full bg-[#FAF8F5] dark:bg-stone-950 text-stone-900 dark:text-stone-100 pt-28 sm:pt-34 pb-14 sm:pb-20 overflow-hidden border-b border-stone-200/80 dark:border-stone-800"
+      aria-label="Ecreation IT Solution Hero Showcase"
     >
-      {/* 1. Full-Bleed Continuous Autoplaying Video Slides */}
-      <div className="absolute inset-0 w-full h-full -z-20 overflow-hidden">
-        {slides.map((s, idx) => {
-          const isActive = idx === currentSlide;
-          return (
-            <div
-              key={s.id}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-                isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-105 pointer-events-none'
-              }`}
-              style={{ transitionProperty: 'opacity, transform' }}
-            >
-              {/* Static Poster Fallback (Zero delay on slow connections) */}
-              <img
-                src={s.posterSrc}
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-cover object-center -z-10 pointer-events-none"
-              />
-
-              <video
-                ref={(el) => {
-                  videoRefs.current[idx] = el;
-                }}
-                src={s.videoSrc}
-                poster={s.posterSrc}
-                autoPlay
-                muted={isMuted}
-                loop
-                playsInline
-                preload="metadata"
-                className="w-full h-full object-cover object-center"
-              />
-            </div>
-          );
-        })}
-      </div>
-
-      {/* 2. Cinematic Dark Gradients & Film Tint Overlay (Ensures 100% WCAG Contrast) */}
+      {/* Subtle Warm Architectural Grid & Champagne Gold Ambient Glow (Zero Blue) */}
       <div
-        className="absolute inset-0 -z-10 bg-radial-[circle_at_center,_var(--tw-gradient-stops)] from-slate-950/70 via-slate-950/85 to-slate-950/95 backdrop-blur-[1px]"
+        className="absolute inset-0 bg-[linear-gradient(to_right,#e7e5e4_1px,transparent_1px),linear-gradient(to_bottom,#e7e5e4_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1c1917_1px,transparent_1px),linear-gradient(to_bottom,#1c1917_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000_60%,transparent_100%)] opacity-60 pointer-events-none"
         aria-hidden="true"
       />
-      {/* Subtle luxury golden lighting vignette */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-tr from-amber-500/10 via-yellow-500/5 to-amber-600/10 blur-[150px] rounded-full -z-10 pointer-events-none"
+        className="absolute top-1/4 right-1/4 w-[650px] h-[400px] bg-amber-500/10 blur-[140px] rounded-full pointer-events-none"
         aria-hidden="true"
       />
 
-      {/* 3. Main Center Content Container */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-auto z-10 flex flex-col justify-center py-6 sm:py-10">
-        <div className="max-w-4xl space-y-6">
-          {/* Top Golden Status Pill */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-amber-500/40 backdrop-blur-md shadow-lg shadow-amber-500/10 transition-all duration-300">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-bold text-amber-300 tracking-wide uppercase">
-              {active.badge}
-            </span>
-            <span className="text-amber-500/60">·</span>
-            <span className="text-xs text-slate-300 flex items-center gap-1 font-mono font-medium">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              SLIDE 0{currentSlide + 1} / 0{slides.length}
-            </span>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* 1. Top Service Pillar Switcher Tabs — Instantly explains what the company does */}
+        <div className="mb-8 sm:mb-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+            {slides.map((s, idx) => {
+              const isSelected = idx === currentSlide;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => selectSlide(idx)}
+                  className={`relative p-3 sm:p-3.5 rounded-2xl text-left transition-all duration-300 border overflow-hidden group ${
+                    isSelected
+                      ? 'bg-stone-950 text-white border-amber-500/70 shadow-lg shadow-stone-950/15'
+                      : 'bg-white/90 dark:bg-stone-900/80 text-stone-700 dark:text-stone-300 border-stone-200/90 dark:border-stone-800 hover:border-amber-500/40 hover:bg-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span
+                      className={`text-[11px] font-mono font-bold uppercase tracking-wider ${
+                        isSelected ? 'text-amber-400' : 'text-amber-700 dark:text-amber-500'
+                      }`}
+                    >
+                      PILLAR {s.pillarNumber}
+                    </span>
+                    {idx === 0 && <Globe className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                    {idx === 1 && <Building2 className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                    {idx === 2 && <TrendingUp className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                    {idx === 3 && <Bot className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                  </div>
 
-          {/* Display Headline with High-Contrast Typography */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12] transition-all duration-500">
-            {active.headline}
-            <span className="text-amber-400 block sm:inline">
-              {active.highlightText}
-            </span>
-          </h1>
+                  <div className={`text-xs sm:text-sm font-bold truncate ${isSelected ? 'text-white' : 'text-stone-900 dark:text-white'}`}>
+                    {s.tabTitle}
+                  </div>
 
-          {/* Subheading Narrative */}
-          <p className="text-base sm:text-lg text-slate-200/90 max-w-2xl leading-relaxed font-normal transition-all duration-500">
-            {active.subheadline}
-          </p>
-
-          {/* Primary Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-            <Link href={active.primaryCtaHref} className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                className="w-full sm:w-auto h-13 px-8 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 font-bold rounded-xl shadow-xl shadow-amber-500/25 transition-all hover:scale-[1.02] text-sm sm:text-base"
-              >
-                {active.primaryCtaText}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
-
-            <Link href={active.secondaryCtaHref} className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full sm:w-auto h-13 px-7 rounded-xl font-semibold border-slate-700/80 bg-slate-900/60 hover:bg-slate-800/80 hover:border-amber-400/50 text-white text-sm sm:text-base backdrop-blur-md shadow-xs transition-colors"
-              >
-                <Terminal className="w-4 h-4 mr-2 text-amber-400" />
-                {active.secondaryCtaText}
-              </Button>
-            </Link>
-
-            {/* Sound Toggle & Play/Pause Controls */}
-            <div className="flex items-center gap-2 pt-2 sm:pt-0 sm:ml-2">
-              <button
-                onClick={toggleMute}
-                className="w-10 h-10 rounded-xl border border-slate-700/80 bg-slate-900/70 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition-colors"
-                aria-label={isMuted ? 'Unmute background video' : 'Mute background video'}
-                title={isMuted ? 'Unmute' : 'Mute'}
-              >
-                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-400" />}
-              </button>
-
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="w-10 h-10 rounded-xl border border-slate-700/80 bg-slate-900/70 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition-colors"
-                aria-label={isPlaying ? 'Pause auto slideshow' : 'Play auto slideshow'}
-                title={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
-              >
-                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 text-amber-400" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Real-Time Live Telemetry Bar */}
-          <div className="pt-4 flex flex-wrap items-center gap-6 sm:gap-10 border-t border-slate-800/80 max-w-2xl">
-            {active.metrics.map((m, idx) => (
-              <div key={idx} className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black text-amber-400 font-mono">
-                  {m.value}
-                </span>
-                <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
-                  {m.label}
-                </span>
-              </div>
-            ))}
-            <div className="hidden lg:flex items-center gap-2 text-xs font-mono text-slate-500 ml-auto self-end pb-1">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>{active.licenseTag}</span>
-            </div>
+                  {/* Animated Progress Line */}
+                  <div className="w-full h-1 bg-stone-200 dark:bg-stone-800 rounded-full mt-2.5 overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-75 ${
+                        isSelected ? 'bg-amber-500' : 'bg-transparent'
+                      }`}
+                      style={{ width: isSelected ? `${progress}%` : '0%' }}
+                    />
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
-      </div>
 
-      {/* 4. Bottom Interactive Slider Carousel Dock (MediaBoom & GoPro inspired) */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 pt-4">
-        {/* Horizontal Navigation Tiles with Live Progress Bars */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 mb-4">
-          {slides.map((s, idx) => {
-            const isSelected = idx === currentSlide;
-            return (
-              <button
-                key={s.id}
-                onClick={() => selectSlide(idx)}
-                className={`relative p-3.5 rounded-2xl text-left transition-all duration-300 border flex flex-col justify-between overflow-hidden backdrop-blur-md ${
-                  isSelected
-                    ? 'bg-slate-900/90 border-amber-500/80 shadow-lg shadow-amber-500/10'
-                    : 'bg-slate-950/60 border-slate-800/80 hover:bg-slate-900/60 hover:border-slate-700'
-                }`}
-                aria-label={`Select slide 0${idx + 1}: ${s.badge}`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="font-mono text-xs font-bold text-amber-400">
-                    0{idx + 1}
+        {/* 2. Main Split Hero Showcase: Left Executive Copy + Right High-Res Image/Video Slider */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Executive Pitch & Clear Deliverables */}
+          <div className="lg:col-span-6 space-y-6">
+            {/* Active Category Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-600/30 text-amber-900 dark:text-amber-300 text-xs font-bold tracking-wide">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+              <span>{active.badge}</span>
+            </div>
+
+            {/* Display H1 */}
+            <h1 className="text-3xl sm:text-5xl lg:text-[52px] font-black tracking-tight text-stone-950 dark:text-white leading-[1.1]">
+              {active.headline}
+              <span className="text-amber-700 dark:text-amber-400 block mt-1">
+                {active.highlightText}
+              </span>
+            </h1>
+
+            {/* Plain-English Value Proposition */}
+            <p className="text-base sm:text-lg text-stone-600 dark:text-stone-300 leading-relaxed font-normal">
+              {active.subheadline}
+            </p>
+
+            {/* 2x2 Deliverables Checklist so visitors immediately understand what they get */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              {active.deliverables.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 shadow-2xs"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span className="text-xs font-bold text-stone-800 dark:text-stone-200">
+                    {item}
                   </span>
-                  {idx === 0 && <Cpu className="w-3.5 h-3.5 text-slate-400" />}
-                  {idx === 1 && <Layers className="w-3.5 h-3.5 text-slate-400" />}
-                  {idx === 2 && <Globe className="w-3.5 h-3.5 text-slate-400" />}
-                  {idx === 3 && <TrendingUp className="w-3.5 h-3.5 text-slate-400" />}
+                </div>
+              ))}
+            </div>
+
+            {/* Primary & Secondary Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+              <Link href={active.primaryCtaHref} className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto h-13 px-7 bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 font-bold rounded-xl shadow-lg shadow-stone-950/15 transition-all hover:scale-[1.02] text-sm sm:text-base"
+                >
+                  <span>{active.primaryCtaText}</span>
+                  <ArrowRight className="w-4 h-4 ml-2 text-amber-400" />
+                </Button>
+              </Link>
+
+              <Link href={active.secondaryCtaHref} className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto h-13 px-6 rounded-xl font-bold border-stone-300 dark:border-stone-700 bg-white hover:bg-stone-100 text-stone-900 dark:bg-stone-900 dark:text-white text-sm sm:text-base transition-colors"
+                >
+                  <Layers className="w-4 h-4 mr-2 text-amber-700" />
+                  {active.secondaryCtaText}
+                </Button>
+              </Link>
+            </div>
+
+            {/* Metrics & Special Launch Offer Strip */}
+            <div className="pt-4 border-t border-stone-200/90 dark:border-stone-800 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-6 sm:gap-8">
+                {active.metrics.map((m, idx) => (
+                  <div key={idx} className="flex flex-col">
+                    <span className="text-xl sm:text-2xl font-black text-stone-950 dark:text-white font-mono">
+                      {m.value}
+                    </span>
+                    <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider">
+                      {m.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <Link
+                href="/#offers"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300/80 dark:border-amber-800 text-xs font-bold text-amber-900 dark:text-amber-300 hover:bg-amber-100 transition-colors"
+              >
+                <Tag className="w-3.5 h-3.5 text-amber-700" />
+                <span>Flat 25% Launch Discount</span>
+                <ArrowRight className="w-3 h-3" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Luxury Interactive Image & Video Showcase Frame */}
+          <div className="lg:col-span-6">
+            <div className="relative rounded-3xl bg-stone-950 p-2.5 sm:p-3.5 border border-stone-800 shadow-2xl shadow-stone-950/25 overflow-hidden">
+              {/* Top Studio Browser Frame Bar */}
+              <div className="flex items-center justify-between px-3.5 py-2.5 mb-2.5 rounded-2xl bg-stone-900/90 border border-stone-800 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-stone-700" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-600/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                  <span className="ml-2 font-mono text-[11px] text-stone-300 font-semibold truncate">
+                    ecreation.in // {active.id}
+                  </span>
                 </div>
 
-                <div className="text-xs font-bold text-white truncate">
-                  {s.badge}
-                </div>
-
-                {/* Progress bar line */}
-                <div className="w-full h-1 bg-slate-800 rounded-full mt-2.5 overflow-hidden">
-                  <div
-                    className={`h-full transition-all duration-75 ${
-                      isSelected
-                        ? 'bg-gradient-to-r from-amber-500 to-yellow-400'
-                        : 'bg-transparent'
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => setShowVideoMode(!showVideoMode)}
+                    className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold transition-colors border ${
+                      showVideoMode
+                        ? 'bg-amber-500 text-stone-950 border-amber-400'
+                        : 'bg-stone-800 text-stone-300 border-stone-700 hover:text-white'
                     }`}
-                    style={{ width: isSelected ? `${progress}%` : '0%' }}
-                  />
+                    title="Toggle between Studio Image Showcase and Motion Video"
+                  >
+                    {showVideoMode ? 'VIDEO ACTIVE' : 'STUDIO VISUAL'}
+                  </button>
+
+                  {showVideoMode && (
+                    <button
+                      onClick={toggleMute}
+                      className="w-7 h-7 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center transition-colors"
+                      aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                    >
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-400" />}
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => setIsPlaying(!isPlaying)}
+                    className="w-7 h-7 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center transition-colors"
+                    aria-label={isPlaying ? 'Pause slider' : 'Play slider'}
+                  >
+                    {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-amber-400" />}
+                  </button>
                 </div>
-              </button>
-            );
-          })}
-        </div>
+              </div>
 
-        {/* Bottom Bar: Prev/Next Arrows & Scroll Indicator */}
-        <div className="flex items-center justify-between pt-2 border-t border-slate-800/60 text-xs">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={prevSlide}
-              className="w-8 h-8 rounded-xl border border-slate-800 bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition-colors"
-              aria-label="Previous slide"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <span className="font-mono text-slate-400 text-[11px] font-semibold px-2">
-              0{currentSlide + 1} / 0{slides.length}
-            </span>
-            <button
-              onClick={nextSlide}
-              className="w-8 h-8 rounded-xl border border-slate-800 bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition-colors"
-              aria-label="Next slide"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+              {/* Main Visual Viewport (420px - 460px height) */}
+              <div className="relative h-[360px] sm:h-[430px] w-full rounded-2xl overflow-hidden bg-stone-900">
+                {slides.map((s, idx) => {
+                  const isSelected = idx === currentSlide;
+                  return (
+                    <div
+                      key={s.id}
+                      className={`absolute inset-0 w-full h-full transition-all duration-700 ease-out ${
+                        isSelected
+                          ? 'opacity-100 scale-100 z-10'
+                          : 'opacity-0 scale-105 z-0 pointer-events-none'
+                      }`}
+                    >
+                      {/* Bespoke High-Resolution Studio Image */}
+                      <img
+                        src={s.imageSrc}
+                        alt={s.badge}
+                        className="w-full h-full object-cover object-center"
+                      />
 
-          {/* Centered Scroll Down Indicator */}
-          <div className="hidden sm:block">
-            <ScrollDownIndicator targetId="tech-engine" label="Explore Architecture Engine" />
-          </div>
+                      {/* Optional Motion Video Layer when Video Mode is toggled */}
+                      {showVideoMode && (
+                        <video
+                          ref={(el) => {
+                            videoRefs.current[idx] = el;
+                          }}
+                          src={s.videoSrc}
+                          poster={s.imageSrc}
+                          autoPlay
+                          muted={isMuted}
+                          loop
+                          playsInline
+                          className="absolute inset-0 w-full h-full object-cover object-center"
+                        />
+                      )}
 
-          <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-            <span className="hidden md:inline">CONTINUOUS 4K STREAMING</span>
-            <span>AUTOPLAY ON</span>
+                      {/* Warm Obsidian Bottom Gradient for Floating Overlay Card */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent" />
+                    </div>
+                  );
+                })}
+
+                {/* Floating Live Telemetry / Outcome Overlay Card */}
+                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 rounded-2xl bg-stone-950/90 backdrop-blur-md border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xl">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs font-bold text-white">
+                        {active.liveCardTitle}
+                      </span>
+                    </div>
+                    <p className="text-[11px] font-mono text-stone-300">
+                      {active.liveCardSubtitle}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <span className="px-2.5 py-1 rounded-lg bg-amber-500 text-stone-950 font-mono font-black text-[11px]">
+                      {active.liveCardBadge}
+                    </span>
+                    <button
+                      onClick={prevSlide}
+                      className="w-8 h-8 rounded-lg bg-stone-800 hover:bg-stone-700 text-white flex items-center justify-center transition-colors border border-stone-700"
+                      aria-label="Previous slide"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={nextSlide}
+                      className="w-8 h-8 rounded-lg bg-stone-800 hover:bg-stone-700 text-white flex items-center justify-center transition-colors border border-stone-700"
+                      aria-label="Next slide"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Thumbnail Strip inside the Studio Frame */}
+              <div className="grid grid-cols-4 gap-2 mt-2.5">
+                {slides.map((s, idx) => {
+                  const isSelected = idx === currentSlide;
+                  return (
+                    <button
+                      key={s.id}
+                      onClick={() => selectSlide(idx)}
+                      className={`relative h-14 sm:h-16 rounded-xl overflow-hidden border transition-all ${
+                        isSelected
+                          ? 'border-amber-400 ring-2 ring-amber-500/30 opacity-100'
+                          : 'border-stone-800 opacity-55 hover:opacity-90'
+                      }`}
+                      aria-label={`Preview ${s.tabTitle}`}
+                    >
+                      <img
+                        src={s.imageSrc}
+                        alt={s.tabTitle}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-stone-950/45 flex items-end p-1.5">
+                        <span className="text-[10px] font-bold text-white truncate leading-none">
+                          {s.pillarNumber}. {s.tabTitle}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
