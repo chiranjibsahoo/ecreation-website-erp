@@ -217,7 +217,7 @@ export const VisualPortfolioSlider = () => {
         <div className="rounded-3xl bg-[#FAF8F5] dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 p-4 sm:p-6 lg:p-8 shadow-xl shadow-stone-900/5">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left High-Resolution Image Showcase Frame (7 Cols) */}
-            <div className="lg:col-span-7 relative rounded-2xl overflow-hidden bg-stone-950 border border-stone-800 h-[320px] sm:h-[440px] group">
+            <div className="lg:col-span-7 relative rounded-2xl overflow-hidden bg-stone-950 border border-stone-800 h-[260px] sm:h-[380px] md:h-[440px] group">
               {items.map((item, idx) => (
                 <img
                   key={item.id}
@@ -232,20 +232,20 @@ export const VisualPortfolioSlider = () => {
               ))}
 
               {/* Subtle Obsidian Gradient & Floating Metric Pill */}
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-transparent to-stone-950/30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-transparent to-stone-950/30" />
 
-              <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-950/85 backdrop-blur-md border border-amber-500/40 text-amber-400 text-xs font-bold">
-                <span>SOLUTION {current.number}</span>
-                <span>·</span>
-                <span className="text-white">{current.category}</span>
+              <div className="absolute top-3 left-3 right-3 sm:right-auto flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-950/85 backdrop-blur-md border border-amber-500/40 text-amber-400 text-[11px] sm:text-xs font-bold max-w-full truncate">
+                <span className="shrink-0">SOLUTION {current.number}</span>
+                <span className="shrink-0">·</span>
+                <span className="text-white truncate">{current.category}</span>
               </div>
 
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-4 p-4 rounded-2xl bg-stone-950/90 backdrop-blur-md border border-stone-800 text-white">
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex flex-wrap items-center justify-between gap-3 p-3 sm:p-4 rounded-2xl bg-stone-950/90 backdrop-blur-md border border-stone-800 text-white">
                 <div>
-                  <div className="text-2xl sm:text-3xl font-black text-amber-400 font-mono leading-none">
+                  <div className="text-xl sm:text-3xl font-black text-amber-400 font-mono leading-none">
                     {current.metricValue}
                   </div>
-                  <div className="text-xs text-stone-300 font-medium mt-1">
+                  <div className="text-[11px] sm:text-xs text-stone-300 font-medium mt-1">
                     {current.metricLabel}
                   </div>
                 </div>
@@ -253,7 +253,7 @@ export const VisualPortfolioSlider = () => {
                 <Link href={current.href}>
                   <Button
                     size="sm"
-                    className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl px-4 h-10 text-xs"
+                    className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl px-3.5 sm:px-4 h-9 sm:h-10 text-xs"
                   >
                     Explore Solution
                     <ArrowUpRight className="w-4 h-4 ml-1" />

@@ -315,20 +315,22 @@ export const ServicesVideoSlider = () => {
               </div>
 
               {/* Metrics Row */}
-              <div className="grid grid-cols-3 gap-3 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1">
                 {active.metrics.map((m, idx) => (
                   <div
                     key={idx}
-                    className="p-3.5 rounded-2xl bg-[#FAF8F5] dark:bg-stone-800/80 border border-stone-200/80 dark:border-stone-700"
+                    className="p-3 sm:p-3.5 rounded-2xl bg-[#FAF8F5] dark:bg-stone-800/80 border border-stone-200/80 dark:border-stone-700 flex sm:block items-center justify-between gap-2"
                   >
-                    <div className="text-xl sm:text-2xl font-black text-amber-700 dark:text-amber-400 font-mono">
+                    <div className="text-lg sm:text-2xl font-black text-amber-700 dark:text-amber-400 font-mono">
                       {m.value}
                     </div>
-                    <div className="text-[11px] font-bold text-stone-900 dark:text-white truncate">
-                      {m.label}
-                    </div>
-                    <div className="text-[10px] text-stone-500 font-mono">
-                      {m.change}
+                    <div className="text-right sm:text-left">
+                      <div className="text-[11px] font-bold text-stone-900 dark:text-white truncate">
+                        {m.label}
+                      </div>
+                      <div className="text-[10px] text-stone-500 font-mono">
+                        {m.change}
+                      </div>
                     </div>
                   </div>
                 ))}

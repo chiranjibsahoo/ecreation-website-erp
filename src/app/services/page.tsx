@@ -13,53 +13,53 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <div className="pt-28 pb-24 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="pt-32 sm:pt-36 pb-20 sm:pb-24 bg-[#FAF8F5] dark:bg-stone-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Header */}
         <div className="max-w-3xl space-y-4">
           <span className="text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-3 py-1 rounded-full border border-amber-200/80">
             What We Engineer
           </span>
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-950 dark:text-white">
             Enterprise Digital Services
           </h1>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-stone-600 dark:text-stone-400 text-base sm:text-lg leading-relaxed">
             From high-throughput cloud architectures to custom enterprise ERP solutions, our engineering practices deliver measurable business outcomes.
           </p>
         </div>
 
         {/* Services List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {SERVICES_DATA.map((service) => (
             <CardHover
               key={service.id}
-              className="bg-card border border-border p-8 rounded-2xl flex flex-col justify-between space-y-6"
+              className="bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 p-6 sm:p-8 rounded-3xl flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="text-xs font-mono font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-md">
                     {service.category}
                   </span>
-                  <div className="flex gap-1.5 font-mono text-[11px] text-muted-foreground">
+                  <div className="flex gap-1.5 font-mono text-[11px] text-stone-500">
                     {service.techStack.slice(0, 2).join(' · ')}
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-foreground">
+                <h2 className="text-xl sm:text-2xl font-bold text-stone-950 dark:text-white">
                   {service.title}
                 </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
                   {service.fullDescription}
                 </p>
 
                 <div className="space-y-2 pt-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-foreground block">
+                  <span className="text-xs font-bold uppercase tracking-wider text-stone-900 dark:text-white block">
                     Core Capabilities:
                   </span>
                   <div className="grid grid-cols-1 gap-2">
                     {service.features.map((feat) => (
-                      <div key={feat} className="flex items-start gap-2 text-xs text-muted-foreground">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                      <div key={feat} className="flex items-start gap-2 text-xs text-stone-600 dark:text-stone-400">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </div>
                     ))}
@@ -67,16 +67,16 @@ export default function ServicesPage() {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-border flex items-center justify-between">
+              <div className="pt-6 border-t border-stone-100 dark:border-stone-800 flex flex-wrap items-center justify-between gap-3">
                 <Link href={`/services/${service.slug}`}>
-                  <Button variant="outline" size="sm" className="rounded-xl text-xs">
-                    View Specifications & Scope
+                  <Button variant="outline" size="sm" className="rounded-xl text-xs border-stone-300 dark:border-stone-700">
+                    View Specifications &amp; Scope
                     <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                   </Button>
                 </Link>
                 <Link href={`/contact?service=${encodeURIComponent(service.title)}`}>
-                  <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs">
-                    Inquire
+                  <Button size="sm" className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/40 rounded-xl text-xs">
+                    Inquire Now
                   </Button>
                 </Link>
               </div>
@@ -85,15 +85,15 @@ export default function ServicesPage() {
         </div>
 
         {/* Bottom Callout */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-neutral-900 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-6 sm:p-12 rounded-3xl bg-stone-950 border border-amber-500/30 text-white flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl text-center md:text-left">
-            <h3 className="text-2xl font-bold">Have unique architecture requirements?</h3>
-            <p className="text-sm text-neutral-400">
+            <h3 className="text-xl sm:text-2xl font-bold">Have unique architecture requirements?</h3>
+            <p className="text-sm text-stone-400">
               Our principal engineers regularly handle custom protocols, legacy migrations, and proprietary integrations.
             </p>
           </div>
           <Link href="/contact#enquiry">
-            <Button size="lg" className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-slate-950 font-bold rounded-xl px-6 shadow-md shadow-amber-500/25">
+            <Button size="lg" className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl px-6 shadow-md shadow-amber-500/20">
               <Terminal className="w-4 h-4 mr-2" />
               Discuss Custom Architecture
             </Button>

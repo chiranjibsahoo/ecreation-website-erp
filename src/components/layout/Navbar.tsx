@@ -346,7 +346,7 @@ export const Navbar = () => {
               <Search className="h-4 w-4 text-amber-600" />
             </button>
 
-            <Link href="/contact#enquiry" className="md:hidden">
+            <Link href="/contact#enquiry" className="hidden xs:inline-flex md:hidden">
               <Button
                 size="sm"
                 className="bg-stone-950 text-white border border-amber-500/50 font-bold rounded-xl px-3 h-9 text-xs"
@@ -362,9 +362,9 @@ export const Navbar = () => {
               >
                 {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </SheetTrigger>
-              <SheetContent side="right" className="w-[88vw] max-w-sm p-6 flex flex-col justify-between bg-white dark:bg-stone-950 overflow-y-auto">
+              <SheetContent side="right" className="w-[90vw] max-w-sm p-5 sm:p-6 flex flex-col justify-between bg-white dark:bg-stone-950 overflow-y-auto">
                 <div>
-                  <SheetTitle className="text-left mb-6">
+                  <SheetTitle className="text-left mb-5">
                     <Logo size="sm" />
                   </SheetTitle>
 
@@ -378,7 +378,7 @@ export const Navbar = () => {
                     </p>
                   </div>
 
-                  <nav className="flex flex-col gap-1.5">
+                  <nav className="flex flex-col gap-1">
                     {navLinks.map((link) => {
                       const Icon = link.icon;
                       const active = isActive(link.href);
@@ -387,10 +387,10 @@ export const Navbar = () => {
                           key={link.href}
                           href={link.href}
                           onClick={() => setMobileOpen(false)}
-                          className={`px-4 py-3 rounded-xl text-sm font-bold flex items-center justify-between transition-colors ${
+                          className={`px-3.5 py-2.5 rounded-xl text-sm font-bold flex items-center justify-between transition-colors ${
                             active
                               ? 'bg-stone-950 text-white'
-                              : 'text-stone-700 hover:text-stone-950 hover:bg-stone-100'
+                              : 'text-stone-700 dark:text-stone-300 hover:text-stone-950 hover:bg-stone-100 dark:hover:bg-stone-900'
                           }`}
                         >
                           <span className="flex items-center gap-3">
@@ -401,21 +401,34 @@ export const Navbar = () => {
                       );
                     })}
 
-                    <Link
-                      href="/services"
-                      onClick={() => setMobileOpen(false)}
-                      className="px-4 py-3 rounded-xl text-sm font-bold text-stone-700 hover:text-stone-950 hover:bg-stone-100 flex items-center gap-3"
-                    >
-                      <Layers className="w-4 h-4 text-amber-600" />
-                      All IT Services
-                    </Link>
+                    <div className="my-2 border-t border-stone-200 dark:border-stone-800 pt-2">
+                      <div className="px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-widest text-stone-400">
+                        Core IT &amp; Digital Services
+                      </div>
+                      <div className="grid grid-cols-1 gap-1 mt-1">
+                        {serviceCategories.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <Link
+                              key={item.title}
+                              href={item.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-900 flex items-center gap-2.5"
+                            >
+                              <Icon className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                              <span className="truncate">{item.title}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
 
-                    <div className="my-2 border-t border-stone-200" />
+                    <div className="my-1.5 border-t border-stone-200 dark:border-stone-800" />
 
                     <Link
                       href="/login"
                       onClick={() => setMobileOpen(false)}
-                      className="px-4 py-3 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 flex items-center gap-3"
+                      className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-900 flex items-center gap-3"
                     >
                       <LogIn className="w-4 h-4 text-amber-600" />
                       Client &amp; Admin Portal Login
@@ -423,7 +436,7 @@ export const Navbar = () => {
                   </nav>
                 </div>
 
-                <div className="pt-6 border-t border-stone-200 space-y-3">
+                <div className="pt-4 border-t border-stone-200 dark:border-stone-800 space-y-2.5">
                   <Link
                     href="/contact#enquiry"
                     onClick={() => setMobileOpen(false)}

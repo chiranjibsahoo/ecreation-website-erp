@@ -242,13 +242,13 @@ function LoginForm() {
         </form>
 
         {/* Security Disclosures */}
-        <div className="pt-4 border-t border-slate-100 dark:border-slate-800 grid grid-cols-2 gap-2 text-[10px] text-slate-500 font-mono">
+        <div className="pt-4 border-t border-stone-100 dark:border-stone-800 grid grid-cols-1 xs:grid-cols-2 gap-2 text-[10px] text-stone-500 font-mono">
           <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-600 shrink-0" />
             <span>256-Bit SSL Encrypted</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+            <Lock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
             <span>Role-Based RLS Guard</span>
           </div>
         </div>
@@ -258,7 +258,7 @@ function LoginForm() {
       <div className="text-center">
         <Link
           href="/"
-          className="text-xs text-slate-500 hover:text-blue-600 transition-colors font-medium inline-flex items-center gap-1"
+          className="text-xs text-stone-500 hover:text-amber-700 transition-colors font-medium inline-flex items-center gap-1"
         >
           ← Return to Ecreation Public Website
         </Link>
@@ -269,14 +269,14 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen pt-28 pb-16 flex items-center justify-center bg-slate-50/70 dark:bg-slate-950 px-4 relative overflow-hidden">
+    <div className="min-h-screen pt-32 sm:pt-36 pb-16 flex items-center justify-center bg-[#FAF8F5] dark:bg-stone-950 px-4 relative overflow-hidden">
       {/* Background ambient radial lights */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-blue-500/10 via-indigo-500/10 to-cyan-400/10 blur-[130px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/10 blur-[130px] rounded-full pointer-events-none -z-10" />
 
       <Suspense
         fallback={
-          <div className="p-12 text-center text-xs text-slate-500">
-            <Loader2 className="w-5 h-5 mx-auto animate-spin text-blue-600 mb-2" />
+          <div className="p-12 text-center text-xs text-stone-500">
+            <Loader2 className="w-5 h-5 mx-auto animate-spin text-amber-600 mb-2" />
             Loading authentication portal...
           </div>
         }

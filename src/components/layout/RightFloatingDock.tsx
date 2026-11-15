@@ -100,10 +100,26 @@ export const RightFloatingDock = () => {
         className="fixed right-0 sm:right-3 lg:right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end gap-2.5 select-none"
         aria-label="Right Side Quick Enquiry and Section Navigation"
       >
-        {/* Always-Visible Floating Quick Enquiry Form Trigger Button on Right Side */}
+        {/* Mobile Compact Vertical Side-Tab (<640px) — Zero screen clutter on phones */}
         <button
           onClick={() => setEnquiryOpen(true)}
-          className="group flex items-center gap-2 px-3.5 py-3 rounded-l-2xl sm:rounded-2xl bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/60 shadow-xl shadow-stone-950/25 transition-all duration-200 hover:scale-105 cursor-pointer"
+          className="sm:hidden flex flex-col items-center gap-1.5 px-2 py-3.5 rounded-l-xl bg-stone-950 text-white border-l border-y border-amber-500/70 shadow-xl cursor-pointer"
+          aria-label="Open Quick Enquiry Form"
+        >
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+          <span
+            className="text-[10px] font-black uppercase tracking-widest text-amber-400"
+            style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+          >
+            Quick Enquiry
+          </span>
+          <Send className="w-3 h-3 text-white" />
+        </button>
+
+        {/* Tablet & Desktop Pill Button (>=640px) */}
+        <button
+          onClick={() => setEnquiryOpen(true)}
+          className="hidden sm:flex group items-center gap-2 px-3.5 py-2.5 rounded-2xl bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/60 shadow-xl shadow-stone-950/25 transition-all duration-200 hover:scale-105 cursor-pointer"
           aria-label="Open Quick Enquiry Form"
         >
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
