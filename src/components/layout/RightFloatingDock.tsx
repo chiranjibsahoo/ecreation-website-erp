@@ -103,30 +103,35 @@ export const RightFloatingDock = () => {
         {/* Mobile Compact Vertical Side-Tab (<640px) — Flush on Left Edge */}
         <button
           onClick={() => setEnquiryOpen(true)}
-          className="sm:hidden flex flex-col items-center gap-1.5 px-2 py-3.5 rounded-r-xl bg-stone-950 text-white border-r border-y border-amber-500/70 shadow-xl cursor-pointer"
+          className="sm:hidden flex flex-col items-center gap-1.5 px-2.5 py-4 rounded-r-2xl bg-gradient-to-b from-[#F59E0B] via-[#EA580C] to-[#B45309] text-white border-r-2 border-y-2 border-amber-200/90 shadow-[0_10px_28px_-4px_rgba(234,88,12,0.65)] cursor-pointer"
           aria-label="Open Quick Enquiry Form"
         >
-          <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-white animate-ping" />
           <span
-            className="text-[10px] font-black uppercase tracking-widest text-amber-400"
+            className="text-[10px] font-black uppercase tracking-widest text-white drop-shadow-sm"
             style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
           >
             Quick Enquiry
           </span>
-          <Send className="w-3 h-3 text-white" />
+          <Send className="w-3.5 h-3.5 text-amber-100" />
         </button>
 
         {/* Tablet & Desktop Left Floating Pill Button (>=640px) */}
         <button
           onClick={() => setEnquiryOpen(true)}
-          className="hidden sm:flex group items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/60 shadow-xl shadow-stone-950/25 transition-all duration-200 hover:scale-105 cursor-pointer"
+          className="hidden sm:flex group items-center gap-2.5 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#D97706] hover:from-[#D97706] hover:via-[#EA580C] hover:to-[#B45309] text-white border-2 border-amber-200/90 shadow-[0_12px_32px_-6px_rgba(234,88,12,0.6)] hover:shadow-[0_16px_38px_-6px_rgba(234,88,12,0.8)] transition-all duration-300 hover:scale-105 cursor-pointer"
           aria-label="Open Quick Enquiry Form"
         >
-          <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
-          <span className="text-xs font-black tracking-wide text-amber-400 whitespace-nowrap">
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-90" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
+          </span>
+          <span className="text-xs font-black uppercase tracking-wider text-white whitespace-nowrap drop-shadow-sm">
             Quick Enquiry
           </span>
-          <Send className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform shrink-0" />
+          <span className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+            <Send className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform shrink-0" />
+          </span>
         </button>
       </div>
 
