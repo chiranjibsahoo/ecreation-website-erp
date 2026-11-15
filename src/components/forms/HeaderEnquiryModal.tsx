@@ -11,7 +11,8 @@ import {
   Phone,
   Mail,
   Gift,
-  Zap
+  Zap,
+  Tag
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -67,6 +68,7 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (errorMessage) setErrorMessage('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,15 +82,16 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
 
     const trimmedPhone = formData.phone.trim();
     const trimmedEmail = formData.email.trim();
+    const digitsOnly = trimmedPhone.replace(/\D/g, '');
 
-    if (!trimmedPhone || trimmedPhone.replace(/\D/g, '').length < 7) {
+    if (digitsOnly.length < 10 || digitsOnly.length > 15 || /^(\d)\1+$/.test(digitsOnly)) {
       setErrorMessage('Please enter a valid 10-digit mobile / phone number.');
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
-      setErrorMessage('Please enter a valid email ID.');
+      setErrorMessage('Please enter a valid official email ID.');
       return;
     }
 
@@ -115,6 +118,7 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
         throw new Error(data.error || 'Failed to submit enquiry.');
       }
 
+      window.dispatchEvent(new CustomEvent('ecreation-enquiry-submitted'));
       setLeadId(data.leadId || `EC-${Math.floor(100000 + Math.random() * 900000)}`);
       setSuccess(true);
     } catch (err: unknown) {
@@ -139,7 +143,7 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
     <Dialog open={open} onOpenChange={setOpen}>
       {!hideTrigger && (
         <DialogTrigger
-          className={`inline-flex items-center justify-center relative group rounded-xl font-bold transition-all duration-200 cursor-pointer ${
+          className={`inline-flex items-center justify-center relative group rounded-xl font-bold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg cursor-pointer ${
             variant === 'vertical-tab'
               ? 'bg-stone-950 hover:bg-stone-900 text-white border-l border-y border-amber-500/50 shadow-xl px-3 py-3.5 rounded-l-2xl rounded-r-none'
               : variant === 'default'
@@ -150,158 +154,169 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
         >
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse mr-2 inline-block shrink-0" />
           <span>{triggerText}</span>
-          <Send className="w-3.5 h-3.5 ml-1.5 text-amber-400 group-hover:translate-x-0.5 transition-transform" />
+          <Send className="w-3.5 h-3.5 ml-1.5 text-amber-400 group-hover:translate-x-1 transition-transform duration-300" />
         </DialogTrigger>
       )}
 
-      <DialogContent className="max-w-md p-0 bg-gradient-to-b from-[#161310] via-[#110F0D] to-[#0B0A09] text-white border-2 border-amber-400/70 rounded-3xl shadow-[0_25px_80px_-15px_rgba(245,158,11,0.45)] overflow-hidden max-h-[92vh] flex flex-col">
-        {/* Top Glowing Gold & Sunset Offer Ribbon */}
-        <div className="bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#D97706] px-5 py-2.5 flex items-center gap-2">
+      {/* Light-Themed Commercial E-Commerce Offer Modal — Single View, Zero Scrollbar */}
+      <DialogContent className="max-w-[440px] p-0 bg-gradient-to-b from-[#FFFDF9] via-[#FFF9EE] to-[#FDF3DC] text-stone-950 border-2 border-amber-400/90 rounded-3xl shadow-[0_25px_70px_-15px_rgba(217,119,6,0.38)] overflow-hidden">
+        {/* Top Metallic 24K Gold Offer Ribbon */}
+        <div className="bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#B45309] px-5 py-2.5 flex items-center gap-2 text-white shadow-xs">
           <Gift className="w-4 h-4 text-white animate-bounce shrink-0" />
-          <span className="text-[11px] font-black uppercase tracking-[0.16em] text-white">
+          <span className="text-[11px] font-black uppercase tracking-[0.15em] text-white">
             SPECIAL BUSINESS OFFER — FLAT 25% OFF
           </span>
         </div>
 
-        <DialogHeader className="px-6 pt-5 pb-2 text-left space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-400/40 text-amber-300 text-[11px] font-extrabold w-fit">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>25% DISCOUNT + FREE 1-YEAR CLOUD HOSTING</span>
-          </div>
-          <DialogTitle className="text-2xl font-black text-white leading-tight">
-            Quick Enquiry &amp;{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-orange-400">
-              25% Special Offer
-            </span>
-          </DialogTitle>
-          <p className="text-xs text-stone-300 leading-relaxed">
-            Enter your <strong className="text-white">Mobile Number &amp; Email ID</strong> below to unlock your Flat 25% Special Offer and free live project consultation.
-          </p>
-        </DialogHeader>
-
-        <div className="px-6 pb-6 pt-2 overflow-y-auto">
+        <div className="px-6 pt-4 pb-5 space-y-3.5">
           {success ? (
-            <div className="py-5 text-center space-y-4">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-400/40">
+            <div className="py-4 text-center space-y-3.5">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 text-emerald-700 flex items-center justify-center mx-auto border border-emerald-500/30 shadow-xs">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
-              <div className="space-y-1.5">
-                <h3 className="text-xl font-black text-white">25% Special Offer Activated!</h3>
-                <p className="text-xs text-stone-300 max-w-sm mx-auto leading-relaxed">
-                  We have saved your Phone (<strong className="text-amber-300">{formData.phone}</strong>) &amp; Email (<strong className="text-amber-300">{formData.email}</strong>). Our team will reach out shortly.
+              <div className="space-y-1">
+                <h3 className="text-xl font-black text-stone-950">25% Special Offer Unlocked!</h3>
+                <p className="text-xs text-stone-600 max-w-sm mx-auto leading-relaxed">
+                  We have saved your Phone (<strong className="text-amber-700">{formData.phone}</strong>) &amp; Email (<strong className="text-amber-700">{formData.email}</strong>). Our team will contact you shortly.
                 </p>
               </div>
-              <div className="p-2.5 bg-white/10 rounded-xl inline-block border border-amber-400/40 font-mono text-xs text-amber-300">
-                Enquiry Ref: <span className="font-bold text-white">{leadId}</span>
+              <div className="px-3.5 py-2 bg-amber-100/80 rounded-xl inline-block border border-amber-300 font-mono text-xs text-amber-900">
+                Voucher Ref: <span className="font-bold text-stone-950">{leadId}</span>
               </div>
-              <div className="pt-2 flex items-center justify-center">
+              <div className="pt-1 flex items-center justify-center">
                 <Button
                   onClick={handleReset}
-                  className="bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-xs rounded-xl px-6 h-10 cursor-pointer"
+                  className="bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#B45309] text-white font-bold text-xs rounded-xl px-6 h-10 cursor-pointer shadow-md"
                 >
-                  Done &amp; Close
+                  Done &amp; Continue
                 </Button>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="honeypot"
-                value={formData.honeypot}
-                onChange={handleChange}
-                tabIndex={-1}
-                autoComplete="off"
-                className="sr-only opacity-0 absolute"
-                aria-hidden="true"
-              />
+            <>
+              <DialogHeader className="text-left space-y-1.5">
+                {/* E-Commerce Auto-Applied Coupon Pill */}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100/90 border border-amber-300 text-amber-900 text-[10px] font-black uppercase tracking-wider">
+                    <Sparkles className="w-3 h-3 text-amber-600" />
+                    <span>25% OFF + FREE 1-YR HOSTING</span>
+                  </div>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 border border border-dashed border-emerald-400 text-emerald-800 text-[10px] font-mono font-bold">
+                    <Tag className="w-2.5 h-2.5 text-emerald-600" />
+                    ECREATION25
+                  </span>
+                </div>
 
-              {/* 3 Value Perks */}
+                <DialogTitle className="text-2xl font-black text-stone-950 leading-tight pt-0.5">
+                  Unlock Your{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B45309] via-[#D97706] to-[#EA580C]">
+                    25% Special Offer
+                  </span>
+                </DialogTitle>
+                <p className="text-xs text-stone-600 leading-snug">
+                  Enter your <strong className="text-stone-900">Mobile Number &amp; Email ID</strong> to instantly claim your 25% discount voucher &amp; free live project demo.
+                </p>
+              </DialogHeader>
+
+              {/* 3 Commercial E-Commerce Value Badges */}
               <div className="grid grid-cols-3 gap-2">
-                <div className="p-2 rounded-xl bg-white/[0.05] border border-white/10 text-center">
-                  <span className="block text-xs font-black text-amber-400">25% OFF</span>
-                  <span className="text-[10px] text-stone-300">Special Offer</span>
+                <div className="py-2 px-2 rounded-xl bg-white border border-amber-300/80 text-center shadow-2xs">
+                  <span className="block text-xs font-black text-amber-700">25% OFF</span>
+                  <span className="text-[10px] text-stone-600 font-semibold">Instant Voucher</span>
                 </div>
-                <div className="p-2 rounded-xl bg-white/[0.05] border border-white/10 text-center">
-                  <span className="block text-xs font-black text-amber-400">FREE</span>
-                  <span className="text-[10px] text-stone-300">Live Demo</span>
+                <div className="py-2 px-2 rounded-xl bg-white border border-amber-300/80 text-center shadow-2xs">
+                  <span className="block text-xs font-black text-amber-700">FREE</span>
+                  <span className="text-[10px] text-stone-600 font-semibold">Live Demo</span>
                 </div>
-                <div className="p-2 rounded-xl bg-white/[0.05] border border-white/10 text-center">
-                  <span className="block text-xs font-black text-amber-400">1 YEAR</span>
-                  <span className="text-[10px] text-stone-300">Free Support</span>
-                </div>
-              </div>
-
-              {errorMessage && (
-                <div className="p-3 bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs rounded-xl flex items-center gap-2 font-medium">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>{errorMessage}</span>
-                </div>
-              )}
-
-              {/* Field 1: Phone / Mobile Number */}
-              <div className="space-y-1.5">
-                <Label htmlFor="qe-phone" className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
-                  Mobile / Phone Number <span className="text-amber-400">*</span>
-                </Label>
-                <div className="relative">
-                  <Phone className="w-4 h-4 text-amber-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <Input
-                    id="qe-phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Enter your 10-digit mobile number"
-                    required
-                    className="h-11 pl-10 text-sm rounded-xl bg-white/10 border-amber-400/40 text-white placeholder:text-stone-400"
-                  />
+                <div className="py-2 px-2 rounded-xl bg-white border border-amber-300/80 text-center shadow-2xs">
+                  <span className="block text-xs font-black text-amber-700">1 YEAR</span>
+                  <span className="text-[10px] text-stone-600 font-semibold">Free Support</span>
                 </div>
               </div>
 
-              {/* Field 2: Official Email ID */}
-              <div className="space-y-1.5">
-                <Label htmlFor="qe-email" className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
-                  Email ID <span className="text-amber-400">*</span>
-                </Label>
-                <div className="relative">
-                  <Mail className="w-4 h-4 text-amber-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <Input
-                    id="qe-email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your official email ID"
-                    required
-                    className="h-11 pl-10 text-sm rounded-xl bg-white/10 border-amber-400/40 text-white placeholder:text-stone-400"
-                  />
-                </div>
-              </div>
+              <form onSubmit={handleSubmit} className="space-y-3" noValidate>
+                <input
+                  type="text"
+                  name="honeypot"
+                  value={formData.honeypot}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="sr-only opacity-0 absolute"
+                  aria-hidden="true"
+                />
 
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full h-12 rounded-xl bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-white font-black text-xs uppercase tracking-wider shadow-[0_12px_30px_-6px_rgba(234,88,12,0.65)] cursor-pointer"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-1.5 animate-spin text-white" />
-                    Activating Your 25% Offer...
-                  </>
-                ) : (
-                  <>
-                    <Zap className="w-4 h-4 mr-1.5 fill-current" />
-                    Claim 25% Special Offer &amp; Submit
-                  </>
+                {errorMessage && (
+                  <div className="p-2.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-center gap-2 font-semibold">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
                 )}
-              </Button>
 
-              <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 font-medium pt-0.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>100% Confidential · Instant Priority Callback</span>
-              </div>
-            </form>
+                {/* Field 1: Phone / Mobile Number */}
+                <div className="space-y-1">
+                  <Label htmlFor="qe-phone" className="text-[11px] font-extrabold uppercase tracking-wider text-stone-800">
+                    Mobile / Phone Number <span className="text-amber-600">*</span>
+                  </Label>
+                  <div className="relative">
+                    <Phone className="w-4 h-4 text-amber-600 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Input
+                      id="qe-phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="Enter your 10-digit mobile number"
+                      required
+                      className="h-10 pl-10 text-sm rounded-xl bg-white border-amber-300 focus:border-amber-500 text-stone-950 placeholder:text-stone-400 font-medium shadow-2xs"
+                    />
+                  </div>
+                </div>
+
+                {/* Field 2: Official Email ID */}
+                <div className="space-y-1">
+                  <Label htmlFor="qe-email" className="text-[11px] font-extrabold uppercase tracking-wider text-stone-800">
+                    Email ID <span className="text-amber-600">*</span>
+                  </Label>
+                  <div className="relative">
+                    <Mail className="w-4 h-4 text-amber-600 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Input
+                      id="qe-email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Enter your official email ID"
+                      required
+                      className="h-10 pl-10 text-sm rounded-xl bg-white border-amber-300 focus:border-amber-500 text-stone-950 placeholder:text-stone-400 font-medium shadow-2xs"
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full h-11 rounded-xl bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#EA580C] hover:from-[#B45309] hover:via-[#D97706] hover:to-[#C2410C] text-white font-black text-xs uppercase tracking-wider shadow-[0_10px_25px_-5px_rgba(217,119,6,0.55)] hover:shadow-[0_14px_30px_-5px_rgba(217,119,6,0.75)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-1.5 animate-spin text-white" />
+                      Activating Your 25% Voucher...
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-4 h-4 mr-1.5 fill-current" />
+                      Claim 25% Special Offer &amp; Submit
+                    </>
+                  )}
+                </Button>
+
+                <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-500 font-medium">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>100% Confidential · Instant Voucher Activation</span>
+                </div>
+              </form>
+            </>
           )}
         </div>
       </DialogContent>

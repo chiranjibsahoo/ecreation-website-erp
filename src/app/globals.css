@@ -169,3 +169,58 @@
     transform: translateX(-50%);
   }
 }
+
+@keyframes goldShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ============================================================================
+   REVERSIBLE 24K METALLIC GOLD GRADIENT THEME LAYER
+   To revert to flat/solid gold across the entire website:
+   Set data-gold-gradient="false" on <html> in src/app/layout.tsx
+   (or click the live "Gold Gradient" preview toggle on screen).
+   ============================================================================ */
+html[data-gold-gradient="true"] {
+  --gold-gradient-metallic: linear-gradient(135deg, #FDE68A 0%, #F59E0B 38%, #D97706 74%, #B45309 100%);
+  --gold-gradient-soft: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #FDE68A 100%);
+  --gold-gradient-text: linear-gradient(135deg, #B45309 0%, #D97706 45%, #F59E0B 75%, #92400E 100%);
+}
+
+html[data-gold-gradient="true"] .bg-amber-500,
+html[data-gold-gradient="true"] .bg-amber-600 {
+  background-image: linear-gradient(135deg, #FBBF24 0%, #F59E0B 42%, #D97706 78%, #B45309 100%) !important;
+  box-shadow: 0 6px 20px -4px rgba(217, 119, 6, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+html[data-gold-gradient="true"] .bg-amber-400 {
+  background-image: linear-gradient(135deg, #FDE68A 0%, #FBBF24 48%, #F59E0B 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+html[data-gold-gradient="true"] .bg-amber-50,
+html[data-gold-gradient="true"] .bg-amber-100\/80,
+html[data-gold-gradient="true"] .bg-amber-100\/90 {
+  background-image: linear-gradient(135deg, #FFFDF7 0%, #FEF3C7 60%, #FDE68A 100%) !important;
+}
+
+html[data-gold-gradient="true"] .border-amber-500,
+html[data-gold-gradient="true"] .border-amber-400 {
+  border-color: #F59E0B !important;
+}
+
+/* Interactive Card & Button Micro-Polish when Gold Gradient Theme is Active */
+html[data-gold-gradient="true"] section .rounded-2xl,
+html[data-gold-gradient="true"] section .rounded-3xl {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.28s ease;
+}
+
+html[data-gold-gradient="true"] section a.rounded-2xl:hover,
+html[data-gold-gradient="true"] section a.rounded-3xl:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -10px rgba(217, 119, 6, 0.22);
+}

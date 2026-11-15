@@ -8,6 +8,7 @@ import { RightFloatingDock } from '@/components/layout/RightFloatingDock';
 import { OpeningPreloader } from '@/components/animations/OpeningPreloader';
 import { AiChatbot } from '@/components/support/AiChatbot';
 import { ExitOfferPopup } from '@/components/forms/ExitOfferPopup';
+import { GoldGradientToggle } from '@/components/layout/GoldGradientToggle';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 
 const inter = Inter({
@@ -88,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} data-gold-gradient="true" suppressHydrationWarning>
       <head>
         <SchemaMarkup type="Organization" />
         <SchemaMarkup type="WebSite" />
@@ -102,6 +103,7 @@ export default function RootLayout({
         <Footer />
         <AiChatbot />
         <ExitOfferPopup />
+        <GoldGradientToggle />
       </body>
     </html>
   );

@@ -150,10 +150,10 @@ export const RightFloatingDock = () => {
                 <button
                   onClick={() => scrollTo(item.id)}
                   aria-label={`Scroll to ${item.label}`}
-                  className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 ${
+                  className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-x-0.5 ${
                     isActive
                       ? 'bg-stone-950 text-amber-400 font-bold shadow-md scale-105'
-                      : 'text-stone-400 hover:text-stone-900 hover:bg-stone-100'
+                      : 'text-stone-400 hover:text-amber-700 hover:bg-amber-50 hover:shadow-sm'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -176,7 +176,7 @@ export const RightFloatingDock = () => {
                 <button
                   onClick={scrollToTop}
                   aria-label="Back to Top"
-                  className="w-8 h-8 rounded-xl flex items-center justify-center text-stone-400 hover:text-amber-600 hover:bg-amber-50 transition-all"
+                  className="w-8 h-8 rounded-xl flex items-center justify-center text-stone-400 hover:text-amber-600 hover:bg-amber-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110"
                 >
                   <ArrowUp className="w-4 h-4" />
                 </button>

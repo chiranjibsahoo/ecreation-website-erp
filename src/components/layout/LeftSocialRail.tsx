@@ -44,7 +44,7 @@ export const LeftSocialRail = () => {
       className="fixed left-4 lg:left-6 bottom-0 z-40 hidden md:flex flex-col items-center gap-3 select-none"
       aria-label="Social Media and Direct Contact Rail"
     >
-      <div className="flex flex-col items-center gap-2 p-2 rounded-2xl bg-white/95 backdrop-blur-md border border-stone-200/90 shadow-lg shadow-stone-900/5">
+      <div className="flex flex-col items-center gap-2 p-2 rounded-2xl bg-white/95 backdrop-blur-md border border-stone-200/90 shadow-lg shadow-stone-900/5 transition-shadow duration-300 hover:shadow-xl hover:shadow-amber-500/15">
         {socialLinks.map((item) => (
           <div key={item.name} className="relative group">
             <a
@@ -52,7 +52,7 @@ export const LeftSocialRail = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={item.name}
-              className="w-9 h-9 rounded-xl flex items-center justify-center text-stone-600 hover:text-stone-950 hover:bg-amber-50 hover:border-amber-300 transition-all duration-200 border border-transparent group-hover:scale-105"
+              className="w-9 h-9 rounded-xl flex items-center justify-center text-stone-600 hover:text-stone-950 hover:bg-amber-50 hover:border-amber-300 transition-all duration-300 border border-transparent group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:shadow-md"
             >
               {item.icon}
             </a>

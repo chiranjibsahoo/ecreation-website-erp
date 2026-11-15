@@ -138,7 +138,7 @@ export const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6">
           {/* Left: Brand Logo */}
-          <div className="flex items-center shrink-0">
+          <div className="flex items-center shrink-0 transition-transform duration-300 hover:scale-[1.04]">
             <Logo size="md" theme="light" />
           </div>
 
@@ -150,7 +150,7 @@ export const Navbar = () => {
             {/* 1. Home */}
             <Link
               href="/"
-              className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-colors duration-200 group ${
+              className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-all duration-300 hover:-translate-y-0.5 group ${
                 isActive('/')
                   ? 'text-stone-950 dark:text-white'
                   : 'text-stone-700 dark:text-stone-300 hover:text-amber-800 dark:hover:text-amber-400'
@@ -172,7 +172,7 @@ export const Navbar = () => {
             >
               <Link
                 href="/services"
-                className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-colors duration-200 inline-flex items-center gap-1.5 group ${
+                className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-all duration-300 hover:-translate-y-0.5 inline-flex items-center gap-1.5 group ${
                   pathname.startsWith('/services')
                     ? 'text-stone-950 dark:text-white'
                     : 'text-stone-700 dark:text-stone-300 hover:text-amber-800 dark:hover:text-amber-400'
@@ -219,7 +219,7 @@ export const Navbar = () => {
                           key={item.title}
                           href={item.href}
                           onClick={() => setServicesOpen(false)}
-                          className="group p-2.5 rounded-2xl bg-[#FAF8F5] dark:bg-stone-800/70 hover:bg-amber-50/70 border border-stone-200/80 hover:border-amber-500/50 transition-all flex items-center gap-3.5"
+                          className="group p-2.5 rounded-2xl bg-[#FAF8F5] dark:bg-stone-800/70 hover:bg-amber-50/70 border border-stone-200/80 hover:border-amber-500/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md flex items-center gap-3.5"
                         >
                           <div className="w-16 h-14 rounded-xl overflow-hidden bg-stone-950 border border-stone-300 shrink-0 relative">
                             <img
@@ -268,7 +268,7 @@ export const Navbar = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-colors duration-200 group ${
+                  className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-all duration-300 hover:-translate-y-0.5 group ${
                     active
                       ? 'text-stone-950 dark:text-white'
                       : 'text-stone-700 dark:text-stone-300 hover:text-amber-800 dark:hover:text-amber-400'
@@ -289,7 +289,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-2.5 shrink-0">
             <a
               href="mailto:contact@ecreation.in"
-              className="hidden xl:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/80 dark:bg-stone-900 border border-amber-500/30 hover:border-amber-500 text-xs font-mono font-bold text-stone-800 dark:text-stone-200 transition-colors shadow-2xs"
+              className="hidden xl:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/80 dark:bg-stone-900 border border-amber-500/30 hover:border-amber-500 text-xs font-mono font-bold text-stone-800 dark:text-stone-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md shadow-2xs"
             >
               <Mail className="w-3.5 h-3.5 text-amber-600" />
               <span>contact@ecreation.in</span>
@@ -297,7 +297,7 @@ export const Navbar = () => {
 
             <button
               onClick={() => setCommandOpen(true)}
-              className="h-10 w-10 rounded-xl border border-amber-500/30 bg-white/80 dark:bg-stone-900 flex items-center justify-center text-stone-700 dark:text-stone-300 hover:text-amber-700 hover:border-amber-500 transition-colors cursor-pointer shadow-2xs"
+              className="h-10 w-10 rounded-xl border border-amber-500/30 bg-white/80 dark:bg-stone-900 flex items-center justify-center text-stone-700 dark:text-stone-300 hover:text-amber-700 hover:border-amber-500 transition-all duration-300 hover:scale-110 hover:-rotate-6 hover:shadow-md cursor-pointer shadow-2xs"
               aria-label="Open command palette search"
               title="Search (⌘K)"
             >
@@ -333,7 +333,7 @@ export const Navbar = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-xs font-extrabold text-stone-800 dark:text-stone-200 bg-white/85 dark:bg-stone-900 border-amber-500/35 hover:bg-amber-50 hover:border-amber-500 rounded-xl h-10 px-3.5 shadow-2xs"
+                  className="text-xs font-extrabold text-stone-800 dark:text-stone-200 bg-white/85 dark:bg-stone-900 border-amber-500/35 hover:bg-amber-50 hover:border-amber-500 rounded-xl h-10 px-3.5 shadow-2xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <LogIn className="w-3.5 h-3.5 mr-1.5 text-amber-600" />
                   Login
@@ -344,7 +344,7 @@ export const Navbar = () => {
             <Link href="/contact#enquiry">
               <Button
                 size="sm"
-                className="group bg-stone-950 hover:bg-stone-900 text-white font-black text-xs sm:text-sm px-5 h-10 rounded-xl shadow-lg shadow-stone-950/15 border border-amber-500/60 transition-all hover:scale-[1.02]"
+                className="group bg-stone-950 hover:bg-stone-900 text-white font-black text-xs sm:text-sm px-5 h-10 rounded-xl shadow-lg shadow-stone-950/15 border border-amber-500/60 transition-all duration-300 hover:scale-[1.04] hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-500/30"
                 aria-label="Redirect to Project Enquiry Page"
               >
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse mr-2 inline-block shrink-0" />
