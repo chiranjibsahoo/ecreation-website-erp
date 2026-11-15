@@ -9,7 +9,6 @@ import {
   ChevronRight,
   ArrowRight,
   Sparkles,
-  ShieldCheck,
   CheckCircle2,
   Volume2,
   VolumeX,
@@ -239,10 +238,10 @@ export const FullscreenVideoHero = () => {
   return (
     <section
       id="hero"
-      className="relative w-full bg-[#FAF8F5] dark:bg-stone-950 text-stone-900 dark:text-stone-100 pt-28 sm:pt-34 pb-14 sm:pb-20 overflow-hidden border-b border-stone-200/80 dark:border-stone-800"
+      className="relative w-full bg-[#FAF8F5] dark:bg-stone-950 text-stone-900 dark:text-stone-100 pt-28 sm:pt-34 pb-14 sm:pb-18 overflow-hidden border-b border-stone-200/80 dark:border-stone-800"
       aria-label="Ecreation IT Solution Hero Showcase"
     >
-      {/* Subtle Warm Architectural Grid & Champagne Gold Ambient Glow (Zero Blue) */}
+      {/* Subtle Warm Architectural Grid & Champagne Gold Ambient Glow */}
       <div
         className="absolute inset-0 bg-[linear-gradient(to_right,#e7e5e4_1px,transparent_1px),linear-gradient(to_bottom,#e7e5e4_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1c1917_1px,transparent_1px),linear-gradient(to_bottom,#1c1917_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000_60%,transparent_100%)] opacity-60 pointer-events-none"
         aria-hidden="true"
@@ -253,55 +252,7 @@ export const FullscreenVideoHero = () => {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* 1. Top Service Pillar Switcher Tabs — Instantly explains what the company does */}
-        <div className="mb-8 sm:mb-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
-            {slides.map((s, idx) => {
-              const isSelected = idx === currentSlide;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => selectSlide(idx)}
-                  className={`relative p-3 sm:p-3.5 rounded-2xl text-left transition-all duration-300 border overflow-hidden group ${
-                    isSelected
-                      ? 'bg-stone-950 text-white border-amber-500/70 shadow-lg shadow-stone-950/15'
-                      : 'bg-white/90 dark:bg-stone-900/80 text-stone-700 dark:text-stone-300 border-stone-200/90 dark:border-stone-800 hover:border-amber-500/40 hover:bg-white'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <span
-                      className={`text-[11px] font-mono font-bold uppercase tracking-wider ${
-                        isSelected ? 'text-amber-400' : 'text-amber-700 dark:text-amber-500'
-                      }`}
-                    >
-                      PILLAR {s.pillarNumber}
-                    </span>
-                    {idx === 0 && <Globe className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
-                    {idx === 1 && <Building2 className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
-                    {idx === 2 && <TrendingUp className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
-                    {idx === 3 && <Bot className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
-                  </div>
-
-                  <div className={`text-xs sm:text-sm font-bold truncate ${isSelected ? 'text-white' : 'text-stone-900 dark:text-white'}`}>
-                    {s.tabTitle}
-                  </div>
-
-                  {/* Animated Progress Line */}
-                  <div className="w-full h-1 bg-stone-200 dark:bg-stone-800 rounded-full mt-2.5 overflow-hidden">
-                    <div
-                      className={`h-full transition-all duration-75 ${
-                        isSelected ? 'bg-amber-500' : 'bg-transparent'
-                      }`}
-                      style={{ width: isSelected ? `${progress}%` : '0%' }}
-                    />
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* 2. Main Split Hero Showcase: Left Executive Copy + Right High-Res Image/Video Slider */}
+        {/* 1. Main Split Hero Showcase FIRST (Directly below Header) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Executive Pitch & Clear Deliverables */}
           <div className="lg:col-span-6 space-y-6">
@@ -324,7 +275,7 @@ export const FullscreenVideoHero = () => {
               {active.subheadline}
             </p>
 
-            {/* 2x2 Deliverables Checklist so visitors immediately understand what they get */}
+            {/* 2x2 Deliverables Checklist */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
               {active.deliverables.map((item) => (
                 <div
@@ -436,7 +387,7 @@ export const FullscreenVideoHero = () => {
                 </div>
               </div>
 
-              {/* Main Visual Viewport (420px - 460px height) */}
+              {/* Main Visual Viewport */}
               <div className="relative h-[360px] sm:h-[430px] w-full rounded-2xl overflow-hidden bg-stone-900">
                 {slides.map((s, idx) => {
                   const isSelected = idx === currentSlide;
@@ -449,14 +400,12 @@ export const FullscreenVideoHero = () => {
                           : 'opacity-0 scale-105 z-0 pointer-events-none'
                       }`}
                     >
-                      {/* Bespoke High-Resolution Studio Image */}
                       <img
                         src={s.imageSrc}
                         alt={s.badge}
                         className="w-full h-full object-cover object-center"
                       />
 
-                      {/* Optional Motion Video Layer when Video Mode is toggled */}
                       {showVideoMode && (
                         <video
                           ref={(el) => {
@@ -472,7 +421,6 @@ export const FullscreenVideoHero = () => {
                         />
                       )}
 
-                      {/* Warm Obsidian Bottom Gradient for Floating Overlay Card */}
                       <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent" />
                     </div>
                   );
@@ -513,37 +461,55 @@ export const FullscreenVideoHero = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Bottom Thumbnail Strip inside the Studio Frame */}
-              <div className="grid grid-cols-4 gap-2 mt-2.5">
-                {slides.map((s, idx) => {
-                  const isSelected = idx === currentSlide;
-                  return (
-                    <button
-                      key={s.id}
-                      onClick={() => selectSlide(idx)}
-                      className={`relative h-14 sm:h-16 rounded-xl overflow-hidden border transition-all ${
-                        isSelected
-                          ? 'border-amber-400 ring-2 ring-amber-500/30 opacity-100'
-                          : 'border-stone-800 opacity-55 hover:opacity-90'
-                      }`}
-                      aria-label={`Preview ${s.tabTitle}`}
-                    >
-                      <img
-                        src={s.imageSrc}
-                        alt={s.tabTitle}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-stone-950/45 flex items-end p-1.5">
-                        <span className="text-[10px] font-bold text-white truncate leading-none">
-                          {s.pillarNumber}. {s.tabTitle}
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
             </div>
+          </div>
+        </div>
+
+        {/* 2. Bottom 4-Pillar Slider Section Buttons — Placed BELOW the Hero Slider as requested */}
+        <div className="mt-10 pt-8 border-t border-stone-200/80 dark:border-stone-800">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            {slides.map((s, idx) => {
+              const isSelected = idx === currentSlide;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => selectSlide(idx)}
+                  className={`relative p-3.5 sm:p-4 rounded-2xl text-left transition-all duration-300 border overflow-hidden group cursor-pointer ${
+                    isSelected
+                      ? 'bg-stone-950 text-white border-amber-500/80 shadow-xl shadow-stone-950/15 scale-[1.01]'
+                      : 'bg-white/95 dark:bg-stone-900/80 text-stone-700 dark:text-stone-300 border-stone-200/90 dark:border-stone-800 hover:border-amber-500/40 hover:bg-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <span
+                      className={`text-[11px] font-mono font-bold uppercase tracking-wider ${
+                        isSelected ? 'text-amber-400' : 'text-amber-700 dark:text-amber-500'
+                      }`}
+                    >
+                      PILLAR {s.pillarNumber}
+                    </span>
+                    {idx === 0 && <Globe className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                    {idx === 1 && <Building2 className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                    {idx === 2 && <TrendingUp className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                    {idx === 3 && <Bot className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                  </div>
+
+                  <div className={`text-xs sm:text-sm font-bold truncate ${isSelected ? 'text-white' : 'text-stone-900 dark:text-white'}`}>
+                    {s.tabTitle}
+                  </div>
+
+                  {/* Animated Progress Line */}
+                  <div className="w-full h-1 bg-stone-200 dark:bg-stone-800 rounded-full mt-3 overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-75 ${
+                        isSelected ? 'bg-amber-500' : 'bg-transparent'
+                      }`}
+                      style={{ width: isSelected ? `${progress}%` : '0%' }}
+                    />
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
