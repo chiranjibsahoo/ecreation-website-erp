@@ -99,9 +99,9 @@ export default function AdminProjectsPage() {
           </div>
           <Button
             onClick={handleCreateNew}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold"
+            className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs font-bold"
           >
-            <Plus className="w-4 h-4 mr-1.5" />
+            <Plus className="w-4 h-4 mr-1.5 text-amber-400" />
             Add New Case Study
           </Button>
         </div>
@@ -370,9 +370,9 @@ export default function AdminProjectsPage() {
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold shadow-sm"
+                    className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs font-bold shadow-sm"
                   >
-                    <Save className="w-3.5 h-3.5 mr-1.5" />
+                    <Save className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
                     Save Case Study
                   </Button>
                 </div>
@@ -389,9 +389,9 @@ export default function AdminProjectsPage() {
                 <Button
                   onClick={handleCreateNew}
                   size="sm"
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold"
+                  className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs font-bold"
                 >
-                  <Plus className="w-3.5 h-3.5 mr-1" />
+                  <Plus className="w-3.5 h-3.5 mr-1 text-amber-400" />
                   Create Case Study
                 </Button>
               </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Menu,
   X,
@@ -15,6 +15,7 @@ import {
   Sparkles,
   Search,
   LogIn,
+  LogOut,
   ChevronDown,
   Globe,
   Building2,
@@ -36,7 +37,28 @@ export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [commandOpen, setCommandOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const auth = localStorage.getItem('ecreation_admin_auth');
+      setIsAdminLoggedIn(auth === 'authenticated');
+    };
+    checkAuth();
+    window.addEventListener('storage', checkAuth);
+    return () => window.removeEventListener('storage', checkAuth);
+  }, [pathname]);
+
+  const handleHeaderLogout = () => {
+    localStorage.removeItem('ecreation_admin_auth');
+    localStorage.removeItem('ecreation_admin_email');
+    document.cookie = 'ecreation_admin_auth=; path=/; max-age=0';
+    setIsAdminLoggedIn(false);
+    setMobileOpen(false);
+    router.push('/login');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -337,16 +359,42 @@ export const Navbar = () => {
                 </kbd>
               </button>
 
-              <Link href="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-xs font-bold text-stone-200 bg-stone-900/90 border-stone-700 hover:bg-stone-800 hover:text-amber-300 hover:border-amber-500/50 rounded-xl h-10 px-3.5"
-                >
-                  <LogIn className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
-                  Login
-                </Button>
-              </Link>
+              {isAdminLoggedIn ? (
+                <div className="flex items-center gap-2">
+                  {!pathname.startsWith('/admin') && (
+                    <Link href="/admin">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs font-bold text-amber-300 bg-stone-900/90 border-amber-500/40 hover:bg-stone-800 rounded-xl h-10 px-3"
+                      >
+                        <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+                        Admin Panel
+                      </Button>
+                    </Link>
+                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleHeaderLogout}
+                    className="text-xs font-extrabold text-white bg-red-600/90 hover:bg-red-600 border-red-500 rounded-xl h-10 px-3.5 shadow-sm cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5 mr-1.5 text-white" />
+                    Logout
+                  </Button>
+                </div>
+              ) : (
+                <Link href="/login">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-xs font-bold text-stone-200 bg-stone-900/90 border-stone-700 hover:bg-stone-800 hover:text-amber-300 hover:border-amber-500/50 rounded-xl h-10 px-3.5"
+                  >
+                    <LogIn className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+                    Login
+                  </Button>
+                </Link>
+              )}
 
               <Link href="/contact#enquiry">
                 <Button
@@ -450,14 +498,34 @@ export const Navbar = () => {
 
                       <div className="my-1.5 border-t border-stone-800" />
 
-                      <Link
-                        href="/login"
-                        onClick={() => setMobileOpen(false)}
-                        className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-stone-300 hover:text-amber-400 hover:bg-stone-900 flex items-center gap-3"
-                      >
-                        <LogIn className="w-4 h-4 text-amber-400" />
-                        Client &amp; Admin Portal Login
-                      </Link>
+                      {isAdminLoggedIn ? (
+                        <div className="space-y-1.5 pt-1">
+                          <Link
+                            href="/admin"
+                            onClick={() => setMobileOpen(false)}
+                            className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-amber-400 bg-stone-900 border border-amber-500/30 flex items-center gap-3"
+                          >
+                            <ShieldCheck className="w-4 h-4 text-amber-400" />
+                            Open Admin ERP Dashboard
+                          </Link>
+                          <button
+                            onClick={handleHeaderLogout}
+                            className="w-full px-3.5 py-2.5 rounded-xl text-xs font-bold text-white bg-red-600/90 hover:bg-red-600 flex items-center gap-3 text-left"
+                          >
+                            <LogOut className="w-4 h-4 text-white" />
+                            Logout (End Admin Session)
+                          </button>
+                        </div>
+                      ) : (
+                        <Link
+                          href="/login"
+                          onClick={() => setMobileOpen(false)}
+                          className="px-3.5 py-2.5 rounded-xl text-xs font-bold text-stone-300 hover:text-amber-400 hover:bg-stone-900 flex items-center gap-3"
+                        >
+                          <LogIn className="w-4 h-4 text-amber-400" />
+                          Client &amp; Admin Portal Login
+                        </Link>
+                      )}
                     </nav>
                   </div>
 

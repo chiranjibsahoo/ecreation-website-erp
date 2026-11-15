@@ -103,9 +103,9 @@ export default function AdminBlogPage() {
           </div>
           <Button
             onClick={handleCreateNew}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold"
+            className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs font-bold"
           >
-            <Plus className="w-4 h-4 mr-1.5" />
+            <Plus className="w-4 h-4 mr-1.5 text-amber-400" />
             Write New Technical Article
           </Button>
         </div>
@@ -283,10 +283,10 @@ export default function AdminBlogPage() {
                   <Button
                     size="sm"
                     onClick={() => handleSave(editingPost)}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl"
+                    className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 text-xs font-bold rounded-xl"
                   >
-                    <Save className="w-3.5 h-3.5 mr-1.5" />
-                    Save & Publish Article
+                    <Save className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+                    Save &amp; Publish Article
                   </Button>
                 </div>
               </div>
