@@ -238,7 +238,7 @@ export const FullscreenVideoHero = () => {
   return (
     <section
       id="hero"
-      className="relative w-full bg-[#FAF8F5] dark:bg-stone-950 text-stone-900 dark:text-stone-100 pt-[92px] sm:pt-[102px] pb-8 sm:pb-12 overflow-hidden border-b border-stone-200/80 dark:border-stone-800"
+      className="relative w-full bg-[#FAF8F5] dark:bg-stone-950 text-stone-900 dark:text-stone-100 pt-[84px] sm:pt-[92px] pb-8 sm:pb-12 overflow-hidden border-b border-stone-200/80 dark:border-stone-800"
       aria-label="Ecreation IT Solution Hero Showcase"
     >
       {/* Subtle Warm Architectural Grid & Champagne Gold Ambient Glow */}

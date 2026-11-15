@@ -78,7 +78,7 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] dark:bg-stone-950 flex flex-col pt-[98px] sm:pt-[108px]">
+    <div className="min-h-screen bg-[#FAF8F5] dark:bg-stone-950 flex flex-col pt-[84px] sm:pt-[92px]">
       {/* Executive Admin ERP Command Sub-Header (Properly cleared below Fixed Main Header) */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-3">
         <div className="rounded-3xl bg-[#141210] text-white border border-amber-500/40 shadow-xl p-4 sm:p-5 space-y-4">
