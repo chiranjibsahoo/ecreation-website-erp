@@ -238,7 +238,7 @@ export const FullscreenVideoHero = () => {
   return (
     <section
       id="hero"
-      className="relative w-full bg-[#FAF8F5] dark:bg-stone-950 text-stone-900 dark:text-stone-100 pt-28 sm:pt-34 pb-12 sm:pb-18 overflow-hidden border-b border-stone-200/80 dark:border-stone-800"
+      className="relative w-full bg-[#FAF8F5] dark:bg-stone-950 text-stone-900 dark:text-stone-100 pt-[92px] sm:pt-[102px] pb-8 sm:pb-12 overflow-hidden border-b border-stone-200/80 dark:border-stone-800"
       aria-label="Ecreation IT Solution Hero Showcase"
     >
       {/* Subtle Warm Architectural Grid & Champagne Gold Ambient Glow */}
@@ -253,17 +253,11 @@ export const FullscreenVideoHero = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* 1. Main Split Hero Showcase FIRST */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           {/* Left Column: Executive Pitch & Clear Deliverables */}
-          <div className="lg:col-span-6 space-y-5 sm:space-y-6">
-            {/* Active Category Pill */}
-            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-600/30 text-amber-900 dark:text-amber-300 text-[11px] sm:text-xs font-bold tracking-wide">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-              <span className="truncate">{active.badge}</span>
-            </div>
-
+          <div className="lg:col-span-6 space-y-4 sm:space-y-5">
             {/* Display H1 — Fluid Responsive Typography across 320px to 4K */}
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[50px] font-black tracking-tight text-stone-950 dark:text-white leading-[1.12]">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-black tracking-tight text-stone-950 dark:text-white leading-[1.12]">
               {active.headline}
               <span className="text-amber-700 dark:text-amber-400 block mt-1">
                 {active.highlightText}

@@ -117,7 +117,7 @@ export const Navbar = () => {
       {/* 1. Top Shimmering Gold & Obsidian Executive Ribbon */}
       <div
         className={`bg-gradient-to-r from-[#0E0C0A] via-[#1C1814] to-[#0E0C0A] text-stone-200 border-b border-amber-500/30 transition-all duration-300 overflow-hidden ${
-          scrolled ? 'max-h-0 py-0 opacity-0 border-none' : 'max-h-11 py-2 opacity-100'
+          scrolled ? 'max-h-0 py-0 opacity-0 border-none' : 'max-h-9 py-1.5 opacity-100'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs">
@@ -166,8 +166,8 @@ export const Navbar = () => {
         <div
           className={`max-w-7xl mx-auto transition-all duration-300 relative ${
             scrolled
-              ? 'bg-[#12100E]/95 backdrop-blur-2xl border border-amber-500/45 rounded-2xl shadow-[0_16px_45px_rgba(0,0,0,0.4)] px-4 sm:px-6 py-2.5'
-              : 'bg-[#12100E] border-b-2 border-amber-500/40 shadow-[0_12px_35px_rgba(0,0,0,0.22)] px-4 sm:px-6 lg:px-8 py-3.5 lg:rounded-b-3xl'
+              ? 'bg-[#12100E]/95 backdrop-blur-2xl border border-amber-500/45 rounded-2xl shadow-[0_16px_45px_rgba(0,0,0,0.4)] px-4 sm:px-6 py-2'
+              : 'bg-[#12100E] border-b-2 border-amber-500/40 shadow-[0_12px_35px_rgba(0,0,0,0.22)] px-4 sm:px-6 lg:px-8 py-2.5 lg:rounded-b-3xl'
           }`}
         >
           {/* Top Metallic Gold Shimmer Accent Line */}
