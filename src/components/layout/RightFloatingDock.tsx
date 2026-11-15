@@ -95,15 +95,15 @@ export const RightFloatingDock = () => {
         aria-valuemax={100}
       />
 
-      {/* Right-Side Persistent Floating Navigation & Quick Enquiry Button */}
-      <nav
-        className="fixed right-0 sm:right-3 lg:right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end gap-2.5 select-none"
-        aria-label="Right Side Quick Enquiry and Section Navigation"
+      {/* Left-Side Persistent Floating Quick Enquiry Button */}
+      <div
+        className="fixed left-0 sm:left-3 lg:left-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-start select-none"
+        aria-label="Left Side Quick Enquiry Navigation"
       >
-        {/* Mobile Compact Vertical Side-Tab (<640px) — Zero screen clutter on phones */}
+        {/* Mobile Compact Vertical Side-Tab (<640px) — Flush on Left Edge */}
         <button
           onClick={() => setEnquiryOpen(true)}
-          className="sm:hidden flex flex-col items-center gap-1.5 px-2 py-3.5 rounded-l-xl bg-stone-950 text-white border-l border-y border-amber-500/70 shadow-xl cursor-pointer"
+          className="sm:hidden flex flex-col items-center gap-1.5 px-2 py-3.5 rounded-r-xl bg-stone-950 text-white border-r border-y border-amber-500/70 shadow-xl cursor-pointer"
           aria-label="Open Quick Enquiry Form"
         >
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
@@ -116,10 +116,10 @@ export const RightFloatingDock = () => {
           <Send className="w-3 h-3 text-white" />
         </button>
 
-        {/* Tablet & Desktop Pill Button (>=640px) */}
+        {/* Tablet & Desktop Left Floating Pill Button (>=640px) */}
         <button
           onClick={() => setEnquiryOpen(true)}
-          className="hidden sm:flex group items-center gap-2 px-3.5 py-2.5 rounded-2xl bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/60 shadow-xl shadow-stone-950/25 transition-all duration-200 hover:scale-105 cursor-pointer"
+          className="hidden sm:flex group items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/60 shadow-xl shadow-stone-950/25 transition-all duration-200 hover:scale-105 cursor-pointer"
           aria-label="Open Quick Enquiry Form"
         >
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
@@ -128,9 +128,15 @@ export const RightFloatingDock = () => {
           </span>
           <Send className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform shrink-0" />
         </button>
+      </div>
 
+      {/* Right-Side Persistent Section Quick-Jump Dock */}
+      <nav
+        className="fixed right-3 lg:right-5 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-end gap-2.5 select-none"
+        aria-label="Right Side Section Navigation"
+      >
         {/* Desktop Section Quick-Jump Dock */}
-        <div className="hidden xl:flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200/90 dark:border-stone-800 shadow-lg shadow-stone-900/5 mr-0.5">
+        <div className="flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200/90 dark:border-stone-800 shadow-lg shadow-stone-900/5 mr-0.5">
           {dockLinks.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
