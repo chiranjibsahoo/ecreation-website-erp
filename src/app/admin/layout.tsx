@@ -69,7 +69,8 @@ export default function AdminLayout({
 
   const adminNav = [
     { label: 'Overview', href: '/admin' },
-    { label: 'Leads CRM', href: '/admin/leads' },
+    { label: 'Leads & Enquiries', href: '/admin/leads' },
+    { label: 'AI Chat Logs & Analysis', href: '/admin/chats' },
     { label: 'Services CMS', href: '/admin/services' },
     { label: 'Projects CMS', href: '/admin/projects' },
     { label: 'Blog CMS', href: '/admin/blog' }

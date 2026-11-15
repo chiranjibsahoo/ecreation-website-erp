@@ -23,6 +23,7 @@ create table if not exists public.leads (
 -- Index for lead sorting and filtering
 create index if not exists idx_leads_created_at on public.leads(created_at desc);
 create index if not exists idx_leads_status on public.leads(status);
+create index if not exists idx_leads_source on public.leads(source);
 
 -- Enable RLS on leads
 alter table public.leads enable row level security;
@@ -157,4 +158,33 @@ create policy "Admins can manage all blog posts"
     to authenticated
     using (true)
     with check (true);
+
+
+-- 5. AI ASSISTANT CHAT SESSIONS TABLE
+create table if not exists public.chat_sessions (
+    id uuid primary key default uuid_generate_v4(),
+    session_id text unique not null,
+    visitor_name text default 'Website Visitor',
+    visitor_email text default '',
+    visitor_phone text default '',
+    service_interested text default 'General IT Consultation',
+    lead_captured boolean default false,
+    lead_id text,
+    messages jsonb not null default '[]'::jsonb,
+    started_at timestamp with time zone default timezone('utc'::text, now()) not null,
+    updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+create index if not exists idx_chat_sessions_updated_at on public.chat_sessions(updated_at desc);
+create index if not exists idx_chat_sessions_lead_captured on public.chat_sessions(lead_captured);
+
+alter table public.chat_sessions enable row level security;
+
+create policy "Public can insert and update chat sessions"
+    on public.chat_sessions
+    for all
+    to anon, authenticated
+    using (true)
+    with check (true);
+
 

@@ -14,7 +14,10 @@ import {
   CheckCircle2,
   Clock,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Bot,
+  Sparkles,
+  MessageSquareText
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,29 +28,37 @@ export default function LeadsAdminPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [sourceFilter, setSourceFilter] = useState<'all' | 'chatbot'>('all');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
+  const isChatbotLead = (source?: string) => {
+    if (!source) return false;
+    const lower = source.toLowerCase();
+    return lower.includes('ai assistant') || lower.includes('chatbot');
+  };
+
   useEffect(() => {
-    // Initial fetch from /api/leads
     fetch('/api/leads')
       .then((res) => res.json())
       .then((data) => {
         if (data.leads) {
-          // Normalize field names if needed
           const normalized = data.leads.map((l: Record<string, unknown>) => ({
-            id: l.id,
-            name: l.name,
-            email: l.email,
-            phone: l.phone,
-            company: l.company,
-            serviceRequired: l.service_required || l.serviceRequired,
-            budgetRange: l.budget_range || l.budgetRange,
-            message: l.message,
-            source: l.source,
-            status: l.status,
-            createdAt: l.created_at || l.createdAt
+            id: String(l.id || ''),
+            name: String(l.name || ''),
+            email: String(l.email || ''),
+            phone: l.phone ? String(l.phone) : undefined,
+            company: l.company ? String(l.company) : undefined,
+            serviceRequired: String(l.service_required || l.serviceRequired || ''),
+            budgetRange: l.budget_range || l.budgetRange ? String(l.budget_range || l.budgetRange) : undefined,
+            message: String(l.message || ''),
+            source: String(l.source || 'direct'),
+            status: (l.status as Lead['status']) || 'new',
+            createdAt: String(l.created_at || l.createdAt || '')
           }));
           setLeads(normalized);
+          if (normalized.length > 0) {
+            setSelectedLead(normalized[0]);
+          }
         }
       })
       .catch((err) => console.error(err));
@@ -73,19 +84,26 @@ export default function LeadsAdminPage() {
     }
   };
 
+  const chatbotLeadsCount = leads.filter((l) => isChatbotLead(l.source)).length;
+
   const filteredLeads = leads.filter((lead) => {
     const matchesSearch =
       lead.name.toLowerCase().includes(search.toLowerCase()) ||
       lead.email.toLowerCase().includes(search.toLowerCase()) ||
+      (lead.phone && lead.phone.toLowerCase().includes(search.toLowerCase())) ||
       (lead.company && lead.company.toLowerCase().includes(search.toLowerCase())) ||
-      lead.serviceRequired.toLowerCase().includes(search.toLowerCase());
+      lead.serviceRequired.toLowerCase().includes(search.toLowerCase()) ||
+      (lead.source && lead.source.toLowerCase().includes(search.toLowerCase()));
 
     const matchesStatus = statusFilter === 'all' || lead.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    const matchesSource =
+      sourceFilter === 'all' || (sourceFilter === 'chatbot' && isChatbotLead(lead.source));
+
+    return matchesSearch && matchesStatus && matchesSource;
   });
 
   const exportCSV = () => {
-    const headers = ['Ref ID', 'Name', 'Email', 'Phone', 'Company', 'Service', 'Budget', 'Status', 'Date'];
+    const headers = ['Ref ID', 'Name', 'Email', 'Phone', 'Company', 'Service', 'Enquiry Source', 'Status', 'Date'];
     const rows = filteredLeads.map((l) => [
       l.id,
       `"${l.name}"`,
@@ -93,7 +111,7 @@ export default function LeadsAdminPage() {
       l.phone || '',
       `"${l.company || ''}"`,
       `"${l.serviceRequired}"`,
-      `"${l.budgetRange || ''}"`,
+      `"${l.source || 'direct'}"`,
       l.status,
       l.createdAt
     ]);
@@ -111,25 +129,50 @@ export default function LeadsAdminPage() {
     <div className="pt-8 pb-20 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Navigation Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Link href="/admin" className="hover:text-foreground flex items-center gap-1">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Admin Overview
+        <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Link href="/admin" className="hover:text-foreground flex items-center gap-1">
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Admin Overview
+            </Link>
+            <span>/</span>
+            <span className="text-foreground font-semibold">Leads &amp; Enquiries CRM</span>
+          </div>
+
+          <Link href="/admin/chats">
+            <Button size="sm" className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs h-8">
+              <Bot className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+              View All AI Assistant Chat Logs
+            </Button>
           </Link>
-          <span>/</span>
-          <span className="text-foreground font-semibold">Leads CRM</span>
         </div>
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
           <div>
-            <h1 className="text-3xl font-extrabold text-foreground">Inbound Leads CRM</h1>
-            <p className="text-sm text-muted-foreground">Review, qualify, and update status of prospective client inquiries.</p>
+            <h1 className="text-3xl font-extrabold text-foreground">Inbound Enquiries &amp; Leads CRM</h1>
+            <p className="text-sm text-muted-foreground">
+              Enquiries captured from Ecreation AI Assistant Chatbot are automatically highlighted below.
+            </p>
           </div>
-          <Button onClick={exportCSV} variant="outline" size="sm" className="rounded-xl text-xs">
-            <Download className="w-3.5 h-3.5 mr-1.5" />
-            Export to CSV
-          </Button>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              onClick={() => setSourceFilter(sourceFilter === 'chatbot' ? 'all' : 'chatbot')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all ${
+                sourceFilter === 'chatbot'
+                  ? 'bg-stone-950 text-amber-400 border-amber-500 shadow-md'
+                  : 'bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border-amber-300 dark:border-amber-800 hover:bg-amber-100'
+              }`}
+            >
+              <Bot className="w-4 h-4 text-amber-500" />
+              <span>AI Assistant Chatbot Enquiries ({chatbotLeadsCount})</span>
+            </button>
+
+            <Button onClick={exportCSV} variant="outline" size="sm" className="rounded-xl text-xs h-9">
+              <Download className="w-3.5 h-3.5 mr-1.5" />
+              Export CSV
+            </Button>
+          </div>
         </div>
 
         {/* Filters and Search Bar */}
@@ -139,7 +182,7 @@ export default function LeadsAdminPage() {
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by client name, email, company, or service..."
+              placeholder="Search by client name, phone, email, service, or source..."
               className="pl-9 text-xs rounded-xl"
             />
           </div>
@@ -169,9 +212,9 @@ export default function LeadsAdminPage() {
                 <table className="w-full text-left text-xs border-collapse">
                   <thead className="bg-muted/50 border-b border-border text-muted-foreground uppercase font-mono text-[10px]">
                     <tr>
-                      <th className="p-3.5">Ref / Client</th>
+                      <th className="p-3.5">Ref / Client &amp; Contact</th>
                       <th className="p-3.5">Service</th>
-                      <th className="p-3.5">Budget</th>
+                      <th className="p-3.5">Enquiry Source</th>
                       <th className="p-3.5">Status</th>
                       <th className="p-3.5 text-right">View</th>
                     </tr>
@@ -180,41 +223,75 @@ export default function LeadsAdminPage() {
                     {filteredLeads.length === 0 ? (
                       <tr>
                         <td colSpan={5} className="p-8 text-center text-muted-foreground text-xs">
-                          No leads matching current search or status filter.
+                          No enquiries matching current search or filter.
                         </td>
                       </tr>
                     ) : (
-                      filteredLeads.map((lead) => (
-                        <tr
-                          key={lead.id}
-                          onClick={() => setSelectedLead(lead)}
-                          className={`cursor-pointer transition-colors ${
-                            selectedLead?.id === lead.id ? 'bg-indigo-50/50 dark:bg-indigo-950/30' : 'hover:bg-muted/30'
-                          }`}
-                        >
-                          <td className="p-3.5">
-                            <span className="font-mono text-[10px] text-indigo-600 font-semibold block">{lead.id}</span>
-                            <span className="font-bold text-foreground block text-xs">{lead.name}</span>
-                            <span className="text-[11px] text-muted-foreground">{lead.company || 'Private Client'}</span>
-                          </td>
-                          <td className="p-3.5 text-muted-foreground">
-                            {lead.serviceRequired}
-                          </td>
-                          <td className="p-3.5 font-mono text-foreground font-medium">
-                            {lead.budgetRange || 'Unspecified'}
-                          </td>
-                          <td className="p-3.5">
-                            <Badge variant="outline" className="text-[10px] uppercase font-mono">
-                              {lead.status}
-                            </Badge>
-                          </td>
-                          <td className="p-3.5 text-right">
-                            <Button variant="ghost" size="icon" className="h-7 w-7 rounded-lg">
-                              <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                            </Button>
-                          </td>
-                        </tr>
-                      ))
+                      filteredLeads.map((lead) => {
+                        const fromBot = isChatbotLead(lead.source);
+                        const isSelected = selectedLead?.id === lead.id;
+                        return (
+                          <tr
+                            key={lead.id}
+                            onClick={() => setSelectedLead(lead)}
+                            className={`cursor-pointer transition-colors ${
+                              fromBot
+                                ? isSelected
+                                  ? 'bg-amber-100/80 dark:bg-amber-950/60 border-l-4 border-l-amber-500'
+                                  : 'bg-amber-50/50 dark:bg-amber-950/25 hover:bg-amber-100/60 border-l-4 border-l-amber-500'
+                                : isSelected
+                                ? 'bg-stone-100 dark:bg-stone-800/60'
+                                : 'hover:bg-muted/30'
+                            }`}
+                          >
+                            <td className="p-3.5">
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-mono text-[10px] text-amber-700 dark:text-amber-400 font-bold">
+                                  {lead.id}
+                                </span>
+                                {fromBot && (
+                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-stone-950 text-amber-400 text-[9px] font-mono font-bold">
+                                    <Bot className="w-2.5 h-2.5" />
+                                    AI BOT
+                                  </span>
+                                )}
+                              </div>
+                              <span className="font-bold text-foreground block text-xs mt-0.5">{lead.name}</span>
+                              <span className="text-[11px] text-muted-foreground block">{lead.email}</span>
+                              {lead.phone && (
+                                <span className="text-[11px] font-mono text-stone-700 dark:text-stone-300 font-semibold block">
+                                  {lead.phone}
+                                </span>
+                              )}
+                            </td>
+                            <td className="p-3.5 text-muted-foreground font-medium">
+                              {lead.serviceRequired}
+                            </td>
+                            <td className="p-3.5">
+                              {fromBot ? (
+                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-950 text-amber-400 border border-amber-500/60 font-bold text-[10px] shadow-xs">
+                                  <Bot className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                                  <span>Ecreation AI Assistant Chatbot</span>
+                                </div>
+                              ) : (
+                                <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-muted text-muted-foreground">
+                                  {lead.source || 'direct'}
+                                </span>
+                              )}
+                            </td>
+                            <td className="p-3.5">
+                              <Badge variant="outline" className="text-[10px] uppercase font-mono">
+                                {lead.status}
+                              </Badge>
+                            </td>
+                            <td className="p-3.5 text-right">
+                              <Button variant="ghost" size="icon" className="h-7 w-7 rounded-lg">
+                                <ChevronRight className="w-4 h-4 text-muted-foreground" />
+                              </Button>
+                            </td>
+                          </tr>
+                        );
+                      })
                     )}
                   </tbody>
                 </table>
@@ -224,10 +301,36 @@ export default function LeadsAdminPage() {
 
           {/* Lead Detail Panel */}
           {selectedLead && (
-            <div className="lg:col-span-5 bg-card border border-border rounded-2xl p-6 shadow-md space-y-6 animate-in fade-in-50">
+            <div className="lg:col-span-5 bg-card border border-border rounded-2xl p-6 shadow-md space-y-5 animate-in fade-in-50">
+              {/* Highlighted Banner if Lead came from Ecreation AI Assistant Chatbot */}
+              {isChatbotLead(selectedLead.source) && (
+                <div className="p-3.5 rounded-2xl bg-stone-950 text-white border border-amber-500/60 flex items-center justify-between gap-3 shadow-md">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-9 h-9 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center shrink-0">
+                      <Bot className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold block">
+                        HIGHLIGHTED ENQUIRY SOURCE
+                      </span>
+                      <span className="text-xs font-black text-white">
+                        Ecreation AI Assistant Chatbot
+                      </span>
+                    </div>
+                  </div>
+                  <Link href="/admin/chats">
+                    <Button size="sm" className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-[11px] h-8 px-3 rounded-xl">
+                      View Chat
+                    </Button>
+                  </Link>
+                </div>
+              )}
+
               <div className="flex items-center justify-between border-b border-border pb-4">
                 <div>
-                  <span className="text-[10px] font-mono text-indigo-600 font-bold block">{selectedLead.id}</span>
+                  <span className="text-[10px] font-mono text-amber-700 dark:text-amber-400 font-bold block">
+                    {selectedLead.id}
+                  </span>
                   <h3 className="text-lg font-bold text-foreground">{selectedLead.name}</h3>
                 </div>
                 <Button variant="ghost" size="sm" onClick={() => setSelectedLead(null)} className="text-xs h-7">
@@ -236,39 +339,40 @@ export default function LeadsAdminPage() {
               </div>
 
               <div className="space-y-4 text-xs">
-                <div className="space-y-1">
-                  <span className="text-muted-foreground font-semibold block">Contact Details</span>
-                  <p className="flex items-center gap-2 text-foreground font-medium">
-                    <Mail className="w-3.5 h-3.5 text-indigo-600" />
+                <div className="space-y-1.5">
+                  <span className="text-muted-foreground font-semibold block">Captured Contact Details</span>
+                  <p className="flex items-center gap-2 text-foreground font-semibold">
+                    <Mail className="w-3.5 h-3.5 text-amber-600" />
                     <a href={`mailto:${selectedLead.email}`} className="hover:underline">{selectedLead.email}</a>
                   </p>
                   {selectedLead.phone && (
-                    <p className="flex items-center gap-2 text-muted-foreground">
-                      <Phone className="w-3.5 h-3.5 text-indigo-600" />
+                    <p className="flex items-center gap-2 text-foreground font-mono font-bold">
+                      <Phone className="w-3.5 h-3.5 text-amber-600" />
                       <span>{selectedLead.phone}</span>
                     </p>
                   )}
-                  {selectedLead.company && (
-                    <p className="flex items-center gap-2 text-muted-foreground">
-                      <Building className="w-3.5 h-3.5 text-indigo-600" />
-                      <span>{selectedLead.company}</span>
-                    </p>
-                  )}
+                  <p className="flex items-center gap-2 text-muted-foreground pt-1">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                    <span>
+                      Enquiry Source:{' '}
+                      <strong className="text-foreground">{selectedLead.source || 'Direct Website'}</strong>
+                    </span>
+                  </p>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-muted-foreground font-semibold block">Service & Budget</span>
-                  <p className="text-foreground font-medium">{selectedLead.serviceRequired}</p>
+                  <span className="text-muted-foreground font-semibold block">Service &amp; Package</span>
+                  <p className="text-foreground font-bold">{selectedLead.serviceRequired}</p>
                   <p className="font-mono text-muted-foreground">{selectedLead.budgetRange}</p>
                 </div>
 
                 <div className="space-y-1 bg-muted/40 p-3.5 rounded-xl border border-border">
-                  <span className="text-muted-foreground font-semibold block">Project Scope / Message:</span>
+                  <span className="text-muted-foreground font-semibold block">Enquiry Summary &amp; Chat Context:</span>
                   <p className="text-foreground whitespace-pre-wrap leading-relaxed">{selectedLead.message}</p>
                 </div>
 
                 <div className="space-y-2 pt-2 border-t border-border">
-                  <span className="text-muted-foreground font-semibold block">Update Status:</span>
+                  <span className="text-muted-foreground font-semibold block">Update Enquiry Status:</span>
                   <div className="flex flex-wrap gap-1.5">
                     {(['new', 'contacted', 'qualified', 'converted', 'archived'] as Lead['status'][]).map((st) => (
                       <button
@@ -276,7 +380,7 @@ export default function LeadsAdminPage() {
                         onClick={() => handleStatusChange(selectedLead.id, st)}
                         className={`px-2.5 py-1 rounded-lg font-mono text-[11px] capitalize transition-colors ${
                           selectedLead.status === st
-                            ? 'bg-indigo-600 text-white font-bold'
+                            ? 'bg-stone-950 text-amber-400 font-bold border border-amber-500/50'
                             : 'bg-muted text-muted-foreground hover:bg-muted/80'
                         }`}
                       >
@@ -293,4 +397,3 @@ export default function LeadsAdminPage() {
     </div>
   );
 }
-

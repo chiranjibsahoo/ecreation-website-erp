@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isSupabaseConfigured, createServerSupabaseClient } from '@/lib/supabase/server';
+import { addStoredLead } from '@/lib/data/localStore';
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
       budget_range: budgetRange ? String(budgetRange).slice(0, 50) : null,
       message: String(message).slice(0, 3000),
       source: source ? String(source).slice(0, 100) : 'direct',
-      status: 'new',
+      status: 'new' as const,
       created_at: new Date().toISOString()
     };
 
@@ -56,9 +57,13 @@ export async function POST(req: NextRequest) {
       } catch (dbErr) {
         console.error('[Database Connection Warning]', dbErr);
       }
-    } else {
-      console.log('[Inquiry Received - In-Memory Mode]:', leadRecord);
     }
+
+    // 4. Always persist to local store so Admin Panel sees real-time enquiries immediately
+    addStoredLead({
+      id: generatedId,
+      ...leadRecord
+    });
 
     return NextResponse.json({
       success: true,

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Users,
@@ -9,11 +9,9 @@ import {
   FileText,
   ArrowUpRight,
   ShieldCheck,
-  CheckCircle2,
-  Clock,
-  Sparkles,
-  Search,
-  ExternalLink
+  Bot,
+  ExternalLink,
+  MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -21,72 +19,106 @@ import { SERVICES_DATA, PROJECTS_DATA, BLOG_POSTS_DATA } from '@/lib/data/seedDa
 import { Lead } from '@/types';
 
 export default function AdminDashboardPage() {
-  // Mock active leads for immediate demonstration & review
-  const [leads, setLeads] = useState<Lead[]>([
-    {
-      id: 'EC-849102',
-      name: 'Sarah Jenkins',
-      email: 's.jenkins@acme-enterprises.com',
-      company: 'Acme Enterprises',
-      phone: '+1 (415) 890-1234',
-      serviceRequired: 'Enterprise ERP & Client Portals',
-      budgetRange: '$25k - $50k',
-      message: 'Looking to replace an internal spreadsheet logistics tracker with a bespoke web portal with role permissions.',
-      source: 'google_organic',
-      status: 'new',
-      createdAt: '2026-11-10T14:32:00Z'
-    },
-    {
-      id: 'EC-712903',
-      name: 'David O’Connor',
-      email: 'doconnor@apexpayments.io',
-      company: 'Apex Payments',
-      phone: '+44 20 7946 0912',
-      serviceRequired: 'Custom Software & Web Engineering',
-      budgetRange: '$50,000+',
-      message: 'Need a high-throughput financial transactions dashboard built on Next.js and Supabase.',
-      source: 'linkedin_campaign',
-      status: 'qualified',
-      createdAt: '2026-11-09T09:15:00Z'
-    },
-    {
-      id: 'EC-632198',
-      name: 'Ananya Deshmukh',
-      email: 'ananya@healthpulse.org',
-      company: 'HealthPulse Labs',
-      phone: '+91 98201 54321',
-      serviceRequired: 'Mobile App Engineering (iOS & Android)',
-      budgetRange: '$10k - $25k',
-      message: 'Patient-facing mobile application with appointment booking and secure document retrieval.',
-      source: 'direct',
-      status: 'contacted',
-      createdAt: '2026-11-08T16:45:00Z'
-    }
-  ]);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [chatCount, setChatCount] = useState<number>(2);
 
-  const updateStatus = (id: string, newStatus: Lead['status']) => {
+  const isChatbotLead = (source?: string) => {
+    if (!source) return false;
+    const lower = source.toLowerCase();
+    return lower.includes('ai assistant') || lower.includes('chatbot');
+  };
+
+  useEffect(() => {
+    fetch('/api/leads')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data.leads)) {
+          const normalized = data.leads.map((l: Record<string, unknown>) => ({
+            id: String(l.id || ''),
+            name: String(l.name || ''),
+            email: String(l.email || ''),
+            phone: l.phone ? String(l.phone) : undefined,
+            company: l.company ? String(l.company) : undefined,
+            serviceRequired: String(l.service_required || l.serviceRequired || ''),
+            budgetRange: l.budget_range || l.budgetRange ? String(l.budget_range || l.budgetRange) : undefined,
+            message: String(l.message || ''),
+            source: String(l.source || 'direct'),
+            status: (l.status as Lead['status']) || 'new',
+            createdAt: String(l.created_at || l.createdAt || '')
+          }));
+          setLeads(normalized);
+        }
+      })
+      .catch((err) => console.error(err));
+
+    fetch('/api/chat-logs')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data.sessions)) {
+          setChatCount(data.sessions.length);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const updateStatus = async (id: string, newStatus: Lead['status']) => {
     setLeads((prev) =>
       prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l))
     );
+    try {
+      await fetch('/api/leads', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status: newStatus })
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
+  const botLeadsCount = leads.filter((l) => isChatbotLead(l.source)).length;
+
   const stats = [
-    { label: 'Total Inbound Leads', value: `${leads.length + 12}`, change: '+18% this month', icon: Users, color: 'text-indigo-600' },
-    { label: 'Active Projects', value: `${PROJECTS_DATA.length}`, change: '4 in delivery', icon: Briefcase, color: 'text-emerald-600' },
-    { label: 'Dynamic Services', value: `${SERVICES_DATA.length}`, change: 'Active catalog', icon: Layers, color: 'text-cyan-600' },
-    { label: 'Published Articles', value: `${BLOG_POSTS_DATA.length}`, change: 'SEO optimized', icon: FileText, color: 'text-purple-600' }
+    {
+      label: 'Total Inbound Enquiries',
+      value: `${leads.length}`,
+      change: `${botLeadsCount} from AI Assistant Bot`,
+      icon: Users,
+      color: 'text-amber-600'
+    },
+    {
+      label: 'AI Assistant Chat Logs',
+      value: `${chatCount}`,
+      change: 'Saved for full analysis',
+      icon: Bot,
+      color: 'text-amber-500'
+    },
+    {
+      label: 'Active Services',
+      value: `${SERVICES_DATA.length}`,
+      change: 'Active catalog',
+      icon: Layers,
+      color: 'text-emerald-600'
+    },
+    {
+      label: 'Case Studies & Blogs',
+      value: `${PROJECTS_DATA.length + BLOG_POSTS_DATA.length}`,
+      change: 'SEO indexed',
+      icon: Briefcase,
+      color: 'text-stone-700 dark:text-stone-300'
+    }
   ];
 
   const getStatusBadge = (status: Lead['status']) => {
     switch (status) {
       case 'new':
-        return <Badge className="bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20">New</Badge>;
+        return <Badge className="bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30">New</Badge>;
       case 'contacted':
-        return <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20">Contacted</Badge>;
+        return <Badge className="bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20">Contacted</Badge>;
       case 'qualified':
         return <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20">Qualified</Badge>;
       case 'converted':
-        return <Badge className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20">Converted</Badge>;
+        return <Badge className="bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20">Converted</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -99,25 +131,27 @@ export default function AdminDashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
           <div>
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-indigo-600" />
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-600">
+              <ShieldCheck className="w-5 h-5 text-amber-600" />
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
                 Ecreation Management ERP
               </span>
             </div>
             <h1 className="text-3xl font-extrabold text-foreground mt-1">Admin Operations Center</h1>
-            <p className="text-sm text-muted-foreground">Manage client leads, services catalog, and dynamic blog content without touching source code.</p>
+            <p className="text-sm text-muted-foreground">
+              Manage client enquiries, analyze Ecreation AI Assistant chat logs, and update website content.
+            </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Link href="/" target="_blank">
-              <Button variant="outline" size="sm" className="rounded-xl text-xs">
-                <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
-                Live Website
+          <div className="flex flex-wrap items-center gap-3">
+            <Link href="/admin/chats">
+              <Button size="sm" className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs font-bold">
+                <Bot className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+                Analyze AI Chat Logs ({chatCount})
               </Button>
             </Link>
-            <Link href="/contact">
-              <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold">
-                Test Inquiry Form
+            <Link href="/admin/leads">
+              <Button variant="outline" size="sm" className="rounded-xl text-xs">
+                Open Full Leads CRM
               </Button>
             </Link>
           </div>
@@ -144,13 +178,17 @@ export default function AdminDashboardPage() {
         <div className="bg-card border border-border rounded-2xl shadow-xs overflow-hidden space-y-4 p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 className="text-xl font-bold text-foreground">Inbound Leads & Inquiry Pipeline</h2>
-              <p className="text-xs text-muted-foreground">Real-time submissions from contact forms, chatbot, and campaign landing pages.</p>
+              <h2 className="text-xl font-bold text-foreground">Inbound Enquiries &amp; AI Chatbot Leads</h2>
+              <p className="text-xs text-muted-foreground">
+                Enquiries captured via Ecreation AI Assistant Chatbot are highlighted automatically.
+              </p>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-xs font-mono">
-                {leads.length} Active Records
-              </Badge>
+              <Link href="/admin/leads">
+                <Button variant="outline" size="sm" className="text-xs rounded-xl">
+                  View All &amp; Filter ({leads.length})
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -160,100 +198,126 @@ export default function AdminDashboardPage() {
               <thead className="bg-muted/50 border-b border-border text-muted-foreground uppercase tracking-wider font-mono text-[10px]">
                 <tr>
                   <th className="p-3.5">Ref ID / Client</th>
-                  <th className="p-3.5">Contact Details</th>
+                  <th className="p-3.5">Captured Phone &amp; Email</th>
                   <th className="p-3.5">Service Requested</th>
-                  <th className="p-3.5">Budget</th>
-                  <th className="p-3.5">Source</th>
+                  <th className="p-3.5">Enquiry Source</th>
                   <th className="p-3.5">Status</th>
                   <th className="p-3.5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border font-sans">
-                {leads.map((lead) => (
-                  <tr key={lead.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="p-3.5">
-                      <span className="font-mono text-indigo-600 font-semibold block">{lead.id}</span>
-                      <span className="font-bold text-foreground block text-xs">{lead.name}</span>
-                      <span className="text-[11px] text-muted-foreground">{lead.company}</span>
-                    </td>
-                    <td className="p-3.5">
-                      <a href={`mailto:${lead.email}`} className="text-indigo-600 hover:underline block">
-                        {lead.email}
-                      </a>
-                      <span className="text-muted-foreground">{lead.phone || 'No phone'}</span>
-                    </td>
-                    <td className="p-3.5 max-w-[200px]">
-                      <span className="font-medium text-foreground block">{lead.serviceRequired}</span>
-                      <span className="text-[11px] text-muted-foreground truncate block">{lead.message}</span>
-                    </td>
-                    <td className="p-3.5 font-mono text-foreground font-medium">
-                      {lead.budgetRange}
-                    </td>
-                    <td className="p-3.5">
-                      <span className="font-mono text-[11px] bg-muted px-2 py-0.5 rounded text-muted-foreground">
-                        {lead.source}
-                      </span>
-                    </td>
-                    <td className="p-3.5">
-                      {getStatusBadge(lead.status)}
-                    </td>
-                    <td className="p-3.5 text-right space-x-1.5">
-                      <select
-                        value={lead.status}
-                        onChange={(e) => updateStatus(lead.id, e.target.value as Lead['status'])}
-                        className="text-[11px] bg-background border border-border rounded-lg px-2 py-1 text-foreground focus-visible:outline-hidden"
-                      >
-                        <option value="new">New</option>
-                        <option value="contacted">Contacted</option>
-                        <option value="qualified">Qualified</option>
-                        <option value="converted">Converted</option>
-                        <option value="archived">Archived</option>
-                      </select>
-                    </td>
-                  </tr>
-                ))}
+                {leads.map((lead) => {
+                  const fromBot = isChatbotLead(lead.source);
+                  return (
+                    <tr
+                      key={lead.id}
+                      className={`transition-colors ${
+                        fromBot
+                          ? 'bg-amber-50/60 dark:bg-amber-950/30 hover:bg-amber-100/60 border-l-4 border-l-amber-500'
+                          : 'hover:bg-muted/30'
+                      }`}
+                    >
+                      <td className="p-3.5">
+                        <span className="font-mono text-amber-700 dark:text-amber-400 font-bold block">{lead.id}</span>
+                        <span className="font-bold text-foreground block text-xs">{lead.name}</span>
+                        <span className="text-[11px] text-muted-foreground">{lead.company}</span>
+                      </td>
+                      <td className="p-3.5">
+                        <a href={`mailto:${lead.email}`} className="text-amber-700 dark:text-amber-400 font-semibold hover:underline block">
+                          {lead.email}
+                        </a>
+                        <span className="text-foreground font-mono font-bold">{lead.phone || 'No phone'}</span>
+                      </td>
+                      <td className="p-3.5 max-w-[220px]">
+                        <span className="font-medium text-foreground block">{lead.serviceRequired}</span>
+                        <span className="text-[11px] text-muted-foreground truncate block">{lead.message}</span>
+                      </td>
+                      <td className="p-3.5">
+                        {fromBot ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-950 text-amber-400 border border-amber-500/60 font-bold text-[10px] shadow-xs">
+                            <Bot className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                            <span>Ecreation AI Assistant Chatbot</span>
+                          </span>
+                        ) : (
+                          <span className="font-mono text-[11px] bg-muted px-2 py-0.5 rounded text-muted-foreground">
+                            {lead.source}
+                          </span>
+                        )}
+                      </td>
+                      <td className="p-3.5">
+                        {getStatusBadge(lead.status)}
+                      </td>
+                      <td className="p-3.5 text-right space-x-1.5">
+                        <select
+                          value={lead.status}
+                          onChange={(e) => updateStatus(lead.id, e.target.value as Lead['status'])}
+                          className="text-[11px] bg-background border border-border rounded-lg px-2 py-1 text-foreground focus-visible:outline-hidden"
+                        >
+                          <option value="new">New</option>
+                          <option value="contacted">Contacted</option>
+                          <option value="qualified">Qualified</option>
+                          <option value="converted">Converted</option>
+                          <option value="archived">Archived</option>
+                        </select>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </div>
 
         {/* CMS Quick Links Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-stone-950 text-white border border-amber-500/50 p-6 rounded-2xl shadow-md space-y-3">
+            <div className="w-9 h-9 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center">
+              <MessageSquare className="w-4 h-4" />
+            </div>
+            <h3 className="text-base font-bold text-white">AI Assistant Chat Logs</h3>
+            <p className="text-xs text-stone-300">
+              Inspect all visitor chat transcripts, questions asked, and phone/email leads captured by the AI Bot.
+            </p>
+            <Link href="/admin/chats" className="text-xs font-bold text-amber-400 hover:underline inline-flex items-center gap-1 pt-1">
+              Open Chat Logs &amp; Analysis <ArrowUpRight className="w-3 h-3" />
+            </Link>
+          </div>
+
           <div className="bg-card border border-border p-6 rounded-2xl shadow-xs space-y-3">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center">
               <Layers className="w-4 h-4" />
             </div>
             <h3 className="text-base font-bold text-foreground">Services Catalog CMS</h3>
             <p className="text-xs text-muted-foreground">
               Modify deliverables, technology tags, and feature bullets across the {SERVICES_DATA.length} active service offerings.
             </p>
-            <Link href="/admin/services" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
+            <Link href="/admin/services" className="text-xs font-semibold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1 pt-1">
               Manage Services CMS <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>
 
           <div className="bg-card border border-border p-6 rounded-2xl shadow-xs space-y-3">
-            <div className="w-9 h-9 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center">
               <FileText className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-foreground">Blog CMS & Metadata</h3>
+            <h3 className="text-base font-bold text-foreground">Blog CMS &amp; Metadata</h3>
             <p className="text-xs text-muted-foreground">
               Publish technical write-ups, maintain reading times, and edit structured JSON-LD Article descriptions.
             </p>
-            <Link href="/admin/blog" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
+            <Link href="/admin/blog" className="text-xs font-semibold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1 pt-1">
               Manage Articles CMS <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>
 
           <div className="bg-card border border-border p-6 rounded-2xl shadow-xs space-y-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center">
               <Briefcase className="w-4 h-4" />
             </div>
             <h3 className="text-base font-bold text-foreground">Project Case Studies</h3>
             <p className="text-xs text-muted-foreground">
               Manage client metrics, challenge/solution narratives, and portfolio spotlight selections.
             </p>
-            <Link href="/admin/projects" className="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 pt-1">
+            <Link href="/admin/projects" className="text-xs font-semibold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1 pt-1">
               Manage Case Studies CMS <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>
@@ -262,4 +326,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-
