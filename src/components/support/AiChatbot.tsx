@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { Bot, X, Send, Sparkles, User, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Bot, X, Send, Sparkles, User, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -25,13 +25,13 @@ export const AiChatbot = () => {
     {
       id: 'm-1',
       sender: 'bot',
-      text: 'Hello! Welcome to Ecreation IT Solution. I am your AI Solutions Consultant. How can I assist you with your project today?',
+      text: 'Hello! Welcome to Ecreation IT Solution. I am your AI Consultant. How can I help you with Website Design, Office Automation ERP, SEO, or Social Media today?',
       time: 'Just now',
       quickReplies: [
-        'Explore Services',
-        'ERP & Client Portals',
-        'Project Timeline & Pricing',
-        'Schedule a Consultation'
+        'Website Design & Dev',
+        'Office Automation & ERP',
+        'SEO & Social Media',
+        '25% Launch Offer & Pricing'
       ]
     }
   ]);
@@ -61,9 +61,8 @@ export const AiChatbot = () => {
     if (!textToSend) setInput('');
     setIsTyping(true);
 
-    // AI Response Logic based on knowledge base
     setTimeout(() => {
-      let botResponse: Message = {
+      const botResponse: Message = {
         id: `b-${Date.now()}`,
         sender: 'bot',
         text: '',
@@ -72,77 +71,90 @@ export const AiChatbot = () => {
 
       const lower = query.toLowerCase();
 
-      if (lower.includes('service') || lower.includes('offer') || lower.includes('stack')) {
+      if (lower.includes('website') || lower.includes('web') || lower.includes('design')) {
         botResponse.text =
-          'Ecreation IT Solution specializes in enterprise software engineering, bespoke ERP & client portals, cloud & DevOps modernization (AWS/GCP), AI automation workflows, cross-platform mobile apps (iOS & Android), and high-conversion UI/UX systems.';
-        botResponse.quickReplies = ['ERP & Client Portals', 'Cloud & DevOps', 'Request a Proposal'];
-        botResponse.ctaLink = { text: 'View All Engineering Services', href: '/services' };
-      } else if (lower.includes('erp') || lower.includes('portal') || lower.includes('client')) {
+          'We design and develop luxury corporate websites, E-commerce stores, and ultra-fast Next.js portals with a full Admin CMS. Right now, you get Flat 25% OFF + Free 1-Year Cloud Hosting & Domain!';
+        botResponse.quickReplies = ['Office Automation & ERP', '25% Launch Offer & Pricing', 'Book Free Demo'];
+        botResponse.ctaLink = { text: 'Explore Website Engineering', href: '/services/custom-software-engineering' };
+      } else if (lower.includes('erp') || lower.includes('automation') || lower.includes('office') || lower.includes('billing')) {
         botResponse.text =
-          'Our bespoke ERP systems unify CRM, invoice automation, milestone tracking, and role-based permissions into a unified web application. Unlike rigid off-the-shelf software, our solutions are engineered precisely around your operational workflows.';
-        botResponse.quickReplies = ['View Logistics ERP Case Study', 'Start Project Inquiry'];
-        botResponse.ctaLink = { text: 'Read OmniLogistics ERP Case Study', href: '/projects/omnilogistics-erp' };
-      } else if (lower.includes('price') || lower.includes('cost') || lower.includes('budget') || lower.includes('timeline')) {
+          'Our custom Office Automation & ERP software handles automated GST billing, multi-warehouse inventory sync, HR attendance, payroll, and client CRM—cutting manual paperwork by 84%.';
+        botResponse.quickReplies = ['View ERP Case Study', 'Book Free Demo'];
+        botResponse.ctaLink = { text: 'Explore ERP & Office Automation', href: '/services/enterprise-erp-crm' };
+      } else if (lower.includes('seo') || lower.includes('social') || lower.includes('marketing')) {
         botResponse.text =
-          'Project investment depends on scope, architecture, and timeline. Typical dedicated development sprints start with transparent milestone contracts. We provide fixed-price deliverables or dedicated engineering pods with clear weekly SLAs.';
-        botResponse.quickReplies = ['Schedule a Scope Call', 'Explore Case Studies'];
-        botResponse.ctaLink = { text: 'Get a Detailed Estimate', href: '/contact' };
-      } else if (lower.includes('consultation') || lower.includes('contact') || lower.includes('call') || lower.includes('hire')) {
+          'We rank businesses #1 on Google Search (Technical SEO) and manage complete Instagram, LinkedIn, and Facebook growth along with high-ROI Google & Meta lead ads.';
+        botResponse.quickReplies = ['Claim Free ₹25,000 SEO Audit', '25% Launch Offer & Pricing'];
+        botResponse.ctaLink = { text: 'Claim Free SEO & Growth Audit', href: '/contact#enquiry' };
+      } else if (lower.includes('price') || lower.includes('cost') || lower.includes('offer') || lower.includes('25%')) {
         botResponse.text =
-          'Our principal architects are available for a 30-minute discovery call to evaluate your requirements and recommend technical architecture.';
-        botResponse.ctaLink = { text: 'Fill Discovery Form', href: '/contact' };
+          'Our Limited Period Launch Offer gives you Flat 25% OFF (Promo Code: ECREATION25) on Website Design, Custom ERP, or Digital Marketing packages—plus Free 1-Year Cloud Hosting, SSL & Domain!';
+        botResponse.quickReplies = ['Book Free Demo', 'Calculate Project Cost'];
+        botResponse.ctaLink = { text: 'Claim 25% Launch Discount', href: '/#offers' };
       } else {
         botResponse.text =
-          'Thank you for reaching out! Ecreation IT Solution engineers scalable digital solutions with guaranteed performance and zero fluff. Would you like to review our case studies or connect with our lead architect?';
-        botResponse.quickReplies = ['View Case Studies', 'Contact Lead Architect'];
-        botResponse.ctaLink = { text: 'Connect with Us', href: '/contact' };
+          'Our senior architects are ready to prepare a free custom demo and quotation for your business within 4 hours. Would you like to submit a quick enquiry?';
+        botResponse.quickReplies = ['Website Design & Dev', 'Office Automation & ERP', '25% Launch Offer & Pricing'];
+        botResponse.ctaLink = { text: 'Open Project Enquiry', href: '/contact#enquiry' };
       }
 
       setIsTyping(false);
       setMessages((prev) => [...prev, botResponse]);
-    }, 600);
+    }, 550);
   };
 
   return (
     <>
-      {/* Floating Trigger Button */}
-      <div className="fixed bottom-6 left-6 z-40">
+      {/* Floating AI Chatbot Trigger Button — Positioned on Bottom-Right */}
+      <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40">
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="h-14 px-4 sm:px-5 rounded-full bg-neutral-900 text-white hover:bg-neutral-800 shadow-xl shadow-black/20 border border-neutral-700/60 flex items-center gap-2.5 transition-all duration-200 group focus-visible:ring-4 focus-visible:ring-indigo-500/50"
+          className="h-14 px-4 sm:px-5 rounded-full bg-stone-950 text-white hover:bg-stone-900 shadow-2xl shadow-stone-950/30 border border-amber-500/50 flex items-center gap-2.5 transition-all duration-200 hover:scale-105 group"
           aria-label="Toggle AI Consultation Assistant"
         >
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
-            <Sparkles className="w-4 h-4 fill-white" />
+          <div className="relative w-9 h-9 rounded-full bg-amber-500 flex items-center justify-center text-stone-950 shadow-sm">
+            <Bot className="w-5 h-5" />
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-stone-950 animate-pulse" />
           </div>
-          <span className="font-semibold text-sm hidden sm:inline">AI Consultant</span>
-          {isOpen ? <X className="w-4 h-4 text-neutral-400" /> : <Bot className="w-4 h-4 text-blue-400" />}
+          <div className="text-left hidden sm:block">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 block leading-none">
+              24/7 Instant Help
+            </span>
+            <span className="font-bold text-xs text-white leading-tight block mt-0.5">
+              AI Consultant Chat
+            </span>
+          </div>
+          {isOpen ? (
+            <X className="w-4 h-4 text-stone-400 ml-1" />
+          ) : (
+            <Sparkles className="w-4 h-4 text-amber-400 ml-1 group-hover:rotate-12 transition-transform" />
+          )}
         </Button>
       </div>
 
-      {/* Chat Window Dialog */}
+      {/* Chat Window Dialog — Opens on Bottom-Right above the Bot Trigger */}
       {isOpen && (
-        <div className="fixed bottom-24 left-4 sm:left-6 z-50 w-[92vw] sm:w-[400px] h-[550px] max-h-[80vh] bg-background border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in-50 slide-in-from-bottom-5 duration-200">
+        <div className="fixed bottom-22 right-4 sm:right-6 z-50 w-[92vw] sm:w-[400px] h-[540px] max-h-[78vh] bg-white dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in-50 slide-in-from-bottom-5 duration-200">
           {/* Header */}
-          <div className="p-4 bg-neutral-950 text-white flex items-center justify-between border-b border-neutral-800">
+          <div className="p-4 bg-stone-950 text-white flex items-center justify-between border-b border-stone-800">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold shadow-xs">
-                <Bot className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-stone-950 font-bold shadow-xs">
+                <Bot className="w-5 h-5" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-bold text-white">Ecreation AI</h3>
-                  <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded-full font-medium">
+                  <h3 className="text-sm font-black text-white">Ecreation AI Assistant</h3>
+                  <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-mono font-bold">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Online
                   </span>
                 </div>
-                <p className="text-[11px] text-neutral-400">Enterprise Solutions Consultant</p>
+                <p className="text-[11px] text-stone-400">Website · ERP · SEO · Automation Expert</p>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-neutral-400 hover:text-white p-1 rounded-md transition-colors"
+              className="text-stone-400 hover:text-white p-1.5 rounded-lg hover:bg-stone-800 transition-colors"
               aria-label="Close Chat"
             >
               <X className="w-5 h-5" />
@@ -150,48 +162,46 @@ export const AiChatbot = () => {
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-muted/20">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-[#FAF8F5] dark:bg-stone-900/50">
             {messages.map((msg) => (
               <div
                 key={msg.id}
                 className={`flex gap-2.5 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.sender === 'bot' && (
-                  <div className="w-7 h-7 rounded-lg bg-indigo-600/10 text-indigo-600 flex items-center justify-center shrink-0 mt-0.5 border border-indigo-600/20">
+                  <div className="w-7 h-7 rounded-lg bg-stone-950 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 border border-amber-500/30">
                     <Bot className="w-4 h-4" />
                   </div>
                 )}
-                <div className="max-w-[80%] space-y-2">
+                <div className="max-w-[82%] space-y-2">
                   <div
                     className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed ${
                       msg.sender === 'user'
-                        ? 'bg-indigo-600 text-white rounded-tr-xs'
-                        : 'bg-card text-foreground border border-border shadow-2xs rounded-tl-xs'
+                        ? 'bg-stone-950 text-white border border-amber-500/40 rounded-tr-xs'
+                        : 'bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 border border-stone-200/90 dark:border-stone-800 shadow-2xs rounded-tl-xs'
                     }`}
                   >
                     {msg.text}
                   </div>
 
-                  {/* Optional CTA Link */}
                   {msg.ctaLink && (
                     <Link
                       href={msg.ctaLink.href}
                       onClick={() => setIsOpen(false)}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-700 bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-900 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-950 bg-amber-400 hover:bg-amber-300 px-3.5 py-2 rounded-xl transition-colors shadow-2xs"
                     >
                       {msg.ctaLink.text}
-                      <ArrowRight className="w-3 h-3" />
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   )}
 
-                  {/* Quick Replies */}
                   {msg.quickReplies && (
                     <div className="flex flex-wrap gap-1.5 pt-1">
                       {msg.quickReplies.map((reply) => (
                         <button
                           key={reply}
                           onClick={() => handleSend(reply)}
-                          className="text-[11px] font-medium bg-background hover:bg-muted text-muted-foreground hover:text-foreground px-2.5 py-1 rounded-full border border-border transition-colors text-left"
+                          className="text-[11px] font-semibold bg-white dark:bg-stone-900 hover:bg-stone-950 hover:text-white text-stone-700 dark:text-stone-300 px-3 py-1.5 rounded-full border border-stone-200 dark:border-stone-700 transition-colors text-left"
                         >
                           {reply}
                         </button>
@@ -199,10 +209,10 @@ export const AiChatbot = () => {
                     </div>
                   )}
 
-                  <span className="text-[10px] text-muted-foreground block px-1">{msg.time}</span>
+                  <span className="text-[10px] text-stone-400 block px-1">{msg.time}</span>
                 </div>
                 {msg.sender === 'user' && (
-                  <div className="w-7 h-7 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-800 dark:text-amber-300 flex items-center justify-center shrink-0 mt-0.5">
                     <User className="w-4 h-4" />
                   </div>
                 )}
@@ -210,8 +220,8 @@ export const AiChatbot = () => {
             ))}
 
             {isTyping && (
-              <div className="flex items-center gap-2 text-muted-foreground text-xs p-2">
-                <Bot className="w-4 h-4 text-indigo-500 animate-spin" />
+              <div className="flex items-center gap-2 text-stone-500 text-xs p-2">
+                <Bot className="w-4 h-4 text-amber-600 animate-spin" />
                 <span>Ecreation AI is typing...</span>
               </div>
             )}
@@ -219,19 +229,19 @@ export const AiChatbot = () => {
           </div>
 
           {/* Input Footer */}
-          <div className="p-3 bg-card border-t border-border flex items-center gap-2">
+          <div className="p-3 bg-white dark:bg-stone-950 border-t border-stone-200 dark:border-stone-800 flex items-center gap-2">
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              placeholder="Ask about our services, ERP, or tech stack..."
-              className="text-xs h-9 bg-background"
+              placeholder="Ask about Website, ERP, SEO, or 25% Offer..."
+              className="text-xs h-10 bg-stone-50 dark:bg-stone-900 border-stone-200 dark:border-stone-800 rounded-xl"
             />
             <Button
               onClick={() => handleSend()}
               disabled={!input.trim()}
               size="icon"
-              className="h-9 w-9 bg-indigo-600 hover:bg-indigo-700 text-white shrink-0"
+              className="h-10 w-10 bg-stone-950 hover:bg-stone-900 text-amber-400 border border-amber-500/40 rounded-xl shrink-0"
               aria-label="Send message"
             >
               <Send className="w-4 h-4" />

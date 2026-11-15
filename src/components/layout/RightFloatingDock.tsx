@@ -4,9 +4,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Home,
   Layers,
-  Cpu,
   Briefcase,
-  GitBranch,
   MessageSquareQuote,
   Send,
   ArrowUp,
@@ -15,11 +13,13 @@ import {
   Tag,
   Images
 } from 'lucide-react';
+import { HeaderEnquiryModal } from '@/components/forms/HeaderEnquiryModal';
 
 export const RightFloatingDock = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('hero');
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,8 +67,7 @@ export const RightFloatingDock = () => {
     { id: 'interactive-showcase', label: 'Live Simulator', icon: Sparkles },
     { id: 'projects', label: 'Case Studies', icon: Briefcase },
     { id: 'estimator', label: 'Cost Estimator', icon: Calculator },
-    { id: 'testimonials', label: 'Client Reviews', icon: MessageSquareQuote },
-    { id: 'contact', label: 'Quick Enquiry', icon: Send }
+    { id: 'testimonials', label: 'Client Reviews', icon: MessageSquareQuote }
   ];
 
   const scrollTo = (id: string) => {
@@ -86,6 +85,7 @@ export const RightFloatingDock = () => {
 
   return (
     <>
+      {/* Top Scroll Progress Bar */}
       <div
         className="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-400 transition-all duration-75 origin-left"
         style={{ width: `${scrollProgress}%` }}
@@ -95,11 +95,26 @@ export const RightFloatingDock = () => {
         aria-valuemax={100}
       />
 
+      {/* Right-Side Persistent Floating Navigation & Quick Enquiry Button */}
       <nav
-        className="fixed right-4 lg:right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center gap-3 select-none"
-        aria-label="Section Quick Dock"
+        className="fixed right-0 sm:right-3 lg:right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end gap-2.5 select-none"
+        aria-label="Right Side Quick Enquiry and Section Navigation"
       >
-        <div className="flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/95 backdrop-blur-md border border-stone-200/90 shadow-lg shadow-stone-900/5">
+        {/* Always-Visible Floating Quick Enquiry Form Trigger Button on Right Side */}
+        <button
+          onClick={() => setEnquiryOpen(true)}
+          className="group flex items-center gap-2 px-3.5 py-3 rounded-l-2xl sm:rounded-2xl bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/60 shadow-xl shadow-stone-950/25 transition-all duration-200 hover:scale-105 cursor-pointer"
+          aria-label="Open Quick Enquiry Form"
+        >
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
+          <span className="text-xs font-black tracking-wide text-amber-400 whitespace-nowrap">
+            Quick Enquiry
+          </span>
+          <Send className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform shrink-0" />
+        </button>
+
+        {/* Desktop Section Quick-Jump Dock */}
+        <div className="hidden xl:flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200/90 dark:border-stone-800 shadow-lg shadow-stone-900/5 mr-0.5">
           {dockLinks.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -149,6 +164,13 @@ export const RightFloatingDock = () => {
           )}
         </div>
       </nav>
+
+      {/* Controlled Quick Enquiry Form Modal */}
+      <HeaderEnquiryModal
+        open={enquiryOpen}
+        onOpenChange={setEnquiryOpen}
+        hideTrigger={true}
+      />
     </>
   );
 };

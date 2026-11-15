@@ -6,7 +6,6 @@ import { Footer } from '@/components/layout/Footer';
 import { LeftSocialRail } from '@/components/layout/LeftSocialRail';
 import { RightFloatingDock } from '@/components/layout/RightFloatingDock';
 import { OpeningPreloader } from '@/components/animations/OpeningPreloader';
-import { WhatsAppButton } from '@/components/support/WhatsAppButton';
 import { AiChatbot } from '@/components/support/AiChatbot';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 
@@ -26,17 +25,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ecreation.in'),
   title: {
-    default: 'Ecreation IT Solution | Enterprise Software, ERP & Cloud Engineering',
+    default: 'Ecreation IT Solution | Website Design, Custom ERP, AI & Digital Marketing',
     template: '%s | Ecreation IT Solution'
   },
   description:
-    'Ecreation IT Solution is a premier software development and enterprise IT company engineering custom ERPs, high-throughput web systems, mobile apps, and cloud architectures.',
+    'Ecreation IT Solution builds world-class corporate websites, custom Office Automation & ERP software, AI chatbots, mobile apps, and Google #1 SEO & social media growth.',
   keywords: [
     'Ecreation IT Solution',
+    'Website Design and Development',
+    'Office Automation Software',
     'Enterprise ERP Solutions',
-    'Custom Software Engineering',
-    'Next.js Development Agency',
-    'Cloud Architecture DevOps',
+    'SEO and Digital Marketing',
+    'Social Media Management',
     'AI Workflow Automation',
     'Mobile App Engineering'
   ],
@@ -52,15 +52,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://ecreation.in',
-    title: 'Ecreation IT Solution | Enterprise Software & Cloud Engineering',
+    title: 'Ecreation IT Solution | Website Design, Custom ERP & Digital Growth',
     description:
-      'Engineering scalable enterprise systems, bespoke ERP portals, and mission-critical digital products with guaranteed performance.',
+      'Engineering luxury websites, custom ERP & office automation software, and high-ROI digital marketing.',
     siteName: 'Ecreation IT Solution',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ecreation IT Solution | Enterprise Software & Cloud Engineering',
-    description: 'Engineering scalable enterprise systems, bespoke ERP portals, and mission-critical cloud solutions.',
+    title: 'Ecreation IT Solution | Website Design, Custom ERP & Digital Growth',
+    description: 'Engineering luxury websites, custom ERP & office automation software, and high-ROI digital marketing.',
     creator: '@ecreation_it',
   },
   icons: {
@@ -92,14 +92,13 @@ export default function RootLayout({
         <SchemaMarkup type="Organization" />
         <SchemaMarkup type="WebSite" />
       </head>
-      <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen selection:bg-amber-500 selection:text-slate-950">
+      <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen selection:bg-amber-500 selection:text-stone-950">
         <OpeningPreloader />
         <RightFloatingDock />
         <LeftSocialRail />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
-        <WhatsAppButton />
         <AiChatbot />
       </body>
     </html>

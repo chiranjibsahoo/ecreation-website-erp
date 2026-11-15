@@ -352,3 +352,4 @@ export const VisualPortfolioSlider = () => {
     </section>
   );
 };
+
