@@ -35,6 +35,12 @@ export default function AdminDashboardPage() {
     return lower.includes('popup') || lower.includes('exit-intent') || lower.includes('offer');
   };
 
+  const isEngagedIdleLead = (source?: string) => {
+    if (!source) return false;
+    const lower = source.toLowerCase();
+    return lower.includes('1-2 min') || lower.includes('engaged visitor');
+  };
+
   useEffect(() => {
     fetch('/api/leads')
       .then((res) => res.json())
@@ -248,6 +254,11 @@ export default function AdminDashboardPage() {
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-950 text-amber-400 border border-amber-500/60 font-bold text-[10px] shadow-xs">
                             <Bot className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                             <span>Ecreation AI Assistant Chatbot</span>
+                          </span>
+                        ) : isEngagedIdleLead(lead.source) ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#065F46] to-[#0F766E] text-amber-300 border border-amber-400/70 font-bold text-[10px] shadow-xs">
+                            <Gift className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                            <span>{lead.source}</span>
                           </span>
                         ) : fromOfferPopup ? (
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white border border-amber-300/70 font-bold text-[10px] shadow-xs">

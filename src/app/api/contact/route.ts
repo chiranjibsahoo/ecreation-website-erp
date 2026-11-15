@@ -12,20 +12,30 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, leadId: 'discarded' });
     }
 
-    // 2. Server-side validation
-    if (!email) {
+    // 2. Server-side validation for Email & Phone
+    if (!email || !String(email).trim()) {
       return NextResponse.json(
-        { error: 'Missing required field: email is required.' },
+        { error: 'Please enter your email ID.' },
         { status: 400 }
       );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(String(email).trim())) {
       return NextResponse.json(
-        { error: 'Invalid email address format.' },
+        { error: 'Please enter a valid email address (e.g. name@company.com).' },
         { status: 400 }
       );
+    }
+
+    if (phone !== undefined && phone !== null && String(phone).trim() !== '') {
+      const digitsOnly = String(phone).replace(/\D/g, '');
+      if (digitsOnly.length < 10 || digitsOnly.length > 15 || /^(\d)\1+$/.test(digitsOnly)) {
+        return NextResponse.json(
+          { error: 'Please enter a valid 10-digit mobile / phone number.' },
+          { status: 400 }
+        );
+      }
     }
 
     const safeName = name && String(name).trim()
