@@ -117,3 +117,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to save chat session' }, { status: 500 });
   }
 }
+

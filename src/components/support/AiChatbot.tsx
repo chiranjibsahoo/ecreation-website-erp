@@ -374,29 +374,30 @@ export const AiChatbot = () => {
 
   return (
     <>
-      {/* Floating AI Chatbot Trigger Button — Responsive on Mobile & Desktop */}
+      {/* Floating AI Chatbot Trigger Button — Distinct Royal Emerald & 24K Gold Accent */}
       <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="h-12 sm:h-14 px-3.5 sm:px-5 rounded-full bg-stone-950 text-white hover:bg-stone-900 shadow-2xl shadow-stone-950/30 border border-amber-500/60 flex items-center gap-2 sm:gap-2.5 transition-all duration-200 hover:scale-105 group cursor-pointer"
+          className="h-12 sm:h-14 px-3.5 sm:px-5 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:via-teal-500 hover:to-emerald-600 text-white shadow-[0_10px_30px_rgba(5,150,105,0.45)] border-2 border-amber-400/90 flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:scale-105 group cursor-pointer"
           aria-label="Toggle AI Consultation Assistant"
         >
-          <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-amber-500 flex items-center justify-center text-stone-950 shadow-sm shrink-0">
-            <Bot className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-stone-950 animate-pulse" />
+          <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-amber-400 flex items-center justify-center text-stone-950 shadow-md shrink-0">
+            <Bot className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-white ring-2 ring-emerald-700 animate-ping" />
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-300 ring-2 ring-emerald-700" />
           </div>
           <div className="text-left">
-            <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-amber-400 block leading-none">
+            <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-amber-200 block leading-none">
               24/7 AI Chat
             </span>
-            <span className="font-bold text-[11px] sm:text-xs text-white leading-tight block mt-0.5">
+            <span className="font-black text-[11px] sm:text-xs text-white leading-tight block mt-0.5">
               Ask Consultant
             </span>
           </div>
           {isOpen ? (
-            <X className="w-4 h-4 text-stone-400 ml-0.5" />
+            <X className="w-4 h-4 text-amber-200 ml-0.5" />
           ) : (
-            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 ml-0.5 group-hover:rotate-12 transition-transform" />
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 ml-0.5 group-hover:rotate-12 transition-transform" />
           )}
         </Button>
       </div>

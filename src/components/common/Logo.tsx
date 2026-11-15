@@ -80,7 +80,11 @@ export const Logo: React.FC<LogoProps> = ({
           >
             Ecreation
           </span>
-          <span className={`font-bold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-400 mt-1 ${currentSize.sub}`}>
+          <span
+            className={`font-bold uppercase tracking-[0.18em] mt-1 ${
+              theme === 'dark' ? 'text-amber-400' : 'text-amber-700 dark:text-amber-400'
+            } ${currentSize.sub}`}
+          >
             IT Solution
           </span>
         </div>
