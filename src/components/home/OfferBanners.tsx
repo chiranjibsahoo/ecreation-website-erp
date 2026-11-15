@@ -44,7 +44,7 @@ export const PrimaryLaunchOfferBanner = () => {
     <section
       id="offers"
       className="py-12 sm:py-16 bg-[#FAF8F5] dark:bg-stone-950 border-b border-stone-200/80 dark:border-stone-800 relative overflow-hidden"
-      aria-label="Special Launch Discount Offer"
+      aria-label="Special Business Package Discount Offer"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
@@ -61,11 +61,11 @@ export const PrimaryLaunchOfferBanner = () => {
                 <div className="flex flex-wrap items-center gap-2.5">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-stone-950 text-xs font-black uppercase tracking-wider">
                     <Gift className="w-3.5 h-3.5" />
-                    LIMITED PERIOD LAUNCH OFFER
+                    SPECIAL BUSINESS PACKAGE OFFER
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-900 border border-stone-700 text-amber-300 text-xs font-mono font-semibold">
                     <Clock className="w-3.5 h-3.5 text-amber-400" />
-                    Valid for First 15 Business Bookings This Month
+                    Available for All New Business Projects
                   </span>
                 </div>
 
@@ -74,7 +74,7 @@ export const PrimaryLaunchOfferBanner = () => {
                 </h2>
 
                 <p className="text-stone-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-                  Upgrade your company with an A-class Website, Automated Billing/ERP Software, or Google #1 SEO &amp; Social Media Package—and receive 4 high-value launch bonuses completely free:
+                  Upgrade your company with an A-class Website, Automated Billing/ERP Software, or Google #1 SEO &amp; Social Media Package—and receive 4 high-value business bonuses completely free:
                 </p>
 
                 {/* 4 Free Bonuses Grid */}
@@ -141,7 +141,7 @@ export const PrimaryLaunchOfferBanner = () => {
 
                 <Link href="/contact#enquiry" className="block">
                   <Button className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-stone-950 font-black rounded-xl text-sm shadow-lg shadow-amber-500/20 transition-all hover:scale-[1.02]">
-                    Claim 25% Launch Offer
+                    Claim 25% Special Offer
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>

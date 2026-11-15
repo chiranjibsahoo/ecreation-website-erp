@@ -62,7 +62,7 @@ export const RightFloatingDock = () => {
   const dockLinks = [
     { id: 'hero', label: 'Home', icon: Home },
     { id: 'visual-gallery', label: 'Visual Gallery', icon: Images },
-    { id: 'offers', label: '25% Launch Offer', icon: Tag },
+    { id: 'offers', label: '25% Special Offer', icon: Tag },
     { id: 'services', label: 'IT Services', icon: Layers },
     { id: 'interactive-showcase', label: 'Live Simulator', icon: Sparkles },
     { id: 'projects', label: 'Case Studies', icon: Briefcase },

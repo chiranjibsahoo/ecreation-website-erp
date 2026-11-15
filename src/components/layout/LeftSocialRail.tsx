@@ -33,12 +33,7 @@ export const LeftSocialRail = () => {
       )
     },
     {
-      name: 'WhatsApp Consultation',
-      url: 'https://wa.me/919876543210?text=Hello%20Ecreation%20IT%20Solution%2C%20I%20would%20like%20to%20consult%20on%20a%20project',
-      icon: <MessageSquare className="w-4 h-4 text-amber-600" />
-    },
-    {
-      name: 'Direct Email',
+      name: 'Direct Email (contact@ecreation.in)',
       url: 'mailto:contact@ecreation.in?subject=Project%20Inquiry%20-%20Ecreation%20IT',
       icon: <Mail className="w-4 h-4 text-amber-600" />
     }

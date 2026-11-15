@@ -31,7 +31,7 @@ export const AiChatbot = () => {
         'Website Design & Dev',
         'Office Automation & ERP',
         'SEO & Social Media',
-        '25% Launch Offer & Pricing'
+        '25% Special Offer & Pricing'
       ]
     }
   ]);
@@ -74,7 +74,7 @@ export const AiChatbot = () => {
       if (lower.includes('website') || lower.includes('web') || lower.includes('design')) {
         botResponse.text =
           'We design and develop luxury corporate websites, E-commerce stores, and ultra-fast Next.js portals with a full Admin CMS. Right now, you get Flat 25% OFF + Free 1-Year Cloud Hosting & Domain!';
-        botResponse.quickReplies = ['Office Automation & ERP', '25% Launch Offer & Pricing', 'Book Free Demo'];
+        botResponse.quickReplies = ['Office Automation & ERP', '25% Special Offer & Pricing', 'Book Free Demo'];
         botResponse.ctaLink = { text: 'Explore Website Engineering', href: '/services/custom-software-engineering' };
       } else if (lower.includes('erp') || lower.includes('automation') || lower.includes('office') || lower.includes('billing')) {
         botResponse.text =
@@ -84,17 +84,17 @@ export const AiChatbot = () => {
       } else if (lower.includes('seo') || lower.includes('social') || lower.includes('marketing')) {
         botResponse.text =
           'We rank businesses #1 on Google Search (Technical SEO) and manage complete Instagram, LinkedIn, and Facebook growth along with high-ROI Google & Meta lead ads.';
-        botResponse.quickReplies = ['Claim Free ₹25,000 SEO Audit', '25% Launch Offer & Pricing'];
+        botResponse.quickReplies = ['Claim Free ₹25,000 SEO Audit', '25% Special Offer & Pricing'];
         botResponse.ctaLink = { text: 'Claim Free SEO & Growth Audit', href: '/contact#enquiry' };
       } else if (lower.includes('price') || lower.includes('cost') || lower.includes('offer') || lower.includes('25%')) {
         botResponse.text =
-          'Our Limited Period Launch Offer gives you Flat 25% OFF (Promo Code: ECREATION25) on Website Design, Custom ERP, or Digital Marketing packages—plus Free 1-Year Cloud Hosting, SSL & Domain!';
+          'Our Special Business Package Offer gives you Flat 25% OFF (Promo Code: ECREATION25) on Website Design, Custom ERP, or Digital Marketing packages—plus Free 1-Year Cloud Hosting, SSL & Domain!';
         botResponse.quickReplies = ['Book Free Demo', 'Calculate Project Cost'];
-        botResponse.ctaLink = { text: 'Claim 25% Launch Discount', href: '/#offers' };
+        botResponse.ctaLink = { text: 'Claim 25% Special Discount', href: '/#offers' };
       } else {
         botResponse.text =
-          'Our senior architects are ready to prepare a free custom demo and quotation for your business within 4 hours. Would you like to submit a quick enquiry?';
-        botResponse.quickReplies = ['Website Design & Dev', 'Office Automation & ERP', '25% Launch Offer & Pricing'];
+          'Our senior architects are ready to prepare a free custom demo and quotation for your business within 4 hours (or email us at contact@ecreation.in). Would you like to submit a quick enquiry?';
+        botResponse.quickReplies = ['Website Design & Dev', 'Office Automation & ERP', '25% Special Offer & Pricing'];
         botResponse.ctaLink = { text: 'Open Project Enquiry', href: '/contact#enquiry' };
       }
 

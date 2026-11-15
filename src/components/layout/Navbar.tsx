@@ -118,7 +118,7 @@ export const Navbar = () => {
           <div className="flex items-center gap-2.5 truncate">
             <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500 text-stone-950 font-black text-[10px] uppercase tracking-wider shrink-0">
               <Sparkles className="w-3 h-3" />
-              25% OFF LAUNCH OFFER
+              25% OFF SPECIAL OFFER
             </span>
             <span className="text-stone-200 truncate font-medium">
               Flat 25% OFF on Complete Business Website, Custom Office ERP &amp; Digital Marketing Packages
@@ -134,18 +134,10 @@ export const Navbar = () => {
 
           <div className="hidden lg:flex items-center gap-5 shrink-0 font-mono text-[11px] text-stone-300">
             <a
-              href="tel:+919876543210"
-              className="hover:text-amber-400 transition-colors flex items-center gap-1.5"
-            >
-              <PhoneCall className="w-3 h-3 text-amber-400" />
-              <span>+91 98765 43210</span>
-            </a>
-            <span className="text-stone-700">|</span>
-            <a
               href="mailto:contact@ecreation.in"
               className="hover:text-amber-400 transition-colors flex items-center gap-1.5"
             >
-              <Mail className="w-3 h-3 text-amber-400" />
+              <Mail className="w-3.5 h-3.5 text-amber-400" />
               <span>contact@ecreation.in</span>
             </a>
           </div>

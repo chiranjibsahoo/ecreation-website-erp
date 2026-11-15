@@ -165,7 +165,7 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
             </div>
             <div>
               <span className="text-[10px] font-mono uppercase font-bold text-amber-400 tracking-widest block">
-                FLAT 25% LAUNCH OFFER ACTIVE
+                FLAT 25% SPECIAL OFFER ACTIVE
               </span>
               <DialogTitle className="text-xl font-black text-white">
                 Quick Project Enquiry
@@ -247,7 +247,7 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+91 98765 43210"
+                    placeholder="Your Contact Number"
                     required
                     className="h-10 text-xs rounded-xl border-stone-200 dark:border-stone-800"
                   />

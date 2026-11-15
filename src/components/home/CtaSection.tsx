@@ -30,14 +30,12 @@ export const CtaSection = () => {
                   size="lg"
                   className="w-full sm:w-auto h-13 px-8 bg-amber-500 hover:bg-amber-400 text-stone-950 rounded-xl font-black shadow-lg shadow-amber-500/20 text-base hover:scale-[1.02] transition-all"
                 >
-                  Book Free Strategy Call
+                  Get Free Project Quote
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
               <a
-                href="https://wa.me/919876543210?text=Hello%20Ecreation%20IT%20Solution%2C%20I%20would%20like%20to%20consult%20on%20a%20project"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:contact@ecreation.in?subject=Project%20Consultation%20-%20Ecreation%20IT%20Solution"
                 className="w-full sm:w-auto"
               >
                 <Button
@@ -46,7 +44,7 @@ export const CtaSection = () => {
                   className="w-full sm:w-auto h-13 px-7 rounded-xl font-bold border-stone-700 bg-stone-900 text-white hover:bg-stone-800 text-base"
                 >
                   <MessageSquare className="w-4 h-4 mr-2 text-amber-400" />
-                  WhatsApp Direct Inquiry
+                  Email: contact@ecreation.in
                 </Button>
               </a>
             </div>

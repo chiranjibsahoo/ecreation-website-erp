@@ -334,7 +334,7 @@ export const FullscreenVideoHero = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300/80 dark:border-amber-800 text-xs font-bold text-amber-900 dark:text-amber-300 hover:bg-amber-100 transition-colors"
               >
                 <Tag className="w-3.5 h-3.5 text-amber-700 shrink-0" />
-                <span>Flat 25% Launch Discount</span>
+                <span>Flat 25% Special Discount</span>
                 <ArrowRight className="w-3 h-3 shrink-0" />
               </Link>
             </div>

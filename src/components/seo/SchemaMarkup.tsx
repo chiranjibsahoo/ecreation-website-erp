@@ -15,7 +15,6 @@ export const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type = 'Organization
     url: COMPANY_INFO.website,
     logo: `${COMPANY_INFO.website}/logo.png`,
     description: COMPANY_INFO.tagline,
-    telephone: COMPANY_INFO.phone,
     email: COMPANY_INFO.email,
     foundingDate: COMPANY_INFO.founded,
     address: {

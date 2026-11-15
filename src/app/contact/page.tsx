@@ -59,19 +59,9 @@ export default function ContactPage() {
                 <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400">
                   <Mail className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold text-stone-950 dark:text-white block">Inquiries &amp; RFPs</span>
+                    <span className="font-semibold text-stone-950 dark:text-white block">Official Email &amp; RFPs</span>
                     <a href={`mailto:${COMPANY_INFO.email}`} className="text-amber-700 dark:text-amber-400 hover:underline font-medium">
                       {COMPANY_INFO.email}
-                    </a>
-                  </div>
-                </li>
-
-                <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400">
-                  <Phone className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold text-stone-950 dark:text-white block">Direct Line</span>
-                    <a href={`tel:${COMPANY_INFO.phone}`} className="hover:text-stone-950 dark:hover:text-white font-medium">
-                      {COMPANY_INFO.phone}
                     </a>
                   </div>
                 </li>
@@ -79,15 +69,11 @@ export default function ContactPage() {
 
               <div className="pt-4 border-t border-stone-100 dark:border-stone-800">
                 <a
-                  href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=${encodeURIComponent(
-                    COMPANY_INFO.defaultWhatsAppMessage
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`mailto:${COMPANY_INFO.email}?subject=Project%20Inquiry%20-%20Ecreation%20IT%20Solution`}
                   className="w-full flex items-center justify-center gap-2 p-3.5 rounded-xl bg-stone-950 hover:bg-stone-900 border border-amber-500/40 text-white font-bold text-xs shadow-md transition-all"
                 >
-                  <MessageSquare className="w-4 h-4 text-amber-400" />
-                  Instant WhatsApp Direct Line
+                  <Mail className="w-4 h-4 text-amber-400" />
+                  Email Us Directly ({COMPANY_INFO.email})
                 </a>
               </div>
             </div>

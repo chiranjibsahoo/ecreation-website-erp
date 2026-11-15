@@ -130,13 +130,11 @@ export const SmartContactForm = () => {
             Submit Another Project Inquiry
           </Button>
           <a
-            href="https://wa.me/919876543210"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:contact@ecreation.in?subject=Priority%20Project%20Escalation"
             className="inline-flex"
           >
-            <Button className="bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-semibold">
-              Instant WhatsApp Escalation
+            <Button className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/40 text-xs font-semibold">
+              Email: contact@ecreation.in
             </Button>
           </a>
         </div>
@@ -212,7 +210,7 @@ export const SmartContactForm = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="+1 (555) 000-0000"
+            placeholder="Your Contact Number"
             className="rounded-xl"
           />
         </div>

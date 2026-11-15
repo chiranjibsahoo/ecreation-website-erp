@@ -304,9 +304,6 @@ export const COMPANY_INFO = {
   founded: '2019',
   headquarters: 'Tech Hub, Sector 62, Noida, Uttar Pradesh, India',
   email: 'contact@ecreation.in',
-  phone: '+91 98765 43210',
-  whatsappNumber: '919876543210',
-  defaultWhatsAppMessage: 'Hello Ecreation IT Solution! I would like to inquire about your software engineering and ERP services.',
   website: 'https://ecreation.in',
   stats: [
     { value: '120+', label: 'Enterprise Projects Delivered' },

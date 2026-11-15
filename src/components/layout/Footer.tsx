@@ -104,7 +104,7 @@ export const Footer = () => {
 
           {/* Contact & Location */}
           <div className="space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-white">Headquarters</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">Headquarters &amp; Contact</h3>
             <ul className="space-y-3 text-sm text-neutral-400">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
@@ -112,14 +112,8 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-amber-400 shrink-0" />
-                <a href={`mailto:${COMPANY_INFO.email}`} className="hover:text-white transition-colors">
+                <a href={`mailto:${COMPANY_INFO.email}`} className="hover:text-white transition-colors font-medium">
                   {COMPANY_INFO.email}
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-amber-400 shrink-0" />
-                <a href={`tel:${COMPANY_INFO.phone}`} className="hover:text-white transition-colors">
-                  {COMPANY_INFO.phone}
                 </a>
               </li>
             </ul>
