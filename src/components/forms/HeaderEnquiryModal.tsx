@@ -9,13 +9,12 @@ import {
   ShieldCheck,
   Sparkles,
   Phone,
-  User,
   Mail,
-  MessageSquareText
+  Gift,
+  Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import {
   Dialog,
@@ -32,6 +31,7 @@ interface HeaderEnquiryModalProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   hideTrigger?: boolean;
+  sourceLabel?: string;
 }
 
 export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
@@ -40,7 +40,8 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
   variant = 'default',
   open: controlledOpen,
   onOpenChange: setControlledOpen,
-  hideTrigger = false
+  hideTrigger = false,
+  sourceLabel = 'Quick Enquiry 25% Offer Popup'
 }) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const isControlled = controlledOpen !== undefined;
@@ -59,20 +60,12 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
   const [leadId, setLeadId] = useState('');
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
     phone: '',
-    company: '',
-    serviceRequired: 'Website Design & Web Development',
-    budgetRange: 'Standard Business Package (25% OFF)',
-    message: '',
-    honeypot: '',
-    source: 'right_nav_quick_enquiry'
+    email: '',
+    honeypot: ''
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -85,14 +78,17 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
       return;
     }
 
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setErrorMessage('Please fill in your name, email, and project requirements.');
+    const trimmedPhone = formData.phone.trim();
+    const trimmedEmail = formData.email.trim();
+
+    if (!trimmedPhone || trimmedPhone.replace(/\D/g, '').length < 7) {
+      setErrorMessage('Please enter a valid 10-digit mobile / phone number.');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setErrorMessage('Please enter a valid email address.');
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
+      setErrorMessage('Please enter a valid email ID.');
       return;
     }
 
@@ -102,7 +98,15 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          name: `Quick Offer Lead (${trimmedPhone})`,
+          phone: trimmedPhone,
+          email: trimmedEmail,
+          serviceRequired: 'Flat 25% Special Business Offer',
+          budgetRange: '25% Special Offer Claimed',
+          source: sourceLabel,
+          message: `Quick Enquiry submitted via ${sourceLabel}. Phone: ${trimmedPhone} | Email: ${trimmedEmail}`
+        })
       });
 
       const data = await res.json();
@@ -124,15 +128,9 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
   const handleReset = () => {
     setSuccess(false);
     setFormData({
-      name: '',
-      email: '',
       phone: '',
-      company: '',
-      serviceRequired: 'Website Design & Web Development',
-      budgetRange: 'Standard Business Package (25% OFF)',
-      message: '',
-      honeypot: '',
-      source: 'right_nav_quick_enquiry'
+      email: '',
+      honeypot: ''
     });
     setOpen(false);
   };
@@ -156,46 +154,50 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
         </DialogTrigger>
       )}
 
-      <DialogContent className="max-w-lg p-0 bg-white dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
-        {/* Luxury Top Obsidian & Gold Header */}
-        <DialogHeader className="p-6 bg-stone-950 text-white border-b border-stone-800 text-left space-y-1.5">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center shadow-md shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase font-bold text-amber-400 tracking-widest block">
-                FLAT 25% SPECIAL OFFER ACTIVE
-              </span>
-              <DialogTitle className="text-xl font-black text-white">
-                Quick Project Enquiry
-              </DialogTitle>
-            </div>
+      <DialogContent className="max-w-md p-0 bg-gradient-to-b from-[#161310] via-[#110F0D] to-[#0B0A09] text-white border-2 border-amber-400/70 rounded-3xl shadow-[0_25px_80px_-15px_rgba(245,158,11,0.45)] overflow-hidden max-h-[92vh] flex flex-col">
+        {/* Top Glowing Gold & Sunset Offer Ribbon */}
+        <div className="bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#D97706] px-5 py-2.5 flex items-center gap-2">
+          <Gift className="w-4 h-4 text-white animate-bounce shrink-0" />
+          <span className="text-[11px] font-black uppercase tracking-[0.16em] text-white">
+            SPECIAL BUSINESS OFFER — FLAT 25% OFF
+          </span>
+        </div>
+
+        <DialogHeader className="px-6 pt-5 pb-2 text-left space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-400/40 text-amber-300 text-[11px] font-extrabold w-fit">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>25% DISCOUNT + FREE 1-YEAR CLOUD HOSTING</span>
           </div>
-          <p className="text-xs text-stone-300 pt-1 leading-relaxed">
-            Share your requirements for Website Design, Office Automation ERP, SEO, or Social Media. Our team replies with a custom quote &amp; demo within 4 hours.
+          <DialogTitle className="text-2xl font-black text-white leading-tight">
+            Quick Enquiry &amp;{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-orange-400">
+              25% Special Offer
+            </span>
+          </DialogTitle>
+          <p className="text-xs text-stone-300 leading-relaxed">
+            Enter your <strong className="text-white">Mobile Number &amp; Email ID</strong> below to unlock your Flat 25% Special Offer and free live project consultation.
           </p>
         </DialogHeader>
 
-        <div className="p-6 overflow-y-auto">
+        <div className="px-6 pb-6 pt-2 overflow-y-auto">
           {success ? (
-            <div className="py-6 text-center space-y-4">
-              <div className="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-600 flex items-center justify-center mx-auto border border-amber-500/30">
-                <CheckCircle2 className="w-7 h-7" />
+            <div className="py-5 text-center space-y-4">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-400/40">
+                <CheckCircle2 className="w-8 h-8" />
               </div>
-              <div className="space-y-1">
-                <h3 className="text-xl font-black text-stone-950 dark:text-white">Enquiry Submitted!</h3>
-                <p className="text-xs text-stone-600 dark:text-stone-400 max-w-sm mx-auto leading-relaxed">
-                  Thank you, <span className="font-bold text-stone-950 dark:text-white">{formData.name}</span>. Our Senior Architect has received your details and will contact you shortly.
+              <div className="space-y-1.5">
+                <h3 className="text-xl font-black text-white">25% Special Offer Activated!</h3>
+                <p className="text-xs text-stone-300 max-w-sm mx-auto leading-relaxed">
+                  We have saved your Phone (<strong className="text-amber-300">{formData.phone}</strong>) &amp; Email (<strong className="text-amber-300">{formData.email}</strong>). Our team will reach out shortly.
                 </p>
               </div>
-              <div className="p-3 bg-stone-100 dark:bg-stone-900 rounded-xl inline-block border border-stone-200 dark:border-stone-800 font-mono text-xs text-stone-600 dark:text-stone-300">
-                Enquiry ID: <span className="text-amber-700 dark:text-amber-400 font-bold">{leadId}</span>
+              <div className="p-2.5 bg-white/10 rounded-xl inline-block border border-amber-400/40 font-mono text-xs text-amber-300">
+                Enquiry Ref: <span className="font-bold text-white">{leadId}</span>
               </div>
-              <div className="pt-3 flex items-center justify-center">
+              <div className="pt-2 flex items-center justify-center">
                 <Button
                   onClick={handleReset}
-                  className="bg-stone-950 hover:bg-stone-900 text-white font-bold text-xs rounded-xl px-6 h-10"
+                  className="bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-xs rounded-xl px-6 h-10 cursor-pointer"
                 >
                   Done &amp; Close
                 </Button>
@@ -214,123 +216,90 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
                 aria-hidden="true"
               />
 
+              {/* 3 Value Perks */}
+              <div className="grid grid-cols-3 gap-2">
+                <div className="p-2 rounded-xl bg-white/[0.05] border border-white/10 text-center">
+                  <span className="block text-xs font-black text-amber-400">25% OFF</span>
+                  <span className="text-[10px] text-stone-300">Special Offer</span>
+                </div>
+                <div className="p-2 rounded-xl bg-white/[0.05] border border-white/10 text-center">
+                  <span className="block text-xs font-black text-amber-400">FREE</span>
+                  <span className="text-[10px] text-stone-300">Live Demo</span>
+                </div>
+                <div className="p-2 rounded-xl bg-white/[0.05] border border-white/10 text-center">
+                  <span className="block text-xs font-black text-amber-400">1 YEAR</span>
+                  <span className="text-[10px] text-stone-300">Free Support</span>
+                </div>
+              </div>
+
               {errorMessage && (
-                <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2 font-medium">
+                <div className="p-3 bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs rounded-xl flex items-center gap-2 font-medium">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
               )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div className="space-y-1.5">
-                  <Label htmlFor="qe-name" className="text-xs font-bold text-stone-800 dark:text-stone-200">
-                    Full Name <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    id="qe-name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your Full Name"
-                    required
-                    className="h-10 text-xs rounded-xl border-stone-200 dark:border-stone-800"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="qe-phone" className="text-xs font-bold text-stone-800 dark:text-stone-200">
-                    Phone / Mobile Number <span className="text-red-500">*</span>
-                  </Label>
+              {/* Field 1: Phone / Mobile Number */}
+              <div className="space-y-1.5">
+                <Label htmlFor="qe-phone" className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                  Mobile / Phone Number <span className="text-amber-400">*</span>
+                </Label>
+                <div className="relative">
+                  <Phone className="w-4 h-4 text-amber-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <Input
                     id="qe-phone"
                     name="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="Your Contact Number"
+                    placeholder="Enter your 10-digit mobile number"
                     required
-                    className="h-10 text-xs rounded-xl border-stone-200 dark:border-stone-800"
+                    className="h-11 pl-10 text-sm rounded-xl bg-white/10 border-amber-400/40 text-white placeholder:text-stone-400"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div className="space-y-1.5">
-                  <Label htmlFor="qe-email" className="text-xs font-bold text-stone-800 dark:text-stone-200">
-                    Business Email <span className="text-red-500">*</span>
-                  </Label>
+              {/* Field 2: Official Email ID */}
+              <div className="space-y-1.5">
+                <Label htmlFor="qe-email" className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                  Email ID <span className="text-amber-400">*</span>
+                </Label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 text-amber-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <Input
                     id="qe-email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="you@company.com"
+                    placeholder="Enter your official email ID"
                     required
-                    className="h-10 text-xs rounded-xl border-stone-200 dark:border-stone-800"
+                    className="h-11 pl-10 text-sm rounded-xl bg-white/10 border-amber-400/40 text-white placeholder:text-stone-400"
                   />
                 </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="qe-service" className="text-xs font-bold text-stone-800 dark:text-stone-200">
-                    Service Required
-                  </Label>
-                  <select
-                    id="qe-service"
-                    name="serviceRequired"
-                    value={formData.serviceRequired}
-                    onChange={handleChange}
-                    className="w-full h-10 px-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-xs font-medium focus-visible:outline-hidden"
-                  >
-                    <option value="Website Design & Web Development">Website Design &amp; Web Development</option>
-                    <option value="Office Automation & Custom ERP Software">Office Automation &amp; Custom ERP</option>
-                    <option value="SEO, Social Media & Digital Marketing">SEO, Social Media &amp; Digital Marketing</option>
-                    <option value="AI Chatbots & Workflow Automation">AI Chatbots &amp; Workflow Automation</option>
-                    <option value="Mobile App Development (iOS & Android)">Mobile App (iOS &amp; Android)</option>
-                    <option value="Complete Business Combo Package (25% OFF)">Complete Business Combo (25% OFF)</option>
-                  </select>
-                </div>
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="qe-message" className="text-xs font-bold text-stone-800 dark:text-stone-200">
-                  Project Details / Requirements <span className="text-red-500">*</span>
-                </Label>
-                <Textarea
-                  id="qe-message"
-                  name="message"
-                  rows={3}
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell us briefly about the website, software, or marketing goals you want to achieve..."
-                  required
-                  className="text-xs rounded-xl resize-none border-stone-200 dark:border-stone-800"
-                />
-              </div>
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full h-12 rounded-xl bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-white font-black text-xs uppercase tracking-wider shadow-[0_12px_30px_-6px_rgba(234,88,12,0.65)] cursor-pointer"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-1.5 animate-spin text-white" />
+                    Activating Your 25% Offer...
+                  </>
+                ) : (
+                  <>
+                    <Zap className="w-4 h-4 mr-1.5 fill-current" />
+                    Claim 25% Special Offer &amp; Submit
+                  </>
+                )}
+              </Button>
 
-              <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-1.5 text-[11px] text-stone-500 font-medium">
-                  <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
-                  <span>100% Confidential · Fast 4-Hr Response</span>
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs font-bold px-6 h-11 shadow-md"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-1.5 animate-spin text-amber-400" />
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      Submit Quick Enquiry
-                      <Send className="w-3.5 h-3.5 ml-2 text-amber-400" />
-                    </>
-                  )}
-                </Button>
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 font-medium pt-0.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>100% Confidential · Instant Priority Callback</span>
               </div>
             </form>
           )}

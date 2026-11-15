@@ -7,6 +7,7 @@ import { LeftSocialRail } from '@/components/layout/LeftSocialRail';
 import { RightFloatingDock } from '@/components/layout/RightFloatingDock';
 import { OpeningPreloader } from '@/components/animations/OpeningPreloader';
 import { AiChatbot } from '@/components/support/AiChatbot';
+import { ExitOfferPopup } from '@/components/forms/ExitOfferPopup';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 
 const inter = Inter({
@@ -100,6 +101,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <AiChatbot />
+        <ExitOfferPopup />
       </body>
     </html>
   );

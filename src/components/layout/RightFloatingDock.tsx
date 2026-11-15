@@ -197,6 +197,7 @@ export const RightFloatingDock = () => {
         open={enquiryOpen}
         onOpenChange={setEnquiryOpen}
         hideTrigger={true}
+        sourceLabel="Left Quick Enquiry 25% Offer Popup"
       />
     </>
   );

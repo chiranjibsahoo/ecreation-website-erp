@@ -17,7 +17,8 @@ import {
   ChevronRight,
   Bot,
   Sparkles,
-  MessageSquareText
+  MessageSquareText,
+  Gift
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,13 +29,19 @@ export default function LeadsAdminPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [sourceFilter, setSourceFilter] = useState<'all' | 'chatbot'>('all');
+  const [sourceFilter, setSourceFilter] = useState<'all' | 'chatbot' | 'offer_popup'>('all');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   const isChatbotLead = (source?: string) => {
     if (!source) return false;
     const lower = source.toLowerCase();
     return lower.includes('ai assistant') || lower.includes('chatbot');
+  };
+
+  const isOfferPopupLead = (source?: string) => {
+    if (!source) return false;
+    const lower = source.toLowerCase();
+    return lower.includes('popup') || lower.includes('exit-intent') || lower.includes('offer');
   };
 
   useEffect(() => {
@@ -85,6 +92,7 @@ export default function LeadsAdminPage() {
   };
 
   const chatbotLeadsCount = leads.filter((l) => isChatbotLead(l.source)).length;
+  const offerPopupLeadsCount = leads.filter((l) => isOfferPopupLead(l.source)).length;
 
   const filteredLeads = leads.filter((lead) => {
     const matchesSearch =
@@ -97,7 +105,9 @@ export default function LeadsAdminPage() {
 
     const matchesStatus = statusFilter === 'all' || lead.status === statusFilter;
     const matchesSource =
-      sourceFilter === 'all' || (sourceFilter === 'chatbot' && isChatbotLead(lead.source));
+      sourceFilter === 'all' ||
+      (sourceFilter === 'chatbot' && isChatbotLead(lead.source)) ||
+      (sourceFilter === 'offer_popup' && isOfferPopupLead(lead.source));
 
     return matchesSearch && matchesStatus && matchesSource;
   });
@@ -157,8 +167,20 @@ export default function LeadsAdminPage() {
           </div>
           <div className="flex flex-wrap items-center gap-2.5">
             <button
+              onClick={() => setSourceFilter(sourceFilter === 'offer_popup' ? 'all' : 'offer_popup')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all cursor-pointer ${
+                sourceFilter === 'offer_popup'
+                  ? 'bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white border-amber-300 shadow-md'
+                  : 'bg-orange-50 dark:bg-orange-950/40 text-orange-900 dark:text-orange-300 border-orange-300 dark:border-orange-800 hover:bg-orange-100'
+              }`}
+            >
+              <Gift className="w-4 h-4 text-orange-600" />
+              <span>25% Offer Popup Leads ({offerPopupLeadsCount})</span>
+            </button>
+
+            <button
               onClick={() => setSourceFilter(sourceFilter === 'chatbot' ? 'all' : 'chatbot')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all cursor-pointer ${
                 sourceFilter === 'chatbot'
                   ? 'bg-stone-950 text-amber-400 border-amber-500 shadow-md'
                   : 'bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border-amber-300 dark:border-amber-800 hover:bg-amber-100'
@@ -229,6 +251,7 @@ export default function LeadsAdminPage() {
                     ) : (
                       filteredLeads.map((lead) => {
                         const fromBot = isChatbotLead(lead.source);
+                        const fromOfferPopup = isOfferPopupLead(lead.source);
                         const isSelected = selectedLead?.id === lead.id;
                         return (
                           <tr
@@ -239,6 +262,10 @@ export default function LeadsAdminPage() {
                                 ? isSelected
                                   ? 'bg-amber-100/80 dark:bg-amber-950/60 border-l-4 border-l-amber-500'
                                   : 'bg-amber-50/50 dark:bg-amber-950/25 hover:bg-amber-100/60 border-l-4 border-l-amber-500'
+                                : fromOfferPopup
+                                ? isSelected
+                                  ? 'bg-orange-100/80 dark:bg-orange-950/60 border-l-4 border-l-orange-500'
+                                  : 'bg-orange-50/60 dark:bg-orange-950/25 hover:bg-orange-100/60 border-l-4 border-l-orange-500'
                                 : isSelected
                                 ? 'bg-stone-100 dark:bg-stone-800/60'
                                 : 'hover:bg-muted/30'
@@ -253,6 +280,12 @@ export default function LeadsAdminPage() {
                                   <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-stone-950 text-amber-400 text-[9px] font-mono font-bold">
                                     <Bot className="w-2.5 h-2.5" />
                                     AI BOT
+                                  </span>
+                                )}
+                                {fromOfferPopup && (
+                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white text-[9px] font-mono font-bold">
+                                    <Gift className="w-2.5 h-2.5" />
+                                    25% POPUP
                                   </span>
                                 )}
                               </div>
@@ -272,6 +305,11 @@ export default function LeadsAdminPage() {
                                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-950 text-amber-400 border border-amber-500/60 font-bold text-[10px] shadow-xs">
                                   <Bot className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                                   <span>Ecreation AI Assistant Chatbot</span>
+                                </div>
+                              ) : fromOfferPopup ? (
+                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white border border-amber-300/70 font-bold text-[10px] shadow-xs">
+                                  <Gift className="w-3.5 h-3.5 text-white shrink-0" />
+                                  <span>{lead.source}</span>
                                 </div>
                               ) : (
                                 <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-muted text-muted-foreground">
@@ -302,7 +340,24 @@ export default function LeadsAdminPage() {
           {/* Lead Detail Panel */}
           {selectedLead && (
             <div className="lg:col-span-5 bg-card border border-border rounded-2xl p-6 shadow-md space-y-5 animate-in fade-in-50">
-              {/* Highlighted Banner if Lead came from Ecreation AI Assistant Chatbot */}
+              {/* Highlighted Banner if Lead came from Exit-Intent / 25% Offer Popup */}
+              {isOfferPopupLead(selectedLead.source) && (
+                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-[#EA580C] via-[#D97706] to-[#B45309] text-white border border-amber-300/70 flex items-center justify-between gap-3 shadow-md">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-9 h-9 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0">
+                      <Gift className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-amber-100 font-bold block">
+                        HIGHLIGHTED CONVERSION POPUP SOURCE
+                      </span>
+                      <span className="text-xs font-black text-white">
+                        {selectedLead.source}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
               {isChatbotLead(selectedLead.source) && (
                 <div className="p-3.5 rounded-2xl bg-stone-950 text-white border border-amber-500/60 flex items-center justify-between gap-3 shadow-md">
                   <div className="flex items-center gap-2.5">

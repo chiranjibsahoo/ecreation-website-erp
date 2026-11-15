@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Server-side validation
-    if (!name || !email || !message) {
+    if (!email) {
       return NextResponse.json(
-        { error: 'Missing required fields: name, email, and message are required.' },
+        { error: 'Missing required field: email is required.' },
         { status: 400 }
       );
     }
@@ -28,14 +28,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const safeName = name && String(name).trim()
+      ? String(name).trim()
+      : phone
+      ? `Offer Lead (${String(phone).trim()})`
+      : `Website Visitor (${String(email).split('@')[0]})`;
+
+    const safeMessage = message && String(message).trim()
+      ? String(message).trim()
+      : `Claimed 25% Special Offer via Conversion Popup. Phone: ${phone || 'Not provided'}, Email: ${email}`;
+
     const leadRecord = {
-      name: String(name).slice(0, 100),
-      email: String(email).slice(0, 150),
-      phone: phone ? String(phone).slice(0, 30) : null,
+      name: safeName.slice(0, 100),
+      email: String(email).trim().slice(0, 150),
+      phone: phone ? String(phone).trim().slice(0, 30) : null,
       company: company ? String(company).slice(0, 120) : null,
-      service_required: String(serviceRequired || 'General Inquiry').slice(0, 150),
+      service_required: String(serviceRequired || '25% Special Business Offer').slice(0, 150),
       budget_range: budgetRange ? String(budgetRange).slice(0, 50) : null,
-      message: String(message).slice(0, 3000),
+      message: safeMessage.slice(0, 3000),
       source: source ? String(source).slice(0, 100) : 'direct',
       status: 'new' as const,
       created_at: new Date().toISOString()

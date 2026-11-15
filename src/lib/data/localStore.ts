@@ -46,6 +46,20 @@ const DB_FILE = path.join(DATA_DIR, 'ecreation_store.json');
 const INITIAL_DATA: LocalDatabase = {
   leads: [
     {
+      id: 'EC-951408',
+      name: 'Offer Lead (+91 98765 43210)',
+      email: 'rohit.sharma@sharmatex.in',
+      company: 'Special Offer Popup Claim',
+      phone: '+91 98765 43210',
+      service_required: 'Flat 25% Special Business Offer',
+      budget_range: '25% Special Offer Claimed',
+      message:
+        'Visitor claimed Flat 25% Special Offer via Exit-Intent 25% Offer Popup. Phone: +91 98765 43210 | Email: rohit.sharma@sharmatex.in',
+      source: 'Exit-Intent 25% Offer Popup',
+      status: 'new',
+      created_at: '2026-11-15T15:30:00Z'
+    },
+    {
       id: 'EC-904215',
       name: 'Vikramaditya Mehta',
       email: 'vikram@mehtalogistics.in',

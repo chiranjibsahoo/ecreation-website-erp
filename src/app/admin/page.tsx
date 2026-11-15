@@ -11,7 +11,8 @@ import {
   ShieldCheck,
   Bot,
   ExternalLink,
-  MessageSquare
+  MessageSquare,
+  Gift
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -26,6 +27,12 @@ export default function AdminDashboardPage() {
     if (!source) return false;
     const lower = source.toLowerCase();
     return lower.includes('ai assistant') || lower.includes('chatbot');
+  };
+
+  const isOfferPopupLead = (source?: string) => {
+    if (!source) return false;
+    const lower = source.toLowerCase();
+    return lower.includes('popup') || lower.includes('exit-intent') || lower.includes('offer');
   };
 
   useEffect(() => {
@@ -77,12 +84,13 @@ export default function AdminDashboardPage() {
   };
 
   const botLeadsCount = leads.filter((l) => isChatbotLead(l.source)).length;
+  const offerPopupLeadsCount = leads.filter((l) => isOfferPopupLead(l.source)).length;
 
   const stats = [
     {
       label: 'Total Inbound Enquiries',
       value: `${leads.length}`,
-      change: `${botLeadsCount} from AI Assistant Bot`,
+      change: `${botLeadsCount} AI Bot • ${offerPopupLeadsCount} Offer Popup`,
       icon: Users,
       color: 'text-amber-600'
     },
@@ -208,12 +216,15 @@ export default function AdminDashboardPage() {
               <tbody className="divide-y divide-border font-sans">
                 {leads.map((lead) => {
                   const fromBot = isChatbotLead(lead.source);
+                  const fromOfferPopup = isOfferPopupLead(lead.source);
                   return (
                     <tr
                       key={lead.id}
                       className={`transition-colors ${
                         fromBot
                           ? 'bg-amber-50/60 dark:bg-amber-950/30 hover:bg-amber-100/60 border-l-4 border-l-amber-500'
+                          : fromOfferPopup
+                          ? 'bg-orange-50/70 dark:bg-orange-950/30 hover:bg-orange-100/60 border-l-4 border-l-orange-500'
                           : 'hover:bg-muted/30'
                       }`}
                     >
@@ -237,6 +248,11 @@ export default function AdminDashboardPage() {
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-950 text-amber-400 border border-amber-500/60 font-bold text-[10px] shadow-xs">
                             <Bot className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                             <span>Ecreation AI Assistant Chatbot</span>
+                          </span>
+                        ) : fromOfferPopup ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white border border-amber-300/70 font-bold text-[10px] shadow-xs">
+                            <Gift className="w-3.5 h-3.5 text-white shrink-0" />
+                            <span>{lead.source}</span>
                           </span>
                         ) : (
                           <span className="font-mono text-[11px] bg-muted px-2 py-0.5 rounded text-muted-foreground">
