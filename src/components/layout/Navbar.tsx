@@ -137,15 +137,9 @@ export const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6">
-          {/* Left: Brand Logo + Architectural Divider */}
-          <div className="flex items-center gap-4 shrink-0">
+          {/* Left: Brand Logo */}
+          <div className="flex items-center shrink-0">
             <Logo size="md" theme="light" />
-            <div className="hidden xl:flex items-center gap-3 pl-4 border-l border-amber-600/25">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-amber-900/80 dark:text-amber-400 block leading-tight">
-                Enterprise IT
-                <span className="block text-stone-500 font-normal tracking-wider">&amp; Digital Growth</span>
-              </span>
-            </div>
           </div>
 
           {/* Center: Open Editorial Menu — NO Round Box, Pure Luxury Underline Indicators */}
@@ -170,7 +164,7 @@ export const Navbar = () => {
               />
             </Link>
 
-            {/* 2. IT Services (With Visual Studio Mega-Dropdown) */}
+            {/* 2. Services (With Visual Studio Mega-Dropdown) */}
             <div
               className="relative"
               onMouseEnter={() => setServicesOpen(true)}
@@ -184,7 +178,7 @@ export const Navbar = () => {
                     : 'text-stone-700 dark:text-stone-300 hover:text-amber-800 dark:hover:text-amber-400'
                 }`}
               >
-                <span>IT Services</span>
+                <span>Services</span>
                 <ChevronDown
                   className={`w-4 h-4 text-amber-600 transition-transform duration-200 ${
                     servicesOpen ? 'rotate-180' : ''
@@ -414,7 +408,7 @@ export const Navbar = () => {
 
                     <div className="my-2 border-t border-stone-200 dark:border-stone-800 pt-2">
                       <div className="px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400">
-                        IT Services &amp; Solutions
+                        Services
                       </div>
                       <div className="grid grid-cols-1 gap-1 mt-1">
                         {serviceCategories.map((item) => {
