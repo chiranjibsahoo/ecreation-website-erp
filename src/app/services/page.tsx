@@ -87,16 +87,16 @@ export default function ServicesPage() {
           ))}
         </div>
 
-        {/* Bottom Callout */}
-        <div className="subsection-bordered-card p-6 sm:p-12 rounded-3xl bg-stone-950 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* Bottom Callout — Blue with Border */}
+        <div className="subsection-bordered-card p-6 sm:p-12 rounded-3xl bg-indigo-600 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl shadow-indigo-600/20">
           <div className="space-y-2 max-w-xl text-center md:text-left">
-            <h3 className="text-xl sm:text-2xl font-bold">Have unique architecture requirements?</h3>
-            <p className="text-sm text-stone-400">
+            <h3 className="text-xl sm:text-2xl font-bold text-white">Have unique architecture requirements?</h3>
+            <p className="text-sm text-indigo-100">
               Our principal engineers regularly handle custom protocols, legacy migrations, and proprietary integrations.
             </p>
           </div>
           <Link href="/contact#enquiry">
-            <Button size="lg" className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl px-6 shadow-md shadow-amber-500/20">
+            <Button size="lg" className="bg-white text-indigo-700 hover:bg-neutral-100 font-bold rounded-xl px-6 shadow-md transition-transform duration-200 hover:-translate-y-0.5">
               <Terminal className="w-4 h-4 mr-2" />
               Discuss Custom Architecture
             </Button>

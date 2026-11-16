@@ -56,7 +56,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
         {/* Hero Section Sub-Card */}
         <div className="subsection-bordered-card bg-white dark:bg-stone-900 rounded-3xl p-7 sm:p-10 space-y-4">
-          <span className="inline-block text-xs font-mono font-bold uppercase tracking-widest text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-3 py-1 rounded-md border border-amber-500/35">
+          <span className="inline-block text-xs font-mono font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 px-3 py-1 rounded-md border border-indigo-200/80">
             {service.category} Service Specification
           </span>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-stone-950 dark:text-white">
@@ -72,7 +72,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           {/* Capabilities & Architecture */}
           <div className="subsection-bordered-card bg-white dark:bg-stone-900 rounded-3xl p-7 sm:p-8 space-y-6">
             <div className="flex items-center gap-2.5 pb-3 border-b border-amber-500/25">
-              <Cpu className="w-5 h-5 text-amber-600" />
+              <Cpu className="w-5 h-5 text-indigo-600" />
               <h2 className="text-xl font-bold text-stone-950 dark:text-white">Capabilities &amp; Architecture</h2>
             </div>
             <ul className="space-y-3">
@@ -81,7 +81,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                   key={feat}
                   className="subsection-bordered-item flex items-start gap-3 text-sm text-stone-700 dark:text-stone-300 p-3 rounded-xl bg-[#FAF8F5] dark:bg-stone-800/60"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                   <span>{feat}</span>
                 </li>
               ))}
@@ -101,7 +101,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                     key={del}
                     className="subsection-bordered-item flex items-start gap-3 text-sm text-stone-700 dark:text-stone-300 p-3 rounded-xl bg-[#FAF8F5] dark:bg-stone-800/60"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
                     <span>{del}</span>
                   </li>
                 ))}
@@ -126,16 +126,16 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Action Callout Sub-Section */}
-        <div className="subsection-bordered-card p-8 sm:p-10 rounded-3xl bg-stone-950 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
+        {/* Action Callout Sub-Section — Restored Blue (bg-indigo-600) with Border */}
+        <div className="subsection-bordered-card p-8 sm:p-10 rounded-3xl bg-indigo-600 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl shadow-indigo-600/20">
           <div className="space-y-1 text-center sm:text-left">
             <h3 className="text-xl sm:text-2xl font-bold text-white">Ready to implement this service?</h3>
-            <p className="text-stone-300 text-sm">
+            <p className="text-indigo-100 text-sm">
               Connect directly with our lead solutions architect to scope deliverables and timelines.
             </p>
           </div>
           <Link href={`/contact?service=${encodeURIComponent(service.title)}`}>
-            <Button size="lg" className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl shadow-md transition-transform duration-200 hover:-translate-y-0.5">
+            <Button size="lg" className="bg-white text-indigo-700 hover:bg-neutral-100 font-bold rounded-xl shadow-md transition-transform duration-200 hover:-translate-y-0.5">
               Request Project Proposal
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

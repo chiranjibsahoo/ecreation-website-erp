@@ -122,16 +122,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Next Steps CTA */}
-        <div className="subsection-bordered-card p-8 rounded-3xl bg-stone-950 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
+        {/* Next Steps CTA — Blue with Border */}
+        <div className="subsection-bordered-card p-8 rounded-3xl bg-indigo-600 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl shadow-indigo-600/20">
           <div className="space-y-1 text-center sm:text-left">
             <h3 className="text-xl font-bold text-white">Have a similar enterprise challenge?</h3>
-            <p className="text-xs text-stone-300">
+            <p className="text-xs text-indigo-100">
               Schedule a technical discovery session to discuss system scope.
             </p>
           </div>
           <Link href="/contact">
-            <Button size="lg" className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold rounded-xl text-xs sm:text-sm transition-transform duration-200 hover:-translate-y-0.5">
+            <Button size="lg" className="bg-white text-indigo-700 hover:bg-neutral-100 font-bold rounded-xl text-xs sm:text-sm shadow-md transition-transform duration-200 hover:-translate-y-0.5">
               Schedule Architecture Call
               <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
