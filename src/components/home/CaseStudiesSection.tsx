@@ -47,7 +47,7 @@ export const CaseStudiesSection = () => {
                   {/* Project Visual Preview Image */}
                   <div className="relative h-52 w-full bg-stone-950 overflow-hidden border-b border-stone-200/60 dark:border-stone-800">
                     <img
-                      src={projectImages[idx % projectImages.length]}
+                      src={project.image || projectImages[idx % projectImages.length]}
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

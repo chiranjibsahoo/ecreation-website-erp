@@ -143,76 +143,190 @@ export const SERVICES_DATA: Service[] = [
 
 export const PROJECTS_DATA: Project[] = [
   {
-    id: 'proj-1',
-    slug: 'omnilogistics-erp',
-    title: 'OmniLogistics: Global Freight ERP & Telematics Hub',
-    client: 'OmniLogistics International',
-    category: 'Enterprise ERP & Cloud Architecture',
-    summary: 'A unified enterprise logistics management platform managing over 4,500 active freight shipments daily across 14 international trade corridors.',
-    challenge: 'OmniLogistics was hindered by disconnected legacy systems, resulting in dispatch delays, manual billing reconciliation errors, and lack of real-time visibility for cargo owners.',
-    solution: 'Ecreation IT Solution engineered a Next.js and Supabase enterprise ERP featuring real-time GPS telematics integration, automated multi-currency customs invoicing, and a self-service client tracking portal.',
+    id: 'proj-study-tracker',
+    slug: 'study-tracker-lockon',
+    title: 'Study Tracker Lockon: Deep Work & Student Analytics Suite',
+    client: 'LockOn Focus Labs (EdTech)',
+    category: 'EdTech & Focus Analytics',
+    summary: 'An intelligent focus-tracking and syllabus retention ecosystem featuring real-time distraction blockers, Pomodoro lock-in sessions, and student leaderboard analytics.',
+    challenge: 'Students struggled with fragmented study schedules, constant phone notifications, lack of syllabus mastery visibility, and severe drop-offs during high-stakes competitive entrance exams.',
+    solution: 'Engineered a high-performance web and mobile app with an authoritative Pomodoro lock-in session timer, automated streak verification, cross-device distraction shield, and multi-cohort rank leaderboards.',
     results: [
-      { metric: '94%', label: 'Reduction in manual dispatch paperwork' },
-      { metric: '3.4x', label: 'Faster invoice settlement speed' },
-      { metric: '99.98%', label: 'System uptime across global zones' }
+      { metric: '48 Days', label: 'Average unbroken study streak in cohorts' },
+      { metric: '+82%', label: 'Lift in daily deep-work focus hours' },
+      { metric: '120,000+', label: 'Active registered students enrolled' }
     ],
-    tags: ['Next.js', 'Supabase', 'PostgreSQL', 'Telematics', 'Tailwind CSS'],
+    tags: ['Next.js', 'React Native', 'WebSockets', 'Tailwind CSS', 'PostgreSQL', 'Redis'],
+    image: '/images/projects/study-tracker-lockon.svg',
+    liveUrl: 'https://app.lockonstudy.com',
+    deliverables: [
+      'Cross-platform lock-in study timer with background distraction blocker',
+      'Subject mastery visualizer (Physics, Chemistry, Mathematics, Biology)',
+      'National and cohort-level leaderboard with anti-cheat verification',
+      'Automated PDF performance report generation for mentors and parents'
+    ],
+    architecture: [
+      'Stateful Pomodoro timer synced over WebSocket heartbeat channels',
+      'Redis cache for instantaneous leaderboard calculation across 120k students',
+      'PostgreSQL RLS for strictly partitioned student study logs and exams'
+    ],
     featured: true,
-    publishedAt: '2026-08-15'
+    publishedAt: '2026-10-10'
   },
   {
-    id: 'proj-2',
-    slug: 'finedge-banking-portal',
-    title: 'FinEdge: High-Throughput Digital Banking Suite',
-    client: 'FinEdge Capital Group',
-    category: 'Fintech & Web Engineering',
-    summary: 'A bank-grade commercial banking and loan underwriting portal processing over $120M in monthly transactional volume with zero security breaches.',
-    challenge: 'Legacy banking core had high latency during peak market opening hours, failing to meet strict modern security compliance and mobile customer expectations.',
-    solution: 'We built a modern, micro-frontend client portal backed by audited PostgreSQL RLS, hardware security key 2FA, and dynamic PDF statement generation.',
+    id: 'proj-nsfs-erp',
+    slug: 'nsfs-erp-system',
+    title: 'NSFS ERP: Multi-Campus Academy & Education Governance',
+    client: 'National School Foundation Society (NSFS)',
+    category: 'Enterprise Education ERP',
+    summary: 'End-to-end enterprise school governance platform uniting biometric attendance, automated fee collection, parent communications, and CBSE/State compliance across 6 campuses.',
+    challenge: 'Operating 6 distinct physical campuses using decentralized desktop ledgers caused widespread billing delays, lost fee reconciliations, and disconnected student records.',
+    solution: 'Designed and deployed a unified Next.js + Supabase cloud ERP with role-based access for Principals, Accountants, Teachers, and Parents, featuring automated UPI autopay fee collection and biometric attendance syncing.',
     results: [
-      { metric: '68ms', label: 'Average API transaction latency' },
-      { metric: '100%', label: 'SOC2 Type II compliance audit pass' },
-      { metric: '180,000+', label: 'Active monthly verified business users' }
+      { metric: '₹1.42 Cr', label: 'Term fees collected via automated PG' },
+      { metric: '98.4%', label: 'Campus biometric attendance accuracy' },
+      { metric: '14,820', label: 'Student profiles unified across 6 campuses' }
     ],
-    tags: ['TypeScript', 'Next.js', 'PostgreSQL', 'Tailwind CSS', 'Zero-Trust'],
+    tags: ['Enterprise ERP', 'Next.js', 'PostgreSQL RLS', 'UPI AutoPay', 'Biometric IoT', 'Audit Trail'],
+    image: '/images/projects/nsfs-erp.svg',
+    liveUrl: 'https://portal.nsfserp.org',
+    deliverables: [
+      'Automated student fee ledger with instant GST-compliant digital receipts',
+      'Cloud biometric attendance engine with automatic SMS alerts to parents',
+      'Examination grading, report card generation, and CBSE export tools',
+      'Multi-branch financial auditing and payroll tax withholding calculations'
+    ],
+    architecture: [
+      'Multi-tenant PostgreSQL schema with isolated campus role permissions',
+      'Integration with biometric hardware scanners via HTTPS webhook relays',
+      'Automated nightly fee reconciliation and failure retry cron tasks'
+    ],
     featured: true,
-    publishedAt: '2026-06-22'
+    publishedAt: '2026-09-18'
   },
   {
-    id: 'proj-3',
-    slug: 'medihealth-telemedicine',
-    title: 'MediHealth: Clinical Care & Telehealth Ecosystem',
-    client: 'MediHealth Networks',
-    category: 'Healthcare & Mobile Engineering',
-    summary: 'HIPAA-compliant patient record, electronic prescriptions, and encrypted video consultation suite connecting 600+ physicians with over 250,000 patients.',
-    challenge: 'Dispersed clinic branches required a centralized medical record system capable of functioning seamlessly during internet disruptions in rural clinics.',
-    solution: 'Engineered an offline-first mobile app and web EHR with end-to-end encrypted video channels, automated prescription delivery, and calendar scheduling.',
+    id: 'proj-duragrit-qr-erp',
+    slug: 'duragrit-qr-erp',
+    title: 'Duragrit QR ERP: Industrial Asset & Inventory Serialization Suite',
+    client: 'Duragrit Abrasives & Manufacturing Ltd.',
+    category: 'Industrial ERP & Asset Tracking',
+    summary: 'A rugged, barcode/QR-driven enterprise manufacturing ERP tracking factory floor inventory, batch serialization, machine uptime, and dispatch logistics across 4 plants.',
+    challenge: 'High-volume abrasive manufacturing plants faced pallet loss, counterfeit product complaints, slow dispatch verification, and disconnected GST E-Way bill generation.',
+    solution: 'Built a real-time QR asset lifecycle platform with industrial thermal printer integration, sub-second handheld scanner APIs, automated batch genealogy, and direct GST portal synchronization.',
     results: [
-      { metric: '4.9/5', label: 'Average patient satisfaction rating' },
-      { metric: '45%', label: 'Decrease in patient appointment no-shows' },
-      { metric: '100%', label: 'HIPAA and GDPR compliance certification' }
+      { metric: '48,250+', label: 'Serialized QR items scanned daily' },
+      { metric: '1.2 sec', label: 'Pallet dispatch scan verification speed' },
+      { metric: '99.85%', label: 'Factory machine uptime reliability' }
     ],
-    tags: ['React Native', 'WebRTC', 'Supabase', 'Next.js', 'Tailwind'],
+    tags: ['Industrial ERP', 'QR Serialization', 'IoT Sensors', 'Thermal Printing API', 'Next.js', 'PostgreSQL'],
+    image: '/images/projects/duragrit-qr-erp.svg',
+    liveUrl: 'https://erp.duragrit.com',
+    deliverables: [
+      'High-speed batch QR code generator with thermal printer driver integration',
+      'Mobile scanner PWA with offline caching for warehouse floor staff',
+      'Real-time warehouse bay utilization visualizer and dispatch vehicle log',
+      'Automated GST E-Way bill & dispatch challan auto-generation engine'
+    ],
+    architecture: [
+      'High-throughput barcode ingestion engine handling 100+ scans/sec',
+      'Offline-first IndexedDB PWA syncing with central PostgreSQL upon reconnect',
+      'Automated batch traceability audit logs for ISO 9001 compliance'
+    ],
     featured: true,
-    publishedAt: '2026-04-10'
+    publishedAt: '2026-08-25'
   },
   {
-    id: 'proj-4',
-    slug: 'apex-headless-commerce',
-    title: 'Apex Lifestyle: Global Headless E-Commerce System',
-    client: 'Apex Retail Global',
-    category: 'Headless Commerce & Performance',
-    summary: 'A sub-second international commerce engine serving 32 localized storefronts with automated multi-warehouse inventory routing.',
-    challenge: 'Slow monolithic Shopify setup suffered from high cart abandonment on mobile devices and struggled with currency conversion and multi-warehouse sync.',
-    solution: 'Implemented a headless Next.js frontend with localized edge caching, Algolia instant search, and real-time inventory webhooks.',
+    id: 'proj-insurance-tracker',
+    slug: 'insurance-tracker-suite',
+    title: 'Insurance Tracker: High-Throughput Claims & Policyholder Portal',
+    client: 'InsurTech Solutions Group',
+    category: 'InsurTech & Claims Automation',
+    summary: 'Enterprise insurance policy lifecycle and automated claims settlement portal featuring OCR document parsing, fraud score telemetry, and 2.4-hour claim resolution.',
+    challenge: 'Traditional policyholder claims took an average of 7 to 10 business days, plagued by manual surveyor evaluations, lost physical bills, and high fraud exposure.',
+    solution: 'Engineered an InsurTech engine utilizing automated OCR medical bill ingestion, AI-powered fraud risk scoring, instant cashless hospital authorization, and automated WhatsApp status notifications.',
     results: [
-      { metric: '0.4s', label: 'Average page load speed globally' },
-      { metric: '+41%', label: 'Lift in mobile checkout conversions' },
-      { metric: '32', label: 'Global regions served simultaneously' }
+      { metric: '2.4 Hours', label: 'Average claim turnaround time' },
+      { metric: '₹8.42 Cr', label: 'Direct claims settled without delay' },
+      { metric: '34,200', label: 'Active health & motor policies managed' }
     ],
-    tags: ['Next.js', 'Tailwind CSS', 'Edge Caching', 'Stripe', 'Headless'],
-    featured: false,
-    publishedAt: '2026-02-18'
+    tags: ['InsurTech', 'OCR AI Parser', 'IRDAI Compliance', 'Next.js', 'WhatsApp API', 'PostgreSQL'],
+    image: '/images/projects/insurance-tracker.svg',
+    liveUrl: 'https://portal.insurancetracker.io',
+    deliverables: [
+      'Instant hospital cashless pre-authorization pipeline',
+      'AI OCR medical prescription & diagnostic bill parsing engine',
+      'Customer self-service portal with UPI autopay renewal and digital card download',
+      'Surveyor mobile app with GPS-tagged photo evidence capture'
+    ],
+    architecture: [
+      'Zero-trust policy data encryption adhering to IRDAI data security norms',
+      'OCR document intelligence pipeline parsing unstructured hospital discharge summaries',
+      'Automated webhook integration with WhatsApp for Business API'
+    ],
+    featured: true,
+    publishedAt: '2026-07-14'
+  },
+  {
+    id: 'proj-social-video-app',
+    slug: 'social-media-video-app',
+    title: 'PulsePlay: Low-Latency Short-Form Video & Live Creator Platform',
+    client: 'NextGen Media Labs',
+    category: 'Mobile & Video Streaming',
+    summary: 'A viral short-video mobile app and creator studio powered by adaptive bitrate streaming (HLS/WebRTC), instant monetization tipping, and sub-45ms feed recommendation algorithms.',
+    challenge: 'High video buffering on tier-2/3 network connections caused 65% drop-offs, while creators struggled with delayed payout reconciliations and toxic comment spam.',
+    solution: 'Deployed a distributed media architecture using GPU-accelerated edge transcoding, low-latency HLS streaming, Redis-backed vector recommendations, and automated real-time moderation.',
+    results: [
+      { metric: '1.2M', label: 'Daily active viewers across platforms' },
+      { metric: '120 ms', label: 'Global edge video start latency' },
+      { metric: '$485,000', label: 'Processed creator tips & live coins' }
+    ],
+    tags: ['React Native', 'WebRTC', 'HLS Transcoding', 'Redis Vector Search', 'Node.js', 'Next.js'],
+    image: '/images/projects/social-video-app.svg',
+    liveUrl: 'https://pulseplay.tv',
+    deliverables: [
+      'Ultra-responsive short-video infinite feed with swipe gestures and GPU shaders',
+      'Sub-second WebRTC interactive live streaming with virtual gift animations',
+      'Creator studio analytics dashboard tracking audience retention and watch times',
+      'Automated multi-currency creator payout pipeline via Stripe and bank transfer'
+    ],
+    architecture: [
+      'Global multi-CDN edge video routing with automatic adaptive bitrate switching',
+      'Vector similarity recommendation engine in Redis delivering 45ms personal feeds',
+      'Real-time automated content moderation flagging prohibited streams in milliseconds'
+    ],
+    featured: true,
+    publishedAt: '2026-06-04'
+  },
+  {
+    id: 'proj-game-tracker',
+    slug: 'game-tracker-platform',
+    title: 'GameTracker Pro: 50+ Games Catalog & Real-Time Player Telemetry Hub',
+    client: 'Apex Interactive Gaming Studios',
+    category: 'Gaming Analytics & 50+ Game Suite',
+    summary: 'A massive high-throughput game analytics engine and cross-platform launcher managing 50+ live game titles, tracking 86,000+ concurrent players, and synchronizing global leaderboards.',
+    challenge: 'Managing telemetry, live balance updates, in-app economies, and anti-cheat tracking across 50+ separate hypercasual and multiplayer titles created extreme operational overhead.',
+    solution: 'Designed a unified gaming telemetry platform with 60Hz authoritative WebSocket ingestion, centralized player identity sync, dynamic in-game item drop balancers, and real-time fraud monitoring.',
+    results: [
+      { metric: '54 Titles', label: 'Active games tracked & managed 24/7' },
+      { metric: '86,400', label: 'Peak concurrent players online' },
+      { metric: '$3.25M', label: 'In-game transactions & season passes' }
+    ],
+    tags: ['Gaming Telemetry', 'WebSockets 60Hz', 'Unity & UE5 SDK', 'Anti-Cheat AI', 'Next.js', 'ClickHouse/PostgreSQL'],
+    image: '/images/projects/game-tracker.svg',
+    liveUrl: 'https://gametracker.network',
+    deliverables: [
+      'Real-time player concurrency & multi-region matchmaking dashboard',
+      '50+ title game catalog with one-click patch deployment and asset delivery',
+      'Anti-cheat monitoring engine with automated behavioral ban triggers',
+      'Global leaderboards and dynamic season pass rewards calculation pipeline'
+    ],
+    architecture: [
+      '60Hz state synchronization handling 500,000 game events per second',
+      'Unified OAuth2 game launcher linking mobile, Steam, and WebGL players',
+      'Anti-cheat behavioral anomaly detection engine running live on match frames'
+    ],
+    featured: true,
+    publishedAt: '2026-05-19'
   }
 ];
 

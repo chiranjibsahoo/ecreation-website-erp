@@ -25,6 +25,11 @@ export interface Project {
   tags: string[];
   featured?: boolean;
   publishedAt: string;
+  image?: string;
+  liveUrl?: string;
+  deliverables?: string[];
+  architecture?: string[];
+  gallery?: string[];
 }
 
 export interface BlogPost {

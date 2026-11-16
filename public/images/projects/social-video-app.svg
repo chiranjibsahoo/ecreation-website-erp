@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="100%" height="100%">
+  <defs>
+    <linearGradient id="vidBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#180026"/>
+      <stop offset="50%" stop-color="#3B0764"/>
+      <stop offset="100%" stop-color="#020005"/>
+    </linearGradient>
+    <linearGradient id="neonPink" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EC4899"/>
+      <stop offset="50%" stop-color="#D946EF"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="feedGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4C1D95"/>
+      <stop offset="50%" stop-color="#1E1B4B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#vidBg)"/>
+
+  <rect x="30" y="30" width="1140" height="50" rx="14" fill="#150020" stroke="#581C87" stroke-width="1.2"/>
+  <circle cx="60" cy="55" r="7" fill="#EF4444"/>
+  <circle cx="82" cy="55" r="7" fill="#F59E0B"/>
+  <circle cx="104" cy="55" r="7" fill="#10B981"/>
+  
+  <rect x="150" y="42" width="620" height="26" rx="7" fill="#2E1065" stroke="#6B21A8" stroke-width="0.8"/>
+  <text x="170" y="60" fill="#E9D5FF" font-family="sans-serif" font-size="12">https://pulseplay.tv/creator-studio/analytics</text>
+  <rect x="740" y="47" width="16" height="16" rx="4" fill="#D946EF" opacity="0.3"/>
+  <circle cx="748" cy="55" r="3.5" fill="#D946EF"/>
+
+  <rect x="970" y="42" width="180" height="26" rx="13" fill="#2E1065" stroke="#6B21A8" stroke-width="0.8"/>
+  <circle cx="985" cy="55" r="8" fill="url(#neonPink)"/>
+  <text x="1000" y="60" fill="#FAF5FF" font-family="sans-serif" font-size="11" font-weight="600">@neha_dancer (Verified)</text>
+
+  <rect x="30" y="90" width="1140" height="640" rx="14" fill="#0C0014" stroke="#581C87" stroke-width="1.2"/>
+
+  <!-- Left Sidebar -->
+  <rect x="40" y="100" width="220" height="620" rx="10" fill="#1F0430" stroke="#581C87" stroke-width="1"/>
+  
+  <rect x="60" y="125" width="38" height="38" rx="9" fill="url(#neonPink)"/>
+  <text x="69" y="152" fill="#FFFFFF" font-family="sans-serif" font-size="20" font-weight="bold">▶️</text>
+  <text x="108" y="142" fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold">PulsePlay</text>
+  <text x="108" y="156" fill="#F472B6" font-family="sans-serif" font-size="10" font-weight="bold">VIDEO ECOSYSTEM</text>
+
+  <rect x="52" y="185" width="196" height="38" rx="8" fill="url(#neonPink)"/>
+  <text x="75" y="210" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="bold">🔥 Trending Short Feed</text>
+
+  <rect x="52" y="233" width="196" height="38" rx="8" fill="transparent"/>
+  <text x="75" y="258" fill="#D8B4FE" font-family="sans-serif" font-size="13">📡 Live Video Streaming</text>
+
+  <rect x="52" y="281" width="196" height="38" rx="8" fill="transparent"/>
+  <text x="75" y="306" fill="#D8B4FE" font-family="sans-serif" font-size="13">💎 Creator Monetization</text>
+
+  <rect x="52" y="329" width="196" height="38" rx="8" fill="transparent"/>
+  <text x="75" y="354" fill="#D8B4FE" font-family="sans-serif" font-size="13">🎶 Music &amp; Audio Library</text>
+
+  <rect x="52" y="377" width="196" height="38" rx="8" fill="transparent"/>
+  <text x="75" y="402" fill="#D8B4FE" font-family="sans-serif" font-size="13">⚙️ Video Transcoding CDN</text>
+
+  <rect x="52" y="560" width="196" height="140" rx="10" fill="#3B0764" stroke="#7E22CE" stroke-width="1"/>
+  <text x="70" y="588" fill="#F472B6" font-family="sans-serif" font-size="12" font-weight="bold">STREAMING LATENCY</text>
+  <text x="70" y="625" fill="#FFFFFF" font-family="sans-serif" font-size="32" font-weight="bold">120 <tspan font-size="16" fill="#E9D5FF">MS</tspan></text>
+  <text x="70" y="650" fill="#D8B4FE" font-family="sans-serif" font-size="11">Global edge POP distribution</text>
+  <text x="70" y="675" fill="#34D399" font-family="sans-serif" font-size="11">● 4K Transcode Active</text>
+
+  <!-- Mobile Mockup -->
+  <g transform="translate(280, 110)">
+    <rect x="0" y="0" width="280" height="600" rx="36" fill="#000000" stroke="#7E22CE" stroke-width="4"/>
+    <rect x="90" y="10" width="100" height="22" rx="11" fill="#180026"/>
+    <circle cx="170" cy="21" r="4" fill="#3B0764"/>
+
+    <rect x="10" y="40" width="260" height="545" rx="26" fill="url(#feedGrad)"/>
+    
+    <circle cx="140" cy="220" r="45" fill="#F472B6" opacity="0.4"/>
+    <path d="M140 160 Q 155 240, 140 320" stroke="#EC4899" stroke-width="4" fill="none"/>
+    <path d="M110 210 Q 140 230, 170 200" stroke="#A855F7" stroke-width="4" fill="none"/>
+    <text x="70" y="270" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="bold">#CyberFunk Dance Challenge</text>
+    
+    <circle cx="235" cy="300" r="16" fill="#1E1B4B" stroke="#A855F7" stroke-width="1"/>
+    <text x="228" y="306" fill="#EC4899" font-size="14">❤️</text>
+    <text x="224" y="326" fill="#FFFFFF" font-family="sans-serif" font-size="9" font-weight="bold">428K</text>
+
+    <circle cx="235" cy="350" r="16" fill="#1E1B4B" stroke="#A855F7" stroke-width="1"/>
+    <text x="228" y="356" fill="#60A5FA" font-size="14">💬</text>
+    <text x="224" y="376" fill="#FFFFFF" font-family="sans-serif" font-size="9" font-weight="bold">18.4K</text>
+
+    <circle cx="235" cy="400" r="16" fill="#1E1B4B" stroke="#A855F7" stroke-width="1"/>
+    <text x="228" y="406" fill="#FBBF24" font-size="14">⚡</text>
+    <text x="226" y="426" fill="#FFFFFF" font-family="sans-serif" font-size="9" font-weight="bold">Tip</text>
+
+    <rect x="20" y="480" width="240" height="90" rx="14" fill="#000000" fill-opacity="0.6"/>
+    <text x="32" y="505" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="bold">@neha_dancer</text>
+    <text x="32" y="525" fill="#E9D5FF" font-family="sans-serif" font-size="10">Original Sound - Beats by Tokyo #dance</text>
+    <rect x="32" y="538" width="80" height="20" rx="10" fill="url(#neonPink)"/>
+    <text x="50" y="552" fill="#FFFFFF" font-family="sans-serif" font-size="10" font-weight="bold">Follow</text>
+  </g>
+
+  <!-- Creator Studio & Stream Telemetry -->
+  <g transform="translate(580, 110)">
+    <rect x="0" y="0" width="180" height="100" rx="12" fill="#1F0430" stroke="#581C87" stroke-width="1"/>
+    <text x="15" y="28" fill="#D8B4FE" font-family="sans-serif" font-size="10" font-weight="bold">DAILY ACTIVE VIEWERS</text>
+    <text x="15" y="65" fill="#FFFFFF" font-family="sans-serif" font-size="24" font-weight="bold">1.2M</text>
+    <text x="15" y="85" fill="#34D399" font-family="sans-serif" font-size="10">+28% this week</text>
+
+    <rect x="195" y="0" width="180" height="100" rx="12" fill="#1F0430" stroke="#581C87" stroke-width="1"/>
+    <text x="210" y="28" fill="#D8B4FE" font-family="sans-serif" font-size="10" font-weight="bold">CREATOR PAYOUTS</text>
+    <text x="210" y="65" fill="#F472B6" font-family="sans-serif" font-size="24" font-weight="bold">$485,000</text>
+    <text x="210" y="85" fill="#E9D5FF" font-family="sans-serif" font-size="10">Live Coins &amp; Ads</text>
+
+    <rect x="390" y="0" width="180" height="100" rx="12" fill="#1F0430" stroke="#581C87" stroke-width="1"/>
+    <text x="405" y="28" fill="#D8B4FE" font-family="sans-serif" font-size="10" font-weight="bold">AI MODERATION</text>
+    <text x="405" y="65" fill="#34D399" font-family="sans-serif" font-size="24" font-weight="bold">99.98%</text>
+    <text x="405" y="85" fill="#A7F3D0" font-family="sans-serif" font-size="10">Zero Hate Speech Pass</text>
+
+    <!-- Analytics Chart -->
+    <rect x="0" y="120" width="570" height="480" rx="14" fill="#1F0430" stroke="#581C87" stroke-width="1.2"/>
+    <text x="25" y="152" fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold">Global Video Stream Ingestion &amp; CDN Edge Throughput</text>
+    <text x="25" y="174" fill="#D8B4FE" font-family="sans-serif" font-size="11">Real-time WebSocket Concurrent Connections &amp; Bitrate Adaptation</text>
+
+    <path d="M 25 350 Q 80 260, 140 290 T 260 210 T 380 250 T 500 180 T 560 160" fill="none" stroke="url(#neonPink)" stroke-width="4"/>
+    <path d="M 25 350 Q 80 260, 140 290 T 260 210 T 380 250 T 500 180 T 560 160 L 560 400 L 25 400 Z" fill="#D946EF" fill-opacity="0.15"/>
+
+    <circle cx="260" cy="210" r="6" fill="#F472B6" stroke="#FFFFFF" stroke-width="2"/>
+    <circle cx="500" cy="180" r="6" fill="#F472B6" stroke="#FFFFFF" stroke-width="2"/>
+
+    <rect x="25" y="420" width="520" height="150" rx="10" fill="#2E1065" stroke="#7E22CE" stroke-width="0.8"/>
+    <text x="45" y="448" fill="#F472B6" font-family="sans-serif" font-size="13" font-weight="bold">NEXT-GEN VIDEO STACK CAPABILITIES</text>
+    <text x="45" y="475" fill="#E9D5FF" font-family="sans-serif" font-size="11">● Multi-bitrate HLS / LL-HLS Adaptive Bitrate Streaming (1080p, 720p, 480p, 360p)</text>
+    <text x="45" y="500" fill="#E9D5FF" font-family="sans-serif" font-size="11">● Redis Vector Recommendation Engine: 45ms Personalized Video Feed Tailoring</text>
+    <text x="45" y="525" fill="#E9D5FF" font-family="sans-serif" font-size="11">● WebRTC Sub-Second Live Streaming with Virtual Gifts and In-App Stripe Payments</text>
+    <text x="45" y="550" fill="#34D399" font-family="sans-serif" font-size="11">● Native iOS &amp; Android Apps with GPU Shaders &amp; Realtime Beauty AR Filters</text>
+  </g>
+</svg>
