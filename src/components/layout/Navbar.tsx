@@ -245,14 +245,14 @@ export const Navbar = () => {
                       );
                     })}
 
-                    <div className="col-span-2 mt-1 pt-3 border-t border-stone-200/80 dark:border-stone-800 flex items-center justify-between bg-stone-950 text-white px-5 py-3.5 rounded-2xl">
-                      <div className="text-xs text-stone-200">
-                        <span className="font-black text-amber-400">Need a custom quote?</span> Get a free architecture &amp; cost roadmap in 4 hours.
+                    <div className="subsection-bordered-item col-span-2 mt-1 pt-3 border-t border-amber-500/30 flex items-center justify-between bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-900 px-5 py-3.5 rounded-2xl">
+                      <div className="text-xs text-stone-800 font-medium">
+                        <span className="font-black text-emerald-800">Need a custom quote?</span> Get a free architecture &amp; cost roadmap in 4 hours.
                       </div>
                       <Link
                         href="/#estimator"
                         onClick={() => setServicesOpen(false)}
-                        className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-black whitespace-nowrap flex items-center gap-1"
+                        className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-black whitespace-nowrap flex items-center gap-1 shadow-2xs"
                       >
                         Cost Calculator
                         <ArrowRight className="w-3.5 h-3.5" />

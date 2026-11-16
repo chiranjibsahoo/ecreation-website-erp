@@ -79,18 +79,18 @@ export default function AdminLayout({
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] dark:bg-stone-950 flex flex-col pt-[84px] sm:pt-[92px]">
-      {/* Executive Admin ERP Command Sub-Header (Properly cleared below Fixed Main Header) */}
+      {/* Executive Admin ERP Command Sub-Header (Option 3 Soft Warm Sage-Cream & Emerald-Gold Gradient) */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-3">
-        <div className="rounded-3xl bg-[#141210] text-white border border-amber-500/40 shadow-xl p-4 sm:p-5 space-y-4">
+        <div className="subsection-bordered-card rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 p-4 sm:p-5 space-y-4">
           {/* Top Row: Session Telemetry & Prominent Logout Button */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-stone-800">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-amber-500/30">
             <div className="flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 font-mono text-[11px] font-bold">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="subsection-bordered-item inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-emerald-800 font-mono text-[11px] font-bold">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>ECREATION ADMIN ERP PORTAL</span>
               </div>
-              <span className="font-mono text-xs text-stone-300">
-                Logged in as: <strong className="text-amber-400">{userEmail}</strong>
+              <span className="font-mono text-xs text-stone-700 font-medium">
+                Logged in as: <strong className="text-amber-800">{userEmail}</strong>
               </span>
             </div>
 
@@ -99,9 +99,9 @@ export default function AdminLayout({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-9 text-xs font-bold bg-stone-900 hover:bg-stone-800 border-stone-700 text-stone-200 rounded-xl"
+                  className="subsection-bordered-item h-9 text-xs font-bold bg-white text-stone-800 rounded-xl"
                 >
-                  <ExternalLink className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+                  <ExternalLink className="w-3.5 h-3.5 mr-1.5 text-amber-600" />
                   Public Website
                 </Button>
               </Link>
@@ -126,13 +126,13 @@ export default function AdminLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 border ${
+                  className={`subsection-bordered-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-2 ${
                     isActive
-                      ? 'bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-stone-950 border-amber-300 shadow-md font-black'
-                      : 'bg-stone-900/90 text-stone-300 border-stone-800 hover:text-amber-300 hover:border-amber-500/40'
+                      ? 'bg-amber-500 text-stone-950 font-black shadow-2xs'
+                      : 'bg-white/90 text-stone-700 hover:text-stone-950'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-stone-950' : 'text-amber-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-stone-950' : 'text-amber-600'}`} />
                   <span>{item.label}</span>
                 </Link>
               );

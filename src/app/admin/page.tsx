@@ -297,15 +297,15 @@ export default function AdminDashboardPage() {
 
         {/* CMS Quick Links Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-stone-950 text-white border border-amber-500/50 p-6 rounded-2xl shadow-md space-y-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center">
+          <div className="subsection-bordered-card bg-gradient-to-br from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 p-6 rounded-2xl space-y-3">
+            <div className="w-9 h-9 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center shadow-2xs">
               <MessageSquare className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-white">AI Assistant Chat Logs</h3>
-            <p className="text-xs text-stone-300">
+            <h3 className="text-base font-bold text-stone-950">AI Assistant Chat Logs</h3>
+            <p className="text-xs text-stone-700 font-medium">
               Inspect all visitor chat transcripts, questions asked, and phone/email leads captured by the AI Bot.
             </p>
-            <Link href="/admin/chats" className="text-xs font-bold text-amber-400 hover:underline inline-flex items-center gap-1 pt-1">
+            <Link href="/admin/chats" className="text-xs font-bold text-emerald-800 hover:underline inline-flex items-center gap-1 pt-1">
               Open Chat Logs &amp; Analysis <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>

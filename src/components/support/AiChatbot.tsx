@@ -930,21 +930,21 @@ export const AiChatbot = () => {
       {/* Chat Window Dialog */}
       {isOpen && (
         <div className="fixed bottom-20 sm:bottom-22 right-3 sm:right-6 z-50 w-[calc(100vw-1.5rem)] sm:w-[430px] h-[610px] max-h-[84dvh] bg-white dark:bg-stone-950 border-2 border-amber-500/45 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in-50 slide-in-from-bottom-5 duration-200">
-          {/* Header */}
-          <div className="p-3.5 sm:p-4 bg-stone-950 text-white flex items-center justify-between border-b border-stone-800 shrink-0">
+          {/* Header — Option 3 Soft Warm Sage-Cream & Emerald-Gold Gradient */}
+          <div className="p-3.5 sm:p-4 bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 flex items-center justify-between border-b border-amber-500/35 shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500 flex items-center justify-center text-stone-950 font-bold shadow-xs shrink-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-500 flex items-center justify-center text-stone-950 font-bold shadow-xs shrink-0 border border-amber-600/40">
                 <Bot className="w-5 h-5" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-xs sm:text-sm font-black text-white">Ecreation AI Consultant</h3>
-                  <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-mono font-bold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <h3 className="text-xs sm:text-sm font-black text-stone-950">Ecreation AI Consultant</h3>
+                  <span className="inline-flex items-center gap-1 text-[10px] bg-white/90 text-emerald-800 border border-emerald-500/40 px-2 py-0.5 rounded-full font-mono font-bold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     24/7 Live
                   </span>
                 </div>
-                <p className="text-[10px] sm:text-[11px] text-stone-400">
+                <p className="text-[10px] sm:text-[11px] text-stone-700 font-medium">
                   Services · Pricing · Timelines · Instant Demo
                 </p>
               </div>
@@ -955,8 +955,8 @@ export const AiChatbot = () => {
                 onClick={() => setShowTopicDrawer((prev) => !prev)}
                 className={`px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 border transition-colors cursor-pointer ${
                   showTopicDrawer
-                    ? 'bg-amber-500 text-stone-950 border-amber-400'
-                    : 'bg-stone-900 text-amber-300 border-amber-500/40 hover:bg-stone-800'
+                    ? 'bg-amber-500 text-stone-950 border-amber-600/50'
+                    : 'bg-white/90 text-stone-800 border-amber-500/40 hover:bg-white'
                 }`}
                 title="Toggle Quick Help Topics Menu"
               >
@@ -965,7 +965,7 @@ export const AiChatbot = () => {
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-stone-400 hover:text-white p-1.5 rounded-lg hover:bg-stone-800 transition-colors cursor-pointer"
+                className="text-stone-700 hover:text-stone-950 p-1.5 rounded-lg hover:bg-white/70 transition-colors cursor-pointer"
                 aria-label="Close Chat"
               >
                 <X className="w-5 h-5" />

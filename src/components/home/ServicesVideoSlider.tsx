@@ -365,18 +365,18 @@ export const ServicesVideoSlider = () => {
               </div>
             </div>
 
-            {/* Right Visual + Live Interface Column (Warm Obsidian & Gold, Zero Blue) */}
-            <div className="lg:col-span-6 bg-stone-950 rounded-2xl p-4 sm:p-6 border border-stone-800 text-white shadow-2xl flex flex-col justify-between space-y-5 overflow-hidden">
+            {/* Right Visual + Live Interface Column (Option 3 Soft Warm Sage-Cream & Emerald-Gold Gradient) */}
+            <div className="lg:col-span-6 subsection-bordered-card bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] rounded-2xl p-4 sm:p-6 text-stone-900 flex flex-col justify-between space-y-5 overflow-hidden">
               {/* Top Visual Preview Banner inside the Simulator */}
-              <div className="relative h-44 sm:h-52 w-full rounded-xl overflow-hidden border border-stone-800">
+              <div className="relative h-44 sm:h-52 w-full rounded-xl overflow-hidden border border-amber-500/40">
                 <img
                   src={active.imageSrc}
                   alt={active.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent" />
-                <div className="absolute top-3 left-3 flex items-center gap-2 px-2.5 py-1 rounded-md bg-stone-950/85 border border-amber-500/40 text-[10px] font-mono text-amber-400 font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/60 via-transparent to-transparent" />
+                <div className="subsection-bordered-item absolute top-3 left-3 flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/95 text-[10px] font-mono text-emerald-800 font-bold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                   <span>LIVE INTERFACE PREVIEW</span>
                 </div>
               </div>
@@ -385,23 +385,23 @@ export const ServicesVideoSlider = () => {
               <div>
                 {active.id === 'automation' && (
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between bg-stone-900 p-3 rounded-xl border border-stone-800">
+                    <div className="subsection-bordered-item flex items-center justify-between bg-white/95 p-3 rounded-xl">
                       <div>
-                        <div className="text-xs font-bold text-white">GST Invoice #EC-2026-891</div>
-                        <div className="text-[10px] text-stone-400">Auto-Generated &amp; Synced with Inventory</div>
+                        <div className="text-xs font-bold text-stone-950">GST Invoice #EC-2026-891</div>
+                        <div className="text-[10px] text-stone-600">Auto-Generated &amp; Synced with Inventory</div>
                       </div>
-                      <span className="text-xs font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-700/60 px-2.5 py-1 rounded">
+                      <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 border border-emerald-400 px-2.5 py-1 rounded">
                         PAID · ₹3,42,500
                       </span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-mono">
-                      <div className="bg-stone-900 p-2 rounded-lg border border-stone-800 text-amber-300">
+                    <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-mono font-bold">
+                      <div className="subsection-bordered-item bg-white/90 p-2 rounded-lg text-amber-800">
                         ✓ PO Approved
                       </div>
-                      <div className="bg-stone-900 p-2 rounded-lg border border-stone-800 text-amber-300">
+                      <div className="subsection-bordered-item bg-white/90 p-2 rounded-lg text-amber-800">
                         ✓ GST Filed
                       </div>
-                      <div className="bg-stone-900 p-2 rounded-lg border border-stone-800 text-emerald-400">
+                      <div className="subsection-bordered-item bg-white/90 p-2 rounded-lg text-emerald-700">
                         ✓ Stock Updated
                       </div>
                     </div>
@@ -410,27 +410,27 @@ export const ServicesVideoSlider = () => {
 
                 {active.id === 'webdev' && (
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between bg-stone-900 p-3 rounded-xl border border-stone-800">
+                    <div className="subsection-bordered-item flex items-center justify-between bg-white/95 p-3 rounded-xl">
                       <div className="flex items-center gap-2.5">
-                        <Laptop className="w-4 h-4 text-amber-400" />
-                        <span className="text-xs font-mono text-stone-200">Responsive 4K + Mobile UI</span>
+                        <Laptop className="w-4 h-4 text-amber-600" />
+                        <span className="text-xs font-mono font-semibold text-stone-900">Responsive 4K + Mobile UI</span>
                       </div>
-                      <span className="text-[10px] font-mono text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-700/60">
+                      <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-400">
                         100/100 LIGHTHOUSE
                       </span>
                     </div>
                     <div className="grid grid-cols-3 gap-2 text-center">
-                      <div className="bg-stone-900 p-2.5 rounded-xl border border-stone-800">
-                        <div className="text-lg font-black text-amber-400">100</div>
-                        <div className="text-[10px] text-stone-400 font-mono">Performance</div>
+                      <div className="subsection-bordered-item bg-white/90 p-2.5 rounded-xl">
+                        <div className="text-lg font-black text-amber-700">100</div>
+                        <div className="text-[10px] text-stone-600 font-mono">Performance</div>
                       </div>
-                      <div className="bg-stone-900 p-2.5 rounded-xl border border-stone-800">
-                        <div className="text-lg font-black text-amber-400">100</div>
-                        <div className="text-[10px] text-stone-400 font-mono">Accessibility</div>
+                      <div className="subsection-bordered-item bg-white/90 p-2.5 rounded-xl">
+                        <div className="text-lg font-black text-amber-700">100</div>
+                        <div className="text-[10px] text-stone-600 font-mono">Accessibility</div>
                       </div>
-                      <div className="bg-stone-900 p-2.5 rounded-xl border border-stone-800">
-                        <div className="text-lg font-black text-amber-400">100</div>
-                        <div className="text-[10px] text-stone-400 font-mono">SEO Score</div>
+                      <div className="subsection-bordered-item bg-white/90 p-2.5 rounded-xl">
+                        <div className="text-lg font-black text-amber-700">100</div>
+                        <div className="text-[10px] text-stone-600 font-mono">SEO Score</div>
                       </div>
                     </div>
                   </div>
@@ -438,19 +438,19 @@ export const ServicesVideoSlider = () => {
 
                 {active.id === 'seo' && (
                   <div className="space-y-3">
-                    <div className="bg-stone-900 p-3 rounded-xl border border-stone-800 space-y-1">
-                      <div className="flex items-center gap-1.5 text-[10px] font-mono text-stone-400">
-                        <Globe className="w-3.5 h-3.5 text-amber-400" />
+                    <div className="subsection-bordered-item bg-white/95 p-3 rounded-xl space-y-1">
+                      <div className="flex items-center gap-1.5 text-[10px] font-mono text-stone-600">
+                        <Globe className="w-3.5 h-3.5 text-emerald-600" />
                         <span>https://ecreation.in › enterprise-solutions</span>
-                        <span className="text-amber-400 font-bold ml-auto">GOOGLE RANK #1</span>
+                        <span className="text-emerald-700 font-bold ml-auto">GOOGLE RANK #1</span>
                       </div>
-                      <div className="text-xs font-bold text-white">
+                      <div className="text-xs font-bold text-stone-950">
                         Best Enterprise ERP &amp; Website Development Company | Ecreation IT
                       </div>
                     </div>
-                    <div className="p-2.5 bg-stone-900 rounded-xl border border-stone-800 flex items-center justify-between">
-                      <span className="text-xs text-stone-300 font-medium">+1,420 Commercial Keywords in Top 3</span>
-                      <span className="text-xs font-mono font-black text-amber-400">▲ +340% Traffic</span>
+                    <div className="subsection-bordered-item p-2.5 bg-white/90 rounded-xl flex items-center justify-between">
+                      <span className="text-xs text-stone-800 font-medium">+1,420 Commercial Keywords in Top 3</span>
+                      <span className="text-xs font-mono font-black text-emerald-700">▲ +340% Traffic</span>
                     </div>
                   </div>
                 )}
@@ -458,37 +458,37 @@ export const ServicesVideoSlider = () => {
                 {active.id === 'social' && (
                   <div className="space-y-3">
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="bg-stone-900 p-2.5 rounded-xl border border-stone-800 text-center">
-                        <div className="text-[10px] font-mono text-stone-400">LinkedIn</div>
-                        <div className="text-sm font-bold text-amber-400">142K Reach</div>
+                      <div className="subsection-bordered-item bg-white/90 p-2.5 rounded-xl text-center">
+                        <div className="text-[10px] font-mono text-stone-600">LinkedIn</div>
+                        <div className="text-sm font-bold text-amber-700">142K Reach</div>
                       </div>
-                      <div className="bg-stone-900 p-2.5 rounded-xl border border-stone-800 text-center">
-                        <div className="text-[10px] font-mono text-stone-400">Instagram</div>
-                        <div className="text-sm font-bold text-amber-400">210K Views</div>
+                      <div className="subsection-bordered-item bg-white/90 p-2.5 rounded-xl text-center">
+                        <div className="text-[10px] font-mono text-stone-600">Instagram</div>
+                        <div className="text-sm font-bold text-amber-700">210K Views</div>
                       </div>
-                      <div className="bg-stone-900 p-2.5 rounded-xl border border-stone-800 text-center">
-                        <div className="text-[10px] font-mono text-stone-400">YouTube</div>
-                        <div className="text-sm font-bold text-amber-400">95K Watch</div>
+                      <div className="subsection-bordered-item bg-white/90 p-2.5 rounded-xl text-center">
+                        <div className="text-[10px] font-mono text-stone-600">YouTube</div>
+                        <div className="text-sm font-bold text-amber-700">95K Watch</div>
                       </div>
                     </div>
-                    <div className="bg-stone-900 p-2.5 rounded-xl border border-stone-800 flex items-center justify-between text-xs">
-                      <span className="text-stone-300">Inbound Social Leads</span>
-                      <span className="font-mono font-bold text-amber-400">+145% Monthly Pipeline</span>
+                    <div className="subsection-bordered-item bg-white/95 p-2.5 rounded-xl flex items-center justify-between text-xs">
+                      <span className="text-stone-800 font-medium">Inbound Social Leads</span>
+                      <span className="font-mono font-bold text-emerald-700">+145% Monthly Pipeline</span>
                     </div>
                   </div>
                 )}
 
                 {active.id === 'marketing' && (
                   <div className="space-y-3">
-                    <div className="bg-stone-900 p-3 rounded-xl border border-stone-800 flex items-center justify-between">
+                    <div className="subsection-bordered-item bg-white/95 p-3 rounded-xl flex items-center justify-between">
                       <div>
-                        <div className="text-[10px] font-mono uppercase text-stone-400">Verified Campaign ROAS</div>
-                        <div className="text-xl font-black text-amber-400">4.8x Return on Ad Spend</div>
+                        <div className="text-[10px] font-mono uppercase text-stone-600">Verified Campaign ROAS</div>
+                        <div className="text-xl font-black text-amber-700">4.8x Return on Ad Spend</div>
                       </div>
-                      <span className="text-xs font-mono font-bold text-stone-300">-42% Cost/Lead</span>
+                      <span className="text-xs font-mono font-bold text-emerald-700">-42% Cost/Lead</span>
                     </div>
-                    <div className="p-2.5 bg-stone-900 rounded-xl border border-stone-800 text-[11px] font-mono text-amber-300 flex items-center gap-2">
-                      <Target className="w-3.5 h-3.5 text-amber-400" />
+                    <div className="subsection-bordered-item p-2.5 bg-white/90 rounded-xl text-[11px] font-mono text-stone-800 font-semibold flex items-center gap-2">
+                      <Target className="w-3.5 h-3.5 text-amber-600" />
                       <span>Google Search + Meta Retargeting Active</span>
                     </div>
                   </div>
@@ -496,12 +496,12 @@ export const ServicesVideoSlider = () => {
               </div>
 
               {/* Footer Telemetry */}
-              <div className="pt-3 border-t border-stone-800 flex items-center justify-between text-[11px] font-mono text-stone-400">
-                <span className="flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5 text-amber-400" />
+              <div className="pt-3 border-t border-amber-500/25 flex items-center justify-between text-[11px] font-mono text-stone-700">
+                <span className="flex items-center gap-1.5 font-semibold">
+                  <Activity className="w-3.5 h-3.5 text-emerald-600" />
                   SLA: 99.99% Uptime
                 </span>
-                <span className="text-amber-400 font-semibold">ECREATION PRODUCTION ENGINE</span>
+                <span className="text-emerald-800 font-bold">ECREATION PRODUCTION ENGINE</span>
               </div>
             </div>
           </div>

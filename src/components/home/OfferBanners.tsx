@@ -48,32 +48,26 @@ export const PrimaryLaunchOfferBanner = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
-          <div className="relative rounded-3xl bg-stone-950 text-white border border-amber-500/40 p-6 sm:p-10 lg:p-12 shadow-2xl overflow-hidden">
-            {/* Warm Gold Studio Glow */}
-            <div
-              className="absolute -top-24 -right-24 w-96 h-96 bg-amber-500/15 blur-[120px] rounded-full pointer-events-none"
-              aria-hidden="true"
-            />
-
+          <div className="subsection-bordered-card relative rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 p-6 sm:p-10 lg:p-12 overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               {/* Left Offer Pitch (8 Cols) */}
               <div className="lg:col-span-8 space-y-5">
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-stone-950 text-xs font-black uppercase tracking-wider">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-stone-950 text-xs font-black uppercase tracking-wider shadow-2xs">
                     <Gift className="w-3.5 h-3.5" />
                     SPECIAL BUSINESS PACKAGE OFFER
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-900 border border-stone-700 text-amber-300 text-xs font-mono font-semibold">
-                    <Clock className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="subsection-bordered-item inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 text-emerald-800 text-xs font-mono font-bold">
+                    <Clock className="w-3.5 h-3.5 text-emerald-600" />
                     Available for All New Business Projects
                   </span>
                 </div>
 
-                <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-white leading-[1.15]">
-                  Get <span className="text-amber-400">Flat 25% OFF</span> on Complete Business Website Design, Custom ERP or Digital Marketing Package
+                <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-stone-950 leading-[1.15]">
+                  Get <span className="text-amber-700">Flat 25% OFF</span> on Complete Business Website Design, Custom ERP or Digital Marketing Package
                 </h2>
 
-                <p className="text-stone-300 text-sm sm:text-base max-w-2xl leading-relaxed">
+                <p className="text-stone-700 text-sm sm:text-base max-w-2xl leading-relaxed font-medium">
                   Upgrade your company with an A-class Website, Automated Billing/ERP Software, or Google #1 SEO &amp; Social Media Package—and receive 4 high-value business bonuses completely free:
                 </p>
 
@@ -82,9 +76,9 @@ export const PrimaryLaunchOfferBanner = () => {
                   {freeBonuses.map((bonus) => (
                     <div
                       key={bonus}
-                      className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-stone-900/90 border border-stone-800 text-xs sm:text-sm font-semibold text-stone-200"
+                      className="subsection-bordered-item flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-white/90 text-xs sm:text-sm font-bold text-stone-800"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                       <span>{bonus}</span>
                     </div>
                   ))}
@@ -92,21 +86,21 @@ export const PrimaryLaunchOfferBanner = () => {
               </div>
 
               {/* Right Promo Code & Action Box (4 Cols) */}
-              <div className="lg:col-span-4 bg-stone-900/95 border border-amber-500/30 rounded-2xl p-6 flex flex-col justify-between space-y-5">
-                <div className="flex items-center justify-between border-b border-stone-800 pb-4">
+              <div className="lg:col-span-4 subsection-bordered-card bg-white/92 rounded-2xl p-6 flex flex-col justify-between space-y-5">
+                <div className="flex items-center justify-between border-b border-amber-500/25 pb-4">
                   <div>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 block">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500 block font-bold">
                       INSTANT SAVING
                     </span>
-                    <span className="text-3xl sm:text-4xl font-black text-amber-400">
+                    <span className="text-3xl sm:text-4xl font-black text-amber-700">
                       25% OFF
                     </span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 block">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500 block font-bold">
                       FREE BONUSES
                     </span>
-                    <span className="text-lg font-bold text-white">
+                    <span className="text-lg font-extrabold text-stone-950">
                       Worth ₹35,000
                     </span>
                   </div>
@@ -114,20 +108,20 @@ export const PrimaryLaunchOfferBanner = () => {
 
                 {/* Interactive Promo Code Box */}
                 <div className="space-y-2">
-                  <span className="text-[11px] font-mono text-stone-400 uppercase tracking-wider block">
+                  <span className="text-[11px] font-mono text-stone-600 uppercase tracking-wider block font-bold">
                     Click to Copy Offer Code:
                   </span>
                   <button
                     onClick={copyPromo}
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-stone-950 border border-dashed border-amber-500/60 hover:border-amber-400 text-amber-300 font-mono font-bold text-sm transition-colors"
+                    className="subsection-bordered-item w-full flex items-center justify-between px-4 py-3 rounded-xl bg-[#F5EFE0] text-amber-900 font-mono font-bold text-sm cursor-pointer"
                     aria-label="Copy promo code ECREATION25"
                   >
                     <span>{promoCode}</span>
-                    <span className="inline-flex items-center gap-1 text-xs text-stone-300">
+                    <span className="inline-flex items-center gap-1 text-xs text-stone-700">
                       {copied ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-emerald-400">Copied!</span>
+                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                          <span className="text-emerald-700 font-bold">Copied!</span>
                         </>
                       ) : (
                         <>
@@ -140,13 +134,13 @@ export const PrimaryLaunchOfferBanner = () => {
                 </div>
 
                 <Link href="/contact#enquiry" className="block">
-                  <Button className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-stone-950 font-black rounded-xl text-sm shadow-lg shadow-amber-500/20 transition-all hover:scale-[1.02]">
+                  <Button className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-stone-950 font-black rounded-xl text-sm shadow-md transition-transform duration-200 hover:-translate-y-0.5">
                     Claim 25% Special Offer
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
 
-                <p className="text-[11px] text-center text-stone-400 font-mono">
+                <p className="text-[11px] text-center text-stone-600 font-mono font-semibold">
                   ✓ No Hidden Charges · Free Consultation in 4 Hours
                 </p>
               </div>

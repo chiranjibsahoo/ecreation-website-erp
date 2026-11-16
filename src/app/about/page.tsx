@@ -47,13 +47,13 @@ export default function AboutPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-3xl bg-neutral-950 text-white">
+        <div className="subsection-bordered-card grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950">
           {COMPANY_INFO.stats.map((s) => (
-            <div key={s.label} className="text-center space-y-1">
-              <span className="text-3xl sm:text-5xl font-black text-amber-400">
+            <div key={s.label} className="subsection-bordered-item rounded-2xl bg-white/85 p-5 text-center space-y-1">
+              <span className="text-3xl sm:text-5xl font-black text-amber-700 block">
                 {s.value}
               </span>
-              <p className="text-xs sm:text-sm text-neutral-400 font-medium">{s.label}</p>
+              <p className="text-xs sm:text-sm text-stone-700 font-bold">{s.label}</p>
             </div>
           ))}
         </div>

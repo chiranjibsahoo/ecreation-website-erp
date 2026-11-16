@@ -336,14 +336,14 @@ export const FullscreenVideoHero = () => {
 
           {/* Right Column: Luxury Interactive Image & Video Showcase Frame */}
           <div className="lg:col-span-6">
-            <div className="relative rounded-3xl bg-stone-950 p-2 sm:p-3.5 border border-stone-800 shadow-2xl shadow-stone-950/25 overflow-hidden">
+            <div className="subsection-bordered-card relative rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] p-2 sm:p-3.5 overflow-hidden">
               {/* Top Studio Browser Frame Bar */}
-              <div className="flex items-center justify-between px-3 py-2 mb-2 rounded-2xl bg-stone-900/90 border border-stone-800 text-xs gap-2">
+              <div className="subsection-bordered-item flex items-center justify-between px-3 py-2 mb-2 rounded-2xl bg-white/90 text-xs gap-2">
                 <div className="flex items-center gap-1.5 min-w-0">
-                  <span className="w-2.5 h-2.5 rounded-full bg-stone-700 shrink-0" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-600/80 shrink-0" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0" />
-                  <span className="ml-1.5 font-mono text-[10px] sm:text-[11px] text-stone-300 font-semibold truncate">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-300 shrink-0" />
+                  <span className="ml-1.5 font-mono text-[10px] sm:text-[11px] text-stone-700 font-semibold truncate">
                     ecreation.in // {active.id}
                   </span>
                 </div>
@@ -351,10 +351,10 @@ export const FullscreenVideoHero = () => {
                 <div className="flex items-center gap-1.5 shrink-0">
                   <button
                     onClick={() => setShowVideoMode(!showVideoMode)}
-                    className={`px-2 py-1 rounded-lg text-[10px] font-mono font-bold transition-colors border ${
+                    className={`px-2 py-1 rounded-lg text-[10px] font-mono font-bold transition-colors border cursor-pointer ${
                       showVideoMode
                         ? 'bg-amber-500 text-stone-950 border-amber-400'
-                        : 'bg-stone-800 text-stone-300 border-stone-700 hover:text-white'
+                        : 'bg-white text-stone-700 border-amber-500/40 hover:text-stone-950'
                     }`}
                     title="Toggle between Studio Image Showcase and Motion Video"
                   >
@@ -364,25 +364,25 @@ export const FullscreenVideoHero = () => {
                   {showVideoMode && (
                     <button
                       onClick={toggleMute}
-                      className="w-7 h-7 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center transition-colors"
+                      className="w-7 h-7 rounded-lg bg-white border border-amber-500/40 text-stone-700 flex items-center justify-center transition-colors cursor-pointer"
                       aria-label={isMuted ? 'Unmute video' : 'Mute video'}
                     >
-                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-400" />}
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-600" />}
                     </button>
                   )}
 
                   <button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="w-7 h-7 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 flex items-center justify-center transition-colors"
+                    className="w-7 h-7 rounded-lg bg-white border border-amber-500/40 text-stone-700 flex items-center justify-center transition-colors cursor-pointer"
                     aria-label={isPlaying ? 'Pause slider' : 'Play slider'}
                   >
-                    {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-amber-400" />}
+                    {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-amber-600" />}
                   </button>
                 </div>
               </div>
 
               {/* Main Visual Viewport */}
-              <div className="relative h-[280px] sm:h-[380px] lg:h-[430px] w-full rounded-2xl overflow-hidden bg-stone-900">
+              <div className="relative h-[280px] sm:h-[380px] lg:h-[430px] w-full rounded-2xl overflow-hidden bg-stone-900 border border-amber-500/35">
                 {slides.map((s, idx) => {
                   const isSelected = idx === currentSlide;
                   return (
@@ -415,21 +415,21 @@ export const FullscreenVideoHero = () => {
                         />
                       )}
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/75 via-transparent to-transparent" />
                     </div>
                   );
                 })}
 
                 {/* Floating Live Telemetry / Outcome Overlay Card */}
-                <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-20 p-3 sm:p-4 rounded-2xl bg-stone-950/90 backdrop-blur-md border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-xl">
+                <div className="subsection-bordered-item absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-20 p-3 sm:p-4 rounded-2xl bg-gradient-to-r from-[#E3F1EB]/95 via-[#EFF4EC]/95 to-[#F5EFE0]/95 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-lg">
                   <div className="space-y-0.5 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                      <span className="text-xs font-bold text-white truncate">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                      <span className="text-xs font-extrabold text-stone-950 truncate">
                         {active.liveCardTitle}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] font-mono text-stone-300 truncate">
+                    <p className="text-[10px] sm:text-[11px] font-mono text-stone-700 truncate font-medium">
                       {active.liveCardSubtitle}
                     </p>
                   </div>
@@ -441,14 +441,14 @@ export const FullscreenVideoHero = () => {
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={prevSlide}
-                        className="w-8 h-8 rounded-lg bg-stone-800 hover:bg-stone-700 text-white flex items-center justify-center transition-colors border border-stone-700"
+                        className="w-8 h-8 rounded-lg bg-white hover:bg-amber-50 text-stone-900 flex items-center justify-center transition-colors border border-amber-500/40 cursor-pointer"
                         aria-label="Previous slide"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
                       <button
                         onClick={nextSlide}
-                        className="w-8 h-8 rounded-lg bg-stone-800 hover:bg-stone-700 text-white flex items-center justify-center transition-colors border border-stone-700"
+                        className="w-8 h-8 rounded-lg bg-white hover:bg-amber-50 text-stone-900 flex items-center justify-center transition-colors border border-amber-500/40 cursor-pointer"
                         aria-label="Next slide"
                       >
                         <ChevronRight className="w-4 h-4" />
@@ -470,27 +470,27 @@ export const FullscreenVideoHero = () => {
                 <button
                   key={s.id}
                   onClick={() => selectSlide(idx)}
-                  className={`relative p-3.5 sm:p-4 rounded-2xl text-left transition-all duration-300 border overflow-hidden group cursor-pointer ${
+                  className={`subsection-bordered-item relative p-3.5 sm:p-4 rounded-2xl text-left overflow-hidden group cursor-pointer ${
                     isSelected
-                      ? 'bg-stone-950 text-white border-amber-500/80 shadow-xl shadow-stone-950/15'
-                      : 'bg-white/95 dark:bg-stone-900/80 text-stone-700 dark:text-stone-300 border-stone-200/90 dark:border-stone-800 hover:border-amber-500/40 hover:bg-white'
+                      ? 'bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 shadow-md'
+                      : 'bg-white/95 dark:bg-stone-900/80 text-stone-700 dark:text-stone-300'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2 mb-1.5">
                     <span
                       className={`text-[11px] font-mono font-bold uppercase tracking-wider ${
-                        isSelected ? 'text-amber-400' : 'text-amber-700 dark:text-amber-500'
+                        isSelected ? 'text-emerald-800' : 'text-amber-700 dark:text-amber-500'
                       }`}
                     >
                       PILLAR {s.pillarNumber}
                     </span>
-                    {idx === 0 && <Globe className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
-                    {idx === 1 && <Building2 className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
-                    {idx === 2 && <TrendingUp className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
-                    {idx === 3 && <Bot className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-stone-400'}`} />}
+                    {idx === 0 && <Globe className={`w-4 h-4 ${isSelected ? 'text-emerald-700' : 'text-stone-400'}`} />}
+                    {idx === 1 && <Building2 className={`w-4 h-4 ${isSelected ? 'text-emerald-700' : 'text-stone-400'}`} />}
+                    {idx === 2 && <TrendingUp className={`w-4 h-4 ${isSelected ? 'text-emerald-700' : 'text-stone-400'}`} />}
+                    {idx === 3 && <Bot className={`w-4 h-4 ${isSelected ? 'text-emerald-700' : 'text-stone-400'}`} />}
                   </div>
 
-                  <div className={`text-xs sm:text-sm font-bold truncate ${isSelected ? 'text-white' : 'text-stone-900 dark:text-white'}`}>
+                  <div className="text-xs sm:text-sm font-extrabold truncate text-stone-950 dark:text-white">
                     {s.tabTitle}
                   </div>
 
