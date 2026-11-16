@@ -63,7 +63,7 @@ export const RightFloatingDock = () => {
     { id: 'hero', label: 'Home', icon: Home },
     { id: 'visual-gallery', label: 'Visual Gallery', icon: Images },
     { id: 'offers', label: '25% Special Offer', icon: Tag },
-    { id: 'services', label: 'IT Services', icon: Layers },
+    { id: 'services', label: 'Services', icon: Layers },
     { id: 'interactive-showcase', label: 'Live Simulator', icon: Sparkles },
     { id: 'projects', label: 'Case Studies', icon: Briefcase },
     { id: 'estimator', label: 'Cost Estimator', icon: Calculator },
@@ -81,6 +81,14 @@ export const RightFloatingDock = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDockMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    e.currentTarget.style.setProperty('--rgb-x', `${x}%`);
+    e.currentTarget.style.setProperty('--rgb-y', `${y}%`);
   };
 
   return (
@@ -119,7 +127,7 @@ export const RightFloatingDock = () => {
         {/* Tablet & Desktop Left Floating Pill Button (>=640px) */}
         <button
           onClick={() => setEnquiryOpen(true)}
-          className="hidden sm:flex group items-center gap-2.5 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#D97706] hover:from-[#D97706] hover:via-[#EA580C] hover:to-[#B45309] text-white border-2 border-amber-200/90 shadow-[0_12px_32px_-6px_rgba(234,88,12,0.6)] hover:shadow-[0_16px_38px_-6px_rgba(234,88,12,0.8)] transition-all duration-300 hover:scale-105 cursor-pointer"
+          className="hidden sm:flex group items-center gap-2.5 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#D97706] hover:from-[#D97706] hover:via-[#EA580C] hover:to-[#B45309] text-white border-2 border-amber-200/90 shadow-[0_12px_32px_-6px_rgba(234,88,12,0.6)] hover:shadow-[0_16px_38px_-6px_rgba(234,88,12,0.85)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 cursor-pointer"
           aria-label="Open Quick Enquiry Form"
         >
           <span className="relative flex h-2.5 w-2.5 shrink-0">
@@ -135,58 +143,46 @@ export const RightFloatingDock = () => {
         </button>
       </div>
 
-      {/* Right-Side Persistent Section Quick-Jump Dock */}
+      {/* Right-Side Persistent Section Quick-Jump Dock (Video Style Pill + Flowing Border + Arrow Tooltips) */}
       <nav
         className="fixed right-3 lg:right-5 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-end gap-2.5 select-none"
         aria-label="Right Side Section Navigation"
       >
-        {/* Desktop Section Quick-Jump Dock */}
-        <div className="flex flex-col items-center gap-1.5 p-2 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200/90 dark:border-stone-800 shadow-lg shadow-stone-900/5 mr-0.5">
+        <div
+          className="right-dock-glass"
+          onMouseMove={handleDockMouseMove}
+        >
           {dockLinks.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
             return (
-              <div key={item.id} className="relative group">
-                <button
-                  onClick={() => scrollTo(item.id)}
-                  aria-label={`Scroll to ${item.label}`}
-                  className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-x-0.5 ${
-                    isActive
-                      ? 'bg-stone-950 text-amber-400 font-bold shadow-md scale-105'
-                      : 'text-stone-400 hover:text-amber-700 hover:bg-amber-50 hover:shadow-sm'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                </button>
-
-                <span
-                  role="tooltip"
-                  className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-stone-950 text-white text-[11px] font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 shadow-md"
-                >
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                aria-label={`Scroll to ${item.label}`}
+                className={`right-dock-btn ${isActive ? 'active' : 'text-stone-600'}`}
+              >
+                <Icon className="w-4 h-4" />
+                <span role="tooltip" className="right-dock-tooltip">
                   {item.label}
                 </span>
-              </div>
+              </button>
             );
           })}
 
           {showBackToTop && (
             <>
-              <div className="w-4 h-[1px] bg-stone-200 my-1" />
-              <div className="relative group">
-                <button
-                  onClick={scrollToTop}
-                  aria-label="Back to Top"
-                  className="w-8 h-8 rounded-xl flex items-center justify-center text-stone-400 hover:text-amber-600 hover:bg-amber-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110"
-                >
-                  <ArrowUp className="w-4 h-4" />
-                </button>
-                <span
-                  role="tooltip"
-                  className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-stone-950 text-white text-[11px] font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 shadow-md"
-                >
-                  Top
+              <div className="w-5 h-[1px] bg-amber-500/35 my-0.5" />
+              <button
+                onClick={scrollToTop}
+                aria-label="Back to Top"
+                className="right-dock-btn text-stone-600"
+              >
+                <ArrowUp className="w-4 h-4" />
+                <span role="tooltip" className="right-dock-tooltip">
+                  Back to Top
                 </span>
-              </div>
+              </button>
             </>
           )}
         </div>

@@ -75,10 +75,10 @@ export const ServicesGrid = () => {
             const imgSrc = getServiceImage(service.slug);
             return (
               <FadeIn key={service.id} delay={idx * 0.08}>
-                <CardHover className="group h-full bg-[#FAF8F5] dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 hover:border-amber-500/60 rounded-3xl overflow-hidden flex flex-col justify-between shadow-xs hover:shadow-xl transition-all duration-300">
+                <CardHover className="group h-full bg-[#FAF8F5] dark:bg-stone-900 border-2 border-amber-500/35 hover:border-amber-500 rounded-3xl overflow-hidden flex flex-col justify-between shadow-[0_8px_28px_-6px_rgba(180,130,40,0.12)] hover:shadow-[0_20px_45px_-8px_rgba(217,119,6,0.28)] transition-all duration-300">
                   <div>
                     {/* Visual Image Header */}
-                    <div className="relative h-48 w-full bg-stone-950 overflow-hidden border-b border-stone-200/60 dark:border-stone-800">
+                    <div className="relative h-48 w-full bg-stone-950 overflow-hidden border-b border-amber-500/30 dark:border-stone-800">
                       <img
                         src={imgSrc}
                         alt={service.title}
@@ -86,10 +86,10 @@ export const ServicesGrid = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent" />
                       <div className="absolute bottom-3 left-4 flex items-center gap-2.5">
-                        <div className="w-10 h-10 rounded-xl bg-stone-950/90 border border-amber-500/40 flex items-center justify-center shadow-md">
+                        <div className="w-10 h-10 rounded-xl bg-stone-950/90 border border-amber-500/50 flex items-center justify-center shadow-md">
                           {getIcon(service.iconName)}
                         </div>
-                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-300 bg-stone-950/80 px-2.5 py-1 rounded-md border border-stone-800">
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-300 bg-stone-950/85 px-2.5 py-1 rounded-md border border-amber-500/40">
                           0{idx + 1} · {service.category}
                         </span>
                       </div>
@@ -106,7 +106,7 @@ export const ServicesGrid = () => {
                         </p>
                       </div>
 
-                      <div className="space-y-2 pt-3 border-t border-stone-200/80 dark:border-stone-800">
+                      <div className="space-y-2 pt-3 border-t border-amber-500/25 dark:border-stone-800">
                         <span className="text-[11px] font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider block">
                           Included Deliverables:
                         </span>
@@ -122,7 +122,7 @@ export const ServicesGrid = () => {
                     </div>
                   </div>
 
-                  <div className="px-7 py-4 bg-white dark:bg-stone-950/60 border-t border-stone-200/80 dark:border-stone-800 flex items-center justify-between">
+                  <div className="px-7 py-4 bg-white dark:bg-stone-950/60 border-t border-amber-500/30 dark:border-stone-800 flex items-center justify-between">
                     <span className="text-[11px] font-mono text-stone-500 font-medium">
                       {service.techStack.slice(0, 3).join(' · ')}
                     </span>

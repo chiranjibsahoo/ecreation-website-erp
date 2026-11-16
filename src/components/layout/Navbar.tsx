@@ -128,12 +128,12 @@ export const Navbar = () => {
       {/* Top 3px 24K Royal Gold Crown Line */}
       <div className="h-[3px] w-full bg-gradient-to-r from-amber-600 via-yellow-400 to-amber-600" />
 
-      {/* Main Warm Champagne-Pearl & Brushed Gold Architectural Header (No Round Box Around Menu) */}
+      {/* Main Warm Champagne-Pearl & Brushed Gold Architectural Header */}
       <div
-        className={`transition-all duration-300 ${
+        className={`navbar-bordered-shell transition-all duration-300 ${
           scrolled
-            ? 'bg-gradient-to-r from-[#FFFDF9]/98 via-[#FAF3E3]/98 to-[#FFFDF9]/98 dark:from-stone-950/95 dark:via-stone-900/95 dark:to-stone-950/95 backdrop-blur-2xl border-b border-amber-500/40 shadow-[0_10px_35px_rgba(180,130,40,0.12)] py-3'
-            : 'bg-gradient-to-r from-[#FFFDF9] via-[#F9F1DF] to-[#FFFDF9] dark:from-stone-950 dark:via-stone-900 dark:to-stone-950 border-b border-amber-500/35 shadow-[0_6px_25px_rgba(180,130,40,0.08)] py-4'
+            ? 'bg-gradient-to-r from-[#FFFDF9]/98 via-[#FAF3E3]/98 to-[#FFFDF9]/98 dark:from-stone-950/95 dark:via-stone-900/95 dark:to-stone-950/95 backdrop-blur-2xl py-3'
+            : 'bg-gradient-to-r from-[#FFFDF9] via-[#F9F1DF] to-[#FFFDF9] dark:from-stone-950 dark:via-stone-900 dark:to-stone-950 py-3.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6">
@@ -142,24 +142,24 @@ export const Navbar = () => {
             <Logo size="md" theme="light" />
           </div>
 
-          {/* Center: Open Editorial Menu — NO Round Box, Pure Luxury Underline Indicators */}
+          {/* Center: Bordered Menu Bar with Spring Hover Pill & Underline Indicators */}
           <nav
-            className="hidden lg:flex items-center gap-9 xl:gap-11"
+            className="hidden lg:flex items-center gap-3 xl:gap-5 nav-menu-pill-group"
             aria-label="Main Navigation"
           >
             {/* 1. Home */}
             <Link
               href="/"
-              className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-all duration-300 hover:-translate-y-0.5 group ${
+              className={`nav-item-animated relative text-[14px] font-extrabold tracking-wide group ${
                 isActive('/')
-                  ? 'text-stone-950 dark:text-white'
-                  : 'text-stone-700 dark:text-stone-300 hover:text-amber-800 dark:hover:text-amber-400'
+                  ? 'text-stone-950 dark:text-white bg-amber-100/80 border border-amber-400/60 shadow-2xs'
+                  : 'text-stone-700 dark:text-stone-300 hover:text-stone-950 dark:hover:text-amber-400'
               }`}
             >
               <span>Home</span>
               <span
-                className={`absolute bottom-0 left-0 h-[2.5px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 ${
-                  isActive('/') ? 'w-full' : 'w-0 group-hover:w-full'
+                className={`absolute bottom-1 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 origin-center ${
+                  isActive('/') ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100'
                 }`}
               />
             </Link>
@@ -172,10 +172,10 @@ export const Navbar = () => {
             >
               <Link
                 href="/services"
-                className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-all duration-300 hover:-translate-y-0.5 inline-flex items-center gap-1.5 group ${
+                className={`nav-item-animated relative text-[14px] font-extrabold tracking-wide inline-flex items-center gap-1.5 group ${
                   pathname.startsWith('/services')
-                    ? 'text-stone-950 dark:text-white'
-                    : 'text-stone-700 dark:text-stone-300 hover:text-amber-800 dark:hover:text-amber-400'
+                    ? 'text-stone-950 dark:text-white bg-amber-100/80 border border-amber-400/60 shadow-2xs'
+                    : 'text-stone-700 dark:text-stone-300 hover:text-stone-950 dark:hover:text-amber-400'
                 }`}
               >
                 <span>Services</span>
@@ -185,8 +185,10 @@ export const Navbar = () => {
                   }`}
                 />
                 <span
-                  className={`absolute bottom-0 left-0 h-[2.5px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 ${
-                    pathname.startsWith('/services') || servicesOpen ? 'w-full' : 'w-0 group-hover:w-full'
+                  className={`absolute bottom-1 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 origin-center ${
+                    pathname.startsWith('/services') || servicesOpen
+                      ? 'scale-x-100 opacity-100'
+                      : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100'
                   }`}
                 />
               </Link>
@@ -268,16 +270,16 @@ export const Navbar = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative py-2 text-[14px] font-extrabold tracking-wide transition-all duration-300 hover:-translate-y-0.5 group ${
+                  className={`nav-item-animated relative text-[14px] font-extrabold tracking-wide group ${
                     active
-                      ? 'text-stone-950 dark:text-white'
-                      : 'text-stone-700 dark:text-stone-300 hover:text-amber-800 dark:hover:text-amber-400'
+                      ? 'text-stone-950 dark:text-white bg-amber-100/80 border border-amber-400/60 shadow-2xs'
+                      : 'text-stone-700 dark:text-stone-300 hover:text-stone-950 dark:hover:text-amber-400'
                   }`}
                 >
                   <span>{link.label}</span>
                   <span
-                    className={`absolute bottom-0 left-0 h-[2.5px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 ${
-                      active ? 'w-full' : 'w-0 group-hover:w-full'
+                    className={`absolute bottom-1 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 origin-center ${
+                      active ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100'
                     }`}
                   />
                 </Link>
