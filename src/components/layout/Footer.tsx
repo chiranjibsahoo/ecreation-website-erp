@@ -8,21 +8,21 @@ export const Footer = () => {
   return (
     <footer className="bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-800 border-t-2 border-amber-500/40 pt-16 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-amber-600/25">
-          {/* Column 1: Brand Info & Bordered Social Pills (4 Cols) */}
-          <div className="lg:col-span-4 space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pb-12 border-b border-amber-600/25">
+          {/* Column 1: Brand Info & Bordered Social Pills (3 Cols) */}
+          <div className="lg:col-span-3 space-y-4">
             <div className="inline-block transition-transform duration-300 hover:-translate-y-0.5">
               <Logo size="md" theme="light" />
             </div>
-            <p className="text-sm text-stone-700 max-w-sm leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-stone-700 max-w-xs leading-relaxed font-medium">
               Sustainable Enterprise Architecture, Bespoke ERP Automation, Cloud Infrastructure &amp; High-ROI Digital Platforms.
             </p>
-            <div className="pt-2 flex items-center gap-2.5">
+            <div className="pt-1 flex items-center gap-2.5">
               <a
                 href={COMPANY_INFO.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="subsection-bordered-item w-10 h-10 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
+                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
                 aria-label="LinkedIn"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@ export const Footer = () => {
                 href={COMPANY_INFO.socials.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="subsection-bordered-item w-10 h-10 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
+                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
                 aria-label="Twitter / X"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -44,7 +44,7 @@ export const Footer = () => {
                 href={COMPANY_INFO.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="subsection-bordered-item w-10 h-10 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
+                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
                 aria-label="GitHub"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -53,7 +53,7 @@ export const Footer = () => {
               </a>
               <a
                 href={`mailto:${COMPANY_INFO.email}`}
-                className="subsection-bordered-item w-10 h-10 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
+                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
                 aria-label="Official Email"
               >
                 <Mail className="w-4 h-4 text-emerald-700" />
@@ -62,12 +62,12 @@ export const Footer = () => {
           </div>
 
           {/* Column 2: Engineering Services (3 Cols) */}
-          <div className="lg:col-span-3 space-y-3.5">
-            <h3 className="text-sm font-extrabold tracking-tight text-stone-950">
+          <div className="lg:col-span-3 space-y-3">
+            <h3 className="text-xs sm:text-sm font-extrabold tracking-tight text-stone-950">
               Engineering Services
             </h3>
-            <ul className="space-y-2.5 text-sm font-medium">
-              {SERVICES_DATA.slice(0, 5).map((service) => (
+            <ul className="space-y-2 text-xs sm:text-sm font-medium">
+              {SERVICES_DATA.map((service) => (
                 <li key={service.id}>
                   <Link
                     href={`/services/${service.slug}`}
@@ -80,12 +80,12 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3: Company (2 Cols) */}
-          <div className="lg:col-span-2 space-y-3.5">
-            <h3 className="text-sm font-extrabold tracking-tight text-stone-950">
-              Company
+          {/* Column 3: Company & Policies (3 Cols) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h3 className="text-xs sm:text-sm font-extrabold tracking-tight text-stone-950">
+              Company &amp; Policies
             </h3>
-            <ul className="space-y-2.5 text-sm font-medium">
+            <ul className="space-y-2 text-xs sm:text-sm font-medium">
               <li>
                 <Link
                   href="/about"
@@ -99,32 +99,63 @@ export const Footer = () => {
                   href="/projects"
                   className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
                 >
-                  Case Studies &amp; Work
+                  Case Studies &amp; Portfolio
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/blog"
+                  href="/faq"
                   className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
                 >
-                  Technical Insights
+                  FAQs &amp; Help Center
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href="/terms"
                   className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
                 >
-                  Careers &amp; Inquiries
+                  Terms &amp; Conditions
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/login"
-                  className="text-stone-800 font-bold hover:text-stone-950 inline-flex items-center gap-1 transition-transform duration-200 hover:translate-x-1"
+                  href="/privacy-policy"
+                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
                 >
-                  Staff Login &amp; Admin
-                  <ArrowUpRight className="w-3.5 h-3.5 text-amber-700" />
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/refund-policy"
+                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
+                >
+                  Refund &amp; Cancellation Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cookie-policy"
+                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
+                >
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/sla-security"
+                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
+                >
+                  SLA &amp; Security Compliance
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/disclaimer"
+                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
+                >
+                  Legal Disclaimer
                 </Link>
               </li>
             </ul>
@@ -132,7 +163,7 @@ export const Footer = () => {
 
           {/* Column 4: Headquarters & Studio (Option 3 Enclosed Card + Pill) (3 Cols) */}
           <div className="lg:col-span-3 space-y-3.5">
-            <h3 className="text-sm font-extrabold tracking-tight text-stone-950">
+            <h3 className="text-xs sm:text-sm font-extrabold tracking-tight text-stone-950">
               Headquarters &amp; Studio
             </h3>
             <div className="subsection-bordered-card rounded-2xl bg-white/90 p-4 text-xs sm:text-sm text-stone-800 leading-relaxed flex items-start gap-2.5">
@@ -140,20 +171,28 @@ export const Footer = () => {
               <span className="font-medium">{COMPANY_INFO.headquarters}</span>
             </div>
 
-            <div>
+            <div className="flex flex-wrap items-center gap-2">
               <a
                 href={`mailto:${COMPANY_INFO.email}`}
-                className="subsection-bordered-item inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#F5EFE0] text-stone-900 font-bold text-xs"
+                className="subsection-bordered-item inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5EFE0] text-stone-900 font-bold text-xs"
               >
                 <Mail className="w-3.5 h-3.5 text-amber-700" />
                 <span>{COMPANY_INFO.email}</span>
               </a>
+
+              <Link
+                href="/login"
+                className="subsection-bordered-item inline-flex items-center gap-1 px-3.5 py-2 rounded-full bg-white/90 text-stone-800 font-bold text-xs"
+              >
+                <span>Staff Login</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-amber-700" />
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar: Operational Pill on Left, Copyright & Legal on Right */}
-        <div className="pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-700 font-medium">
+        {/* Bottom Bar: Operational Pill on Left, Copyright & All Legal Links on Right */}
+        <div className="pt-7 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-stone-700 font-medium">
           <div className="subsection-bordered-item inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 text-[11px] font-semibold text-stone-800">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>All Systems Operational</span>
@@ -161,14 +200,8 @@ export const Footer = () => {
             <span>99.99% Cloud Infrastructure SLA</span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            <span>© 2026 Ecreation IT Solution.</span>
-            <Link
-              href="/privacy-policy"
-              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              Privacy Policy
-            </Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11px] sm:text-xs">
+            <span className="font-semibold text-stone-800">© 2026 Ecreation IT Solution.</span>
             <Link
               href="/terms"
               className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
@@ -176,10 +209,40 @@ export const Footer = () => {
               Terms &amp; Conditions
             </Link>
             <Link
-              href="/sitemap.xml"
+              href="/privacy-policy"
               className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
             >
-              XML Sitemap
+              Privacy Policy
+            </Link>
+            <Link
+              href="/refund-policy"
+              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              Refund Policy
+            </Link>
+            <Link
+              href="/cookie-policy"
+              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              Cookie Policy
+            </Link>
+            <Link
+              href="/sla-security"
+              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              SLA &amp; Security
+            </Link>
+            <Link
+              href="/disclaimer"
+              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              Disclaimer
+            </Link>
+            <Link
+              href="/faq"
+              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              FAQs
             </Link>
           </div>
         </div>

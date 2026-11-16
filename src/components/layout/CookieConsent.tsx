@@ -74,6 +74,13 @@ export const CookieConsent = () => {
               <p className="text-[11px] sm:text-xs text-stone-700 leading-relaxed font-medium">
                 We use cookies to enhance site speed, remember your session preferences, and analyze traffic. Read our{' '}
                 <Link
+                  href="/cookie-policy"
+                  className="text-amber-800 font-bold underline underline-offset-2 hover:text-stone-950"
+                >
+                  Cookie Policy
+                </Link>{' '}
+                &amp;{' '}
+                <Link
                   href="/privacy-policy"
                   className="text-amber-800 font-bold underline underline-offset-2 hover:text-stone-950"
                 >
