@@ -33,11 +33,11 @@ export default function ProjectsPage() {
           {PROJECTS_DATA.map((project) => (
             <CardHover
               key={project.id}
-              className="bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 p-6 sm:p-8 rounded-3xl flex flex-col justify-between space-y-6"
+              className="subsection-bordered-card bg-white dark:bg-stone-900 p-6 sm:p-8 rounded-3xl flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-md border border-amber-500/35">
                     {project.category}
                   </span>
                   <span className="text-xs text-stone-500 font-mono">
@@ -53,9 +53,12 @@ export default function ProjectsPage() {
                 </p>
 
                 {/* Measurable Results */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-4 border-t border-stone-100 dark:border-stone-800">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-4 border-t border-amber-500/25">
                   {project.results.map((res) => (
-                    <div key={res.label} className="p-3 rounded-xl bg-[#FAF8F5] dark:bg-stone-800/80 border border-stone-200/80 dark:border-stone-700">
+                    <div
+                      key={res.label}
+                      className="subsection-bordered-item p-3 rounded-xl bg-[#FAF8F5] dark:bg-stone-800/80"
+                    >
                       <div className="text-base font-extrabold text-stone-950 dark:text-white flex items-center gap-1">
                         <TrendingUp className="w-3.5 h-3.5 text-amber-600" />
                         <span>{res.metric}</span>
@@ -66,16 +69,19 @@ export default function ProjectsPage() {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-stone-100 dark:border-stone-800 flex flex-wrap items-center justify-between gap-3">
+              <div className="pt-5 border-t border-amber-500/25 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-wrap gap-1.5">
                   {project.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="text-[10px] font-mono px-2 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200">
+                    <span
+                      key={tag}
+                      className="subsection-bordered-item text-[10px] font-mono px-2.5 py-0.5 rounded-md bg-[#FAF8F5] dark:bg-stone-800 text-stone-800 dark:text-stone-200"
+                    >
                       {tag}
                     </span>
                   ))}
                 </div>
                 <Link href={`/projects/${project.slug}`}>
-                  <Button variant="outline" size="sm" className="rounded-xl text-xs border-stone-300 dark:border-stone-700">
+                  <Button variant="outline" size="sm" className="subsection-bordered-item rounded-xl text-xs">
                     Read Full Case Study
                     <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                   </Button>

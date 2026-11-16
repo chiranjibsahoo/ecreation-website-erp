@@ -476,27 +476,47 @@
 }
 
 /* ============================================================================
-   2. SIMPLE ARCHITECTURAL BORDERS FOR ALL WEBSITE SECTIONS & SUB-SECTION CARDS
+   2. SIMPLE ARCHITECTURAL BORDERS & LIGHT HOVER ANIMATION FOR ALL SUB-SECTIONS
+   (Same crisp border across Homepage, Services, Service Detail, Portfolio, Contact
+    + subtle physical lift animation only — no hover color or gradient fill change)
    ============================================================================ */
-main > section {
-  border-bottom: 1.5px solid rgba(217, 119, 6, 0.24) !important;
+main > section,
+main > div {
+  border-bottom: 1.5px solid rgba(217, 119, 6, 0.24);
 }
 
-main section .rounded-2xl,
-main section .rounded-3xl {
-  border-style: solid;
+main .rounded-2xl,
+main .rounded-3xl,
+.subsection-bordered-card {
+  border-style: solid !important;
   border-width: 1.5px !important;
-  border-color: rgba(217, 119, 6, 0.36) !important;
-  box-shadow: 0 6px 22px -6px rgba(180, 130, 40, 0.12);
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 0.28s ease !important;
+  border-color: rgba(217, 119, 6, 0.38) !important;
+  box-shadow: 0 6px 20px -6px rgba(180, 130, 40, 0.1);
+  transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.26s ease !important;
 }
 
-main section .rounded-2xl:hover,
-main section .rounded-3xl:hover {
-  border-color: rgba(245, 158, 11, 0.85) !important;
-  box-shadow: 0 16px 38px -10px rgba(217, 119, 6, 0.24), 0 0 16px rgba(245, 158, 11, 0.14) !important;
+main .rounded-2xl:hover,
+main .rounded-3xl:hover,
+.subsection-bordered-card:hover {
+  transform: translateY(-2.5px);
+  border-color: rgba(217, 119, 6, 0.58) !important;
+  box-shadow: 0 12px 28px -8px rgba(20, 18, 16, 0.12) !important;
+}
+
+/* Subtle sub-item boxes (metric cards, capability rows, tech pills) */
+.subsection-bordered-item {
+  border: 1.5px solid rgba(217, 119, 6, 0.34) !important;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.22s ease,
+              border-color 0.22s ease !important;
+}
+
+.subsection-bordered-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(217, 119, 6, 0.55) !important;
+  box-shadow: 0 8px 18px -6px rgba(20, 18, 16, 0.09) !important;
 }
 
 /* ============================================================================

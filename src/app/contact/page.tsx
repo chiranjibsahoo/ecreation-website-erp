@@ -45,10 +45,12 @@ export default function ContactPage() {
           {/* Right Column: Contact Details & Guarantee */}
           <div className="lg:col-span-5 space-y-6 sm:space-y-8">
             {/* Quick Contact Card */}
-            <div className="bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xs">
-              <h3 className="text-lg font-bold text-stone-950 dark:text-white">Direct Engagement Channels</h3>
-              <ul className="space-y-4 text-sm">
-                <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400">
+            <div className="subsection-bordered-card bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 space-y-6">
+              <h3 className="text-lg font-bold text-stone-950 dark:text-white pb-3 border-b border-amber-500/25">
+                Direct Engagement Channels
+              </h3>
+              <ul className="space-y-3.5 text-sm">
+                <li className="subsection-bordered-item flex items-start gap-3 text-stone-600 dark:text-stone-400 p-3.5 rounded-2xl bg-[#FAF8F5] dark:bg-stone-800/60">
                   <MapPin className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-semibold text-stone-950 dark:text-white block">Corporate Headquarters</span>
@@ -56,7 +58,7 @@ export default function ContactPage() {
                   </div>
                 </li>
 
-                <li className="flex items-start gap-3 text-stone-600 dark:text-stone-400">
+                <li className="subsection-bordered-item flex items-start gap-3 text-stone-600 dark:text-stone-400 p-3.5 rounded-2xl bg-[#FAF8F5] dark:bg-stone-800/60">
                   <Mail className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-semibold text-stone-950 dark:text-white block">Official Email &amp; RFPs</span>
@@ -67,10 +69,10 @@ export default function ContactPage() {
                 </li>
               </ul>
 
-              <div className="pt-4 border-t border-stone-100 dark:border-stone-800">
+              <div className="pt-4 border-t border-amber-500/25">
                 <a
                   href={`mailto:${COMPANY_INFO.email}?subject=Project%20Inquiry%20-%20Ecreation%20IT%20Solution`}
-                  className="w-full flex items-center justify-center gap-2 p-3.5 rounded-xl bg-stone-950 hover:bg-stone-900 border border-amber-500/40 text-white font-bold text-xs shadow-md transition-all"
+                  className="w-full flex items-center justify-center gap-2 p-3.5 rounded-xl bg-stone-950 hover:bg-stone-900 border border-amber-500/50 text-white font-bold text-xs shadow-md transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   <Mail className="w-4 h-4 text-amber-400" />
                   Email Us Directly ({COMPANY_INFO.email})
@@ -79,20 +81,20 @@ export default function ContactPage() {
             </div>
 
             {/* Engagement Guarantees */}
-            <div className="bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 rounded-3xl p-6 space-y-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-stone-950 dark:text-white">
+            <div className="subsection-bordered-card bg-white dark:bg-stone-900 rounded-3xl p-6 space-y-4">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-stone-950 dark:text-white pb-2.5 border-b border-amber-500/25">
                 Our Engagement Commitments
               </h4>
-              <div className="space-y-3 text-xs text-stone-600 dark:text-stone-400">
-                <div className="flex items-center gap-2">
+              <div className="space-y-2.5 text-xs text-stone-600 dark:text-stone-400">
+                <div className="subsection-bordered-item flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF8F5] dark:bg-stone-800/60">
                   <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
                   <span>Comprehensive Mutual Non-Disclosure Agreement</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="subsection-bordered-item flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF8F5] dark:bg-stone-800/60">
                   <Clock className="w-4 h-4 text-amber-600 shrink-0" />
                   <span>Dedicated Architect response within 4 hours</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="subsection-bordered-item flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF8F5] dark:bg-stone-800/60">
                   <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
                   <span>Transparent milestone-based sprint billing</span>
                 </div>

@@ -221,19 +221,19 @@ export const Navbar = () => {
                           key={item.title}
                           href={item.href}
                           onClick={() => setServicesOpen(false)}
-                          className="group p-2.5 rounded-2xl bg-[#FAF8F5] dark:bg-stone-800/70 hover:bg-amber-50/70 border border-stone-200/80 hover:border-amber-500/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md flex items-center gap-3.5"
+                          className="subsection-bordered-card group p-3 rounded-2xl bg-[#FAF8F5] dark:bg-stone-800/70 flex items-center gap-3.5"
                         >
-                          <div className="w-16 h-14 rounded-xl overflow-hidden bg-stone-950 border border-stone-300 shrink-0 relative">
+                          <div className="w-16 h-14 rounded-xl overflow-hidden bg-stone-950 border border-amber-500/35 shrink-0 relative">
                             <img
                               src={item.image}
                               alt={item.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                           </div>
                           <div className="space-y-0.5 min-w-0">
                             <div className="flex items-center gap-1.5">
                               <Icon className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                              <span className="text-xs font-bold text-stone-950 dark:text-white group-hover:text-amber-800 transition-colors truncate">
+                              <span className="text-xs font-bold text-stone-950 dark:text-white truncate">
                                 {item.title}
                               </span>
                             </div>

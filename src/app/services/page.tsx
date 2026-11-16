@@ -33,11 +33,11 @@ export default function ServicesPage() {
           {SERVICES_DATA.map((service) => (
             <CardHover
               key={service.id}
-              className="bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 p-6 sm:p-8 rounded-3xl flex flex-col justify-between space-y-6"
+              className="subsection-bordered-card bg-white dark:bg-stone-900 p-6 sm:p-8 rounded-3xl flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-md">
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-2.5 py-1 rounded-md border border-amber-500/35">
                     {service.category}
                   </span>
                   <div className="flex gap-1.5 font-mono text-[11px] text-stone-500">
@@ -52,13 +52,16 @@ export default function ServicesPage() {
                   {service.fullDescription}
                 </p>
 
-                <div className="space-y-2 pt-2">
+                <div className="space-y-2.5 pt-2 border-t border-amber-500/25">
                   <span className="text-xs font-bold uppercase tracking-wider text-stone-900 dark:text-white block">
                     Core Capabilities:
                   </span>
                   <div className="grid grid-cols-1 gap-2">
                     {service.features.map((feat) => (
-                      <div key={feat} className="flex items-start gap-2 text-xs text-stone-600 dark:text-stone-400">
+                      <div
+                        key={feat}
+                        className="subsection-bordered-item flex items-start gap-2.5 text-xs text-stone-700 dark:text-stone-300 p-2.5 rounded-xl bg-[#FAF8F5] dark:bg-stone-800/60"
+                      >
                         <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </div>
@@ -67,15 +70,15 @@ export default function ServicesPage() {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-stone-100 dark:border-stone-800 flex flex-wrap items-center justify-between gap-3">
+              <div className="pt-5 border-t border-amber-500/25 flex flex-wrap items-center justify-between gap-3">
                 <Link href={`/services/${service.slug}`}>
-                  <Button variant="outline" size="sm" className="rounded-xl text-xs border-stone-300 dark:border-stone-700">
+                  <Button variant="outline" size="sm" className="subsection-bordered-item rounded-xl text-xs">
                     View Specifications &amp; Scope
                     <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                   </Button>
                 </Link>
                 <Link href={`/contact?service=${encodeURIComponent(service.title)}`}>
-                  <Button size="sm" className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/40 rounded-xl text-xs">
+                  <Button size="sm" className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs transition-transform duration-200 hover:-translate-y-0.5">
                     Inquire Now
                   </Button>
                 </Link>
@@ -85,7 +88,7 @@ export default function ServicesPage() {
         </div>
 
         {/* Bottom Callout */}
-        <div className="p-6 sm:p-12 rounded-3xl bg-stone-950 border border-amber-500/30 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="subsection-bordered-card p-6 sm:p-12 rounded-3xl bg-stone-950 text-white flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-bold">Have unique architecture requirements?</h3>
             <p className="text-sm text-stone-400">

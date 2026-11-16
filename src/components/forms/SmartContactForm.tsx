@@ -145,7 +145,7 @@ export const SmartContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-card border border-border rounded-2xl p-6 sm:p-10 shadow-lg space-y-6 relative"
+      className="subsection-bordered-card bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-10 space-y-6 relative"
       noValidate
     >
       {/* Honeypot hidden input for anti-bot trap */}

@@ -75,14 +75,14 @@ export const ServicesGrid = () => {
             const imgSrc = getServiceImage(service.slug);
             return (
               <FadeIn key={service.id} delay={idx * 0.08}>
-                <CardHover className="group h-full bg-[#FAF8F5] dark:bg-stone-900 border-2 border-amber-500/35 hover:border-amber-500 rounded-3xl overflow-hidden flex flex-col justify-between shadow-[0_8px_28px_-6px_rgba(180,130,40,0.12)] hover:shadow-[0_20px_45px_-8px_rgba(217,119,6,0.28)] transition-all duration-300">
+                <CardHover className="subsection-bordered-card group h-full bg-[#FAF8F5] dark:bg-stone-900 rounded-3xl overflow-hidden flex flex-col justify-between">
                   <div>
                     {/* Visual Image Header */}
-                    <div className="relative h-48 w-full bg-stone-950 overflow-hidden border-b border-amber-500/30 dark:border-stone-800">
+                    <div className="relative h-48 w-full bg-stone-950 overflow-hidden border-b border-amber-500/35 dark:border-stone-800">
                       <img
                         src={imgSrc}
                         alt={service.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent" />
                       <div className="absolute bottom-3 left-4 flex items-center gap-2.5">
@@ -98,7 +98,7 @@ export const ServicesGrid = () => {
                     {/* Card Body */}
                     <div className="p-7 space-y-4">
                       <div className="space-y-2">
-                        <h3 className="text-xl font-black text-stone-950 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors">
+                        <h3 className="text-xl font-black text-stone-950 dark:text-white">
                           {service.title}
                         </h3>
                         <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
