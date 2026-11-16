@@ -67,15 +67,13 @@ function LoginForm() {
           throw new Error(error.message);
         }
       } else {
-        // 2. Demo & Staff authentication check
-        // Default standard credentials for Ecreation Admin Portal
+        // 2. Staff authentication check (no credentials ever shown in UI or error messages)
         const isValid =
           (email.toLowerCase() === 'admin@ecreation.in' && password === 'admin123') ||
-          (email.toLowerCase() === 'admin@ecreationit.com' && password === 'admin123') ||
-          (email.includes('@') && password.length >= 6);
+          (email.toLowerCase() === 'admin@ecreationit.com' && password === 'admin123');
 
         if (!isValid) {
-          throw new Error('Invalid credentials. Use admin@ecreation.in and password "admin123" to login.');
+          throw new Error('Invalid admin email or password. Please verify your credentials.');
         }
       }
 
@@ -95,12 +93,6 @@ function LoginForm() {
     }
   };
 
-  const handleQuickDemoLogin = () => {
-    setEmail('admin@ecreation.in');
-    setPassword('admin123');
-    setErrorMessage('');
-  };
-
   return (
     <div className="w-full max-w-md mx-auto space-y-8">
       {/* Brand Header */}
@@ -110,36 +102,18 @@ function LoginForm() {
         </div>
         <div className="space-y-1 pt-2">
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-            Staff & Admin Sign In
+            Staff &amp; Admin Sign In
           </h1>
           <p className="text-xs text-slate-600 dark:text-slate-400">
-            Secure authentication portal for Ecreation IT Solution ERP & CMS
+            Secure authentication portal for Ecreation IT Solution ERP &amp; CMS
           </p>
         </div>
       </div>
 
       {/* Main Login Card */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6 relative overflow-hidden">
+      <div className="subsection-bordered-card bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6 relative overflow-hidden">
         {/* Subtle top color bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500" />
-
-        {/* Demo Credentials Quick Pill */}
-        <div className="p-3 rounded-2xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-900/60 text-xs flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <KeyRound className="w-4 h-4 text-amber-600 shrink-0" />
-            <div>
-              <span className="font-bold text-slate-900 dark:text-white block">Demo Admin Access</span>
-              <span className="text-[11px] font-mono text-slate-500">admin@ecreation.in · admin123</span>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={handleQuickDemoLogin}
-            className="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-[11px] shrink-0 transition-colors shadow-xs"
-          >
-            Auto Fill
-          </button>
-        </div>
 
         {/* Error Alert */}
         {errorMessage && (
@@ -158,7 +132,7 @@ function LoginForm() {
         )}
 
         {/* Form */}
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
           <div className="space-y-1.5">
             <Label htmlFor="email" className="text-xs font-bold text-slate-700 dark:text-slate-300">
               Admin Email Address
@@ -169,9 +143,10 @@ function LoginForm() {
                 id="email"
                 type="email"
                 required
+                autoComplete="off"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@ecreation.in"
+                placeholder="Enter authorized admin email"
                 className="pl-10 text-xs rounded-xl h-10 bg-slate-50/50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
               />
             </div>
@@ -182,9 +157,6 @@ function LoginForm() {
               <Label htmlFor="password" className="text-xs font-bold text-slate-700 dark:text-slate-300">
                 Password
               </Label>
-              <span className="text-[11px] text-amber-700 dark:text-amber-400 font-semibold">
-                Default: admin123
-              </span>
             </div>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -192,6 +164,7 @@ function LoginForm() {
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 required
+                autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
