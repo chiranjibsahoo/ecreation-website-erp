@@ -1,16 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isSupabaseConfigured, createServerSupabaseClient } from '@/lib/supabase/server';
+import {
+  isSupabaseConfigured,
+  createAdminSupabaseClient,
+  isAdminRequest
+} from '@/lib/supabase/server';
 import { getStoredLeads, updateStoredLeadStatus, StoredLead } from '@/lib/data/localStore';
 
-// GET /api/leads - Retrieve all leads (or filter by status)
+// GET /api/leads - Retrieve all leads (admin only when Supabase is connected)
 export async function GET(req: NextRequest) {
   try {
+    if (!(await isAdminRequest())) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status');
 
     if (isSupabaseConfigured()) {
       try {
-        const supabase = await createServerSupabaseClient();
+        const supabase = createAdminSupabaseClient();
         let query = supabase.from('leads').select('*').order('created_at', { ascending: false });
 
         if (status && status !== 'all') {
@@ -18,15 +26,17 @@ export async function GET(req: NextRequest) {
         }
 
         const { data, error } = await query;
-        if (!error && data && data.length > 0) {
+        if (!error && data) {
+          // Supabase is the source of truth once connected (even when empty).
           return NextResponse.json({ success: true, leads: data });
         }
+        console.error('[Supabase GET Leads Error]', error);
       } catch (err) {
         console.error('[Supabase GET Leads Fallback]', err);
       }
     }
 
-    // Persistent local database response
+    // Local development store fallback
     const leads = getStoredLeads(status);
     return NextResponse.json({
       success: true,
@@ -38,20 +48,29 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// PATCH /api/leads - Update lead status
+// PATCH /api/leads - Update lead status (admin only when Supabase is connected)
 export async function PATCH(req: NextRequest) {
   try {
+    if (!(await isAdminRequest())) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id, status } = await req.json();
 
     if (!id || !status) {
       return NextResponse.json({ error: 'Lead ID and status are required' }, { status: 400 });
     }
 
+    const allowed = ['new', 'contacted', 'qualified', 'converted', 'archived'];
+    if (!allowed.includes(status)) {
+      return NextResponse.json({ error: 'Invalid status value' }, { status: 400 });
+    }
+
     updateStoredLeadStatus(id, status as StoredLead['status']);
 
     if (isSupabaseConfigured()) {
       try {
-        const supabase = await createServerSupabaseClient();
+        const supabase = createAdminSupabaseClient();
         const { data, error } = await supabase
           .from('leads')
           .update({ status })
@@ -73,4 +92,3 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to update lead status' }, { status: 500 });
   }
 }
-

@@ -1,23 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isSupabaseConfigured, createServerSupabaseClient } from '@/lib/supabase/server';
+import {
+  isSupabaseConfigured,
+  createAdminSupabaseClient,
+  isAdminRequest
+} from '@/lib/supabase/server';
 import {
   getStoredChatSessions,
   upsertStoredChatSession,
   StoredChatSession
 } from '@/lib/data/localStore';
 
-// GET /api/chat-logs - Retrieve all Ecreation AI Assistant chat sessions for Admin Analytics
+// GET /api/chat-logs - Retrieve all Ecreation AI Assistant chat sessions (admin only when Supabase is connected)
 export async function GET() {
   try {
+    if (!(await isAdminRequest())) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     if (isSupabaseConfigured()) {
       try {
-        const supabase = await createServerSupabaseClient();
+        const supabase = createAdminSupabaseClient();
         const { data, error } = await supabase
           .from('chat_sessions')
           .select('*')
           .order('updated_at', { ascending: false });
 
-        if (!error && data && data.length > 0) {
+        if (!error && data) {
           const mapped: StoredChatSession[] = data.map((row: Record<string, unknown>) => ({
             sessionId: String(row.session_id || row.id),
             visitorName: String(row.visitor_name || 'Visitor'),
@@ -87,7 +95,7 @@ export async function POST(req: NextRequest) {
     // Also persist to Supabase if configured
     if (isSupabaseConfigured()) {
       try {
-        const supabase = await createServerSupabaseClient();
+        const supabase = createAdminSupabaseClient();
         await supabase.from('chat_sessions').upsert(
           {
             session_id: sessionRecord.sessionId,

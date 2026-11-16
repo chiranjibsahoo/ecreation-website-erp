@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isSupabaseConfigured, createServerSupabaseClient } from '@/lib/supabase/server';
+import { isSupabaseConfigured, createAdminSupabaseClient } from '@/lib/supabase/server';
 import { addStoredLead } from '@/lib/data/localStore';
 
 export async function POST(req: NextRequest) {
@@ -63,10 +63,10 @@ export async function POST(req: NextRequest) {
 
     let generatedId = `EC-${Math.floor(100000 + Math.random() * 900000)}`;
 
-    // 3. Supabase persistence if configured
+    // 3. Supabase persistence if configured (service-role client so RLS never blocks public enquiries)
     if (isSupabaseConfigured()) {
       try {
-        const supabase = await createServerSupabaseClient();
+        const supabase = createAdminSupabaseClient();
         const { data, error } = await supabase.from('leads').insert([leadRecord]).select('id').single();
 
         if (error) {
