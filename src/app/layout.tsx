@@ -9,6 +9,7 @@ import { OpeningPreloader } from '@/components/animations/OpeningPreloader';
 import { AiChatbot } from '@/components/support/AiChatbot';
 import { ExitOfferPopup } from '@/components/forms/ExitOfferPopup';
 import { GoldGradientToggle } from '@/components/layout/GoldGradientToggle';
+import { CookieConsent } from '@/components/layout/CookieConsent';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 
 const inter = Inter({
@@ -104,6 +105,7 @@ export default function RootLayout({
         <AiChatbot />
         <ExitOfferPopup />
         <GoldGradientToggle />
+        <CookieConsent />
       </body>
     </html>
   );
