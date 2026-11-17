@@ -142,26 +142,22 @@ export const Navbar = () => {
             <Logo size="md" theme="light" />
           </div>
 
-          {/* Center: Bordered Menu Bar with Spring Hover Pill & Underline Indicators */}
+          {/* Center: Clean & Refined Menu Bar with Sleek Gold Indicator Line (No Blobs/Circles) */}
           <nav
-            className="hidden lg:flex items-center gap-3 xl:gap-5 nav-menu-pill-group"
+            className="hidden lg:flex items-center gap-7 xl:gap-9 nav-menu-clean"
             aria-label="Main Navigation"
           >
             {/* 1. Home */}
             <Link
               href="/"
-              className={`nav-item-animated relative text-[14px] font-extrabold tracking-wide group ${
+              className={`nav-item-clean group ${
                 isActive('/')
-                  ? 'text-stone-950 dark:text-white bg-amber-100/80 border border-amber-400/60 shadow-2xs'
-                  : 'text-stone-700 dark:text-stone-300 hover:text-stone-950 dark:hover:text-amber-400'
+                  ? 'is-active text-stone-950 dark:text-white font-extrabold'
+                  : 'text-stone-700 dark:text-stone-300 font-semibold hover:text-stone-950 dark:hover:text-amber-400'
               }`}
             >
               <span>Home</span>
-              <span
-                className={`absolute bottom-1 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 origin-center ${
-                  isActive('/') ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100'
-                }`}
-              />
+              <span className="nav-indicator-line" />
             </Link>
 
             {/* 2. Services (With Visual Studio Mega-Dropdown) */}
@@ -172,10 +168,10 @@ export const Navbar = () => {
             >
               <Link
                 href="/services"
-                className={`nav-item-animated relative text-[14px] font-extrabold tracking-wide inline-flex items-center gap-1.5 group ${
-                  pathname.startsWith('/services')
-                    ? 'text-stone-950 dark:text-white bg-amber-100/80 border border-amber-400/60 shadow-2xs'
-                    : 'text-stone-700 dark:text-stone-300 hover:text-stone-950 dark:hover:text-amber-400'
+                className={`nav-item-clean inline-flex items-center gap-1.5 group ${
+                  pathname.startsWith('/services') || servicesOpen
+                    ? 'is-active text-stone-950 dark:text-white font-extrabold'
+                    : 'text-stone-700 dark:text-stone-300 font-semibold hover:text-stone-950 dark:hover:text-amber-400'
                 }`}
               >
                 <span>Services</span>
@@ -184,13 +180,7 @@ export const Navbar = () => {
                     servicesOpen ? 'rotate-180' : ''
                   }`}
                 />
-                <span
-                  className={`absolute bottom-1 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 origin-center ${
-                    pathname.startsWith('/services') || servicesOpen
-                      ? 'scale-x-100 opacity-100'
-                      : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100'
-                  }`}
-                />
+                <span className="nav-indicator-line" />
               </Link>
 
               {/* Visual Mega Dropdown Panel */}
@@ -270,18 +260,14 @@ export const Navbar = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`nav-item-animated relative text-[14px] font-extrabold tracking-wide group ${
+                  className={`nav-item-clean group ${
                     active
-                      ? 'text-stone-950 dark:text-white bg-amber-100/80 border border-amber-400/60 shadow-2xs'
-                      : 'text-stone-700 dark:text-stone-300 hover:text-stone-950 dark:hover:text-amber-400'
+                      ? 'is-active text-stone-950 dark:text-white font-extrabold'
+                      : 'text-stone-700 dark:text-stone-300 font-semibold hover:text-stone-950 dark:hover:text-amber-400'
                   }`}
                 >
                   <span>{link.label}</span>
-                  <span
-                    className={`absolute bottom-1 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 transition-all duration-300 origin-center ${
-                      active ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100'
-                    }`}
-                  />
+                  <span className="nav-indicator-line" />
                 </Link>
               );
             })}
