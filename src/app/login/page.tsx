@@ -20,7 +20,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/common/Logo';
-import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 
 function LoginForm() {
   const router = useRouter();
@@ -55,37 +54,30 @@ function LoginForm() {
     }
 
     try {
-      // 1. If Supabase is connected, attempt Supabase Auth
-      if (isSupabaseConfigured()) {
-        const supabase = createClient();
-        const { error } = await supabase.auth.signInWithPassword({
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           email: email.trim(),
-          password: password.trim()
-        });
+          password: password.trim(),
+          rememberMe
+        })
+      });
 
-        if (error) {
-          throw new Error(error.message);
-        }
-      } else {
-        // 2. Staff authentication check (no credentials ever shown in UI or error messages)
-        const isValid =
-          (email.toLowerCase() === 'admin@ecreation.in' && password === 'admin123') ||
-          (email.toLowerCase() === 'admin@ecreationit.com' && password === 'admin123');
-
-        if (!isValid) {
-          throw new Error('Invalid admin email or password. Please verify your credentials.');
-        }
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Invalid admin email or password.');
       }
 
-      // Set session flag and cookie for admin guard
+      // Set client session indicator for admin UI
       localStorage.setItem('ecreation_admin_auth', 'authenticated');
-      localStorage.setItem('ecreation_admin_email', email.trim());
+      localStorage.setItem('ecreation_admin_email', data.email || email.trim());
       document.cookie = `ecreation_admin_auth=authenticated; path=/; max-age=${rememberMe ? 86400 * 30 : 86400}`;
 
       setSuccess(true);
       setTimeout(() => {
         router.push(redirectUrl);
-      }, 600);
+      }, 500);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Authentication failed. Please verify your credentials.';
       setErrorMessage(msg);

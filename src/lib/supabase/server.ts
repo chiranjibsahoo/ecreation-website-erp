@@ -1,6 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { createClient as createSupabaseJsClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
+import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from '@/lib/auth/adminSession';
 
 export const isSupabaseConfigured = () => {
   return Boolean(
@@ -70,6 +71,16 @@ export const createAdminSupabaseClient = () => {
  * - Supabase NOT configured (local development) → allowed, so the demo admin keeps working.
  */
 export const isAdminRequest = async (): Promise<boolean> => {
+  try {
+    const cookieStore = await cookies();
+    const signedToken = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
+    if (verifyAdminSessionToken(signedToken).valid) {
+      return true;
+    }
+  } catch {
+    // continue to Supabase check
+  }
+
   if (!isSupabaseConfigured()) return true;
   try {
     const supabase = await createServerSupabaseClient();

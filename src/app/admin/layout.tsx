@@ -43,7 +43,12 @@ export default function AdminLayout({
     }
   }, [pathname, router]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+      // ignore
+    }
     localStorage.removeItem('ecreation_admin_auth');
     localStorage.removeItem('ecreation_admin_email');
     document.cookie = 'ecreation_admin_auth=; path=/; max-age=0';
