@@ -1,36 +1,62 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Users,
   Search,
   Download,
-  Filter,
   ArrowLeft,
   Mail,
   Phone,
   Building,
   CheckCircle2,
   Clock,
-  ExternalLink,
-  ChevronRight,
   Bot,
-  Sparkles,
   MessageSquareText,
-  Gift
+  Gift,
+  Send,
+  RefreshCw
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Lead } from '@/types';
 
+interface LeadReply {
+  id: string;
+  lead_id: string;
+  channel: 'whatsapp' | 'email' | 'call' | 'note';
+  message: string;
+  sent_by: string;
+  created_at: string;
+}
+
+const REPLY_TEMPLATES = [
+  {
+    label: '25% Offer + Demo',
+    text: 'Namaste {name}! Thank you for reaching out to Ecreation IT Solution regarding {service}. Your Flat 25% Special Business Offer is reserved. When is a good time for a quick 10-min live demo today?'
+  },
+  {
+    label: 'Pricing & Roadmap',
+    text: 'Hello {name}, thanks for your enquiry with Ecreation IT Solution for {service}. Our Solutions Architect has reviewed your scope and prepared a fixed-cost roadmap. Please let us know if we can connect on WhatsApp or call.'
+  },
+  {
+    label: 'Follow-Up Reminder',
+    text: 'Hi {name}, following up on your {service} requirement with Ecreation IT Solution. Let us know if you would like to see our live ERP & portfolio demos.'
+  }
+];
+
 export default function LeadsAdminPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [replies, setReplies] = useState<LeadReply[]>([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sourceFilter, setSourceFilter] = useState<'all' | 'chatbot' | 'offer_popup'>('all');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [replyText, setReplyText] = useState('');
+  const [sendingReply, setSendingReply] = useState(false);
+  const [replyFeedback, setReplyFeedback] = useState('');
 
   const isChatbotLead = (source?: string) => {
     if (!source) return false;
@@ -44,48 +70,51 @@ export default function LeadsAdminPage() {
     return lower.includes('popup') || lower.includes('exit-intent') || lower.includes('offer');
   };
 
-  const isEngagedIdleLead = (source?: string) => {
-    if (!source) return false;
-    const lower = source.toLowerCase();
-    return lower.includes('1-2 min') || lower.includes('engaged visitor');
-  };
-
-  useEffect(() => {
-    fetch('/api/leads')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.leads) {
-          const normalized = data.leads.map((l: Record<string, unknown>) => ({
-            id: String(l.id || ''),
-            name: String(l.name || ''),
-            email: String(l.email || ''),
-            phone: l.phone ? String(l.phone) : undefined,
-            company: l.company ? String(l.company) : undefined,
-            serviceRequired: String(l.service_required || l.serviceRequired || ''),
-            budgetRange: l.budget_range || l.budgetRange ? String(l.budget_range || l.budgetRange) : undefined,
-            message: String(l.message || ''),
-            source: String(l.source || 'direct'),
-            status: (l.status as Lead['status']) || 'new',
-            createdAt: String(l.created_at || l.createdAt || '')
-          }));
-          setLeads(normalized);
-          if (normalized.length > 0) {
-            setSelectedLead(normalized[0]);
-          }
-        }
-      })
-      .catch((err) => console.error(err));
+  const fetchLeads = useCallback(async () => {
+    try {
+      const res = await fetch('/api/leads', { cache: 'no-store' });
+      const data = await res.json();
+      if (Array.isArray(data.leads)) {
+        const normalized: Lead[] = data.leads.map((l: Record<string, unknown>) => ({
+          id: String(l.id || ''),
+          name: String(l.name || ''),
+          email: String(l.email || ''),
+          phone: l.phone ? String(l.phone) : undefined,
+          company: l.company ? String(l.company) : undefined,
+          serviceRequired: String(l.service_required || l.serviceRequired || ''),
+          budgetRange: l.budget_range || l.budgetRange ? String(l.budget_range || l.budgetRange) : undefined,
+          message: String(l.message || ''),
+          source: String(l.source || 'direct'),
+          status: (l.status as Lead['status']) || 'new',
+          createdAt: String(l.created_at || l.createdAt || '')
+        }));
+        setLeads(normalized);
+        setSelectedLead((prev) => {
+          if (!prev && normalized.length > 0) return normalized[0];
+          if (prev) return normalized.find((item) => item.id === prev.id) || normalized[0] || null;
+          return null;
+        });
+      }
+      if (Array.isArray(data.replies)) {
+        setReplies(data.replies);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
 
-  const handleStatusChange = async (id: string, newStatus: Lead['status']) => {
-    setLeads((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l))
-    );
+  useEffect(() => {
+    fetchLeads();
+    const handleSync = () => fetchLeads();
+    window.addEventListener('ecreation:admin-sync', handleSync);
+    return () => window.removeEventListener('ecreation:admin-sync', handleSync);
+  }, [fetchLeads]);
 
+  const handleStatusChange = async (id: string, newStatus: Lead['status']) => {
+    setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l)));
     if (selectedLead?.id === id) {
       setSelectedLead((prev) => (prev ? { ...prev, status: newStatus } : null));
     }
-
     try {
       await fetch('/api/leads', {
         method: 'PATCH',
@@ -95,6 +124,79 @@ export default function LeadsAdminPage() {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleSendReply = async (channel: 'whatsapp' | 'email' | 'call' | 'note') => {
+    if (!selectedLead) return;
+    const text =
+      replyText.trim() ||
+      `Replied via ${channel.toUpperCase()} regarding ${selectedLead.serviceRequired}.`;
+
+    setSendingReply(true);
+    setReplyFeedback('');
+    try {
+      const adminEmail =
+        typeof window !== 'undefined'
+          ? localStorage.getItem('ecreation_admin_email') || 'admin@ecreation.in'
+          : 'admin@ecreation.in';
+
+      const nextStatus: Lead['status'] =
+        selectedLead.status === 'new' ? 'contacted' : selectedLead.status;
+
+      const res = await fetch('/api/leads', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: selectedLead.id,
+          status: nextStatus,
+          replyMessage: text,
+          replyChannel: channel,
+          sentBy: adminEmail
+        })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.reply) {
+          setReplies((prev) => [data.reply, ...prev]);
+        }
+        setLeads((prev) =>
+          prev.map((l) => (l.id === selectedLead.id ? { ...l, status: nextStatus } : l))
+        );
+        setSelectedLead((prev) => (prev ? { ...prev, status: nextStatus } : null));
+        setReplyText('');
+        setReplyFeedback(`Reply logged & status updated to "${nextStatus}"!`);
+        setTimeout(() => setReplyFeedback(''), 4000);
+      }
+
+      // Launch native channel action on mobile / desktop
+      const cleanPhone = (selectedLead.phone || '').replace(/[^\d+]/g, '');
+      if (channel === 'whatsapp' && cleanPhone) {
+        window.open(
+          `https://wa.me/${cleanPhone.replace(/^\+/, '')}?text=${encodeURIComponent(text)}`,
+          '_blank'
+        );
+      } else if (channel === 'email' && selectedLead.email) {
+        window.location.href = `mailto:${selectedLead.email}?subject=${encodeURIComponent(
+          `Re: ${selectedLead.serviceRequired} — Ecreation IT Solution (${selectedLead.id})`
+        )}&body=${encodeURIComponent(text)}`;
+      } else if (channel === 'call' && cleanPhone) {
+        window.location.href = `tel:${cleanPhone}`;
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSendingReply(false);
+    }
+  };
+
+  const applyTemplate = (tpl: string) => {
+    if (!selectedLead) return;
+    setReplyText(
+      tpl
+        .replace('{name}', selectedLead.name.split('(')[0].trim() || 'there')
+        .replace('{service}', selectedLead.serviceRequired || 'your project')
+    );
   };
 
   const chatbotLeadsCount = leads.filter((l) => isChatbotLead(l.source)).length;
@@ -118,8 +220,12 @@ export default function LeadsAdminPage() {
     return matchesSearch && matchesStatus && matchesSource;
   });
 
+  const selectedReplies = selectedLead
+    ? replies.filter((r) => r.lead_id === selectedLead.id)
+    : [];
+
   const exportCSV = () => {
-    const headers = ['Ref ID', 'Name', 'Email', 'Phone', 'Company', 'Service', 'Enquiry Source', 'Status', 'Date'];
+    const headers = ['Ref ID', 'Name', 'Email', 'Phone', 'Company', 'Service', 'Source', 'Status', 'Date'];
     const rows = filteredLeads.map((l) => [
       l.id,
       `"${l.name}"`,
@@ -132,9 +238,8 @@ export default function LeadsAdminPage() {
       l.createdAt
     ]);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
+    link.setAttribute('href', encodeURI(csvContent));
     link.setAttribute('download', `ecreation-leads-${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
@@ -142,322 +247,323 @@ export default function LeadsAdminPage() {
   };
 
   return (
-    <div className="pt-8 pb-20 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        {/* Navigation Breadcrumb */}
-        <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Link href="/admin" className="hover:text-foreground flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" />
-              Admin Overview
-            </Link>
-            <span>/</span>
-            <span className="text-foreground font-semibold">Leads &amp; Enquiries CRM</span>
-          </div>
-
-          <Link href="/admin/chats">
-            <Button size="sm" className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs h-8">
-              <Bot className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
-              View All AI Assistant Chat Logs
-            </Button>
-          </Link>
-        </div>
-
+    <div className="pt-6 pb-20 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold text-foreground">Inbound Enquiries &amp; Leads CRM</h1>
-            <p className="text-sm text-muted-foreground">
-              Enquiries captured from Ecreation AI Assistant Chatbot are automatically highlighted below.
+            <Link href="/admin" className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1 mb-1">
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Back to Overview
+            </Link>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground flex items-center gap-2">
+              <Users className="w-6 h-6 text-amber-600" />
+              Enquiries &amp; Instant Reply CRM
+            </h1>
+            <p className="text-xs text-muted-foreground">
+              Auto-synced across Web &amp; Mobile App. Reply via WhatsApp, Email, or Call and maintain lead status in real time.
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-2.5">
-            <button
-              onClick={() => setSourceFilter(sourceFilter === 'offer_popup' ? 'all' : 'offer_popup')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all cursor-pointer ${
-                sourceFilter === 'offer_popup'
-                  ? 'bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white border-amber-300 shadow-md'
-                  : 'bg-orange-50 dark:bg-orange-950/40 text-orange-900 dark:text-orange-300 border-orange-300 dark:border-orange-800 hover:bg-orange-100'
-              }`}
-            >
-              <Gift className="w-4 h-4 text-orange-600" />
-              <span>25% Offer Popup Leads ({offerPopupLeadsCount})</span>
-            </button>
 
-            <button
-              onClick={() => setSourceFilter(sourceFilter === 'chatbot' ? 'all' : 'chatbot')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 border transition-all cursor-pointer ${
-                sourceFilter === 'chatbot'
-                  ? 'bg-stone-950 text-amber-400 border-amber-500 shadow-md'
-                  : 'bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border-amber-300 dark:border-amber-800 hover:bg-amber-100'
-              }`}
-            >
-              <Bot className="w-4 h-4 text-amber-500" />
-              <span>AI Assistant Chatbot Enquiries ({chatbotLeadsCount})</span>
-            </button>
-
-            <Button onClick={exportCSV} variant="outline" size="sm" className="rounded-xl text-xs h-9">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button size="sm" variant="outline" onClick={fetchLeads} className="rounded-xl text-xs cursor-pointer">
+              <RefreshCw className="w-3.5 h-3.5 mr-1.5 text-amber-600" />
+              Refresh
+            </Button>
+            <Button size="sm" variant="outline" onClick={exportCSV} className="rounded-xl text-xs cursor-pointer">
               <Download className="w-3.5 h-3.5 mr-1.5" />
               Export CSV
             </Button>
           </div>
         </div>
 
-        {/* Filters and Search Bar */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 bg-card border border-border p-4 rounded-2xl shadow-xs">
-          <div className="relative flex-1 w-full">
+        {/* Filters Bar */}
+        <div className="subsection-bordered-card bg-card p-4 rounded-2xl flex flex-col md:flex-row items-stretch md:items-center gap-3">
+          <div className="relative flex-1">
             <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by client name, phone, email, service, or source..."
-              className="pl-9 text-xs rounded-xl"
+              placeholder="Search name, phone, email, service..."
+              className="pl-9 h-9 rounded-xl text-xs"
             />
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <Filter className="w-4 h-4 text-muted-foreground shrink-0" />
+          <div className="flex flex-wrap items-center gap-2">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="h-10 px-3 rounded-xl border border-input bg-background text-foreground text-xs focus-visible:outline-hidden"
+              className="h-9 rounded-xl border border-border bg-background px-3 text-xs font-semibold"
             >
-              <option value="all">All Statuses ({leads.length})</option>
+              <option value="all">All Status ({leads.length})</option>
               <option value="new">New</option>
               <option value="contacted">Contacted</option>
               <option value="qualified">Qualified</option>
               <option value="converted">Converted</option>
               <option value="archived">Archived</option>
             </select>
+
+            <button
+              type="button"
+              onClick={() => setSourceFilter(sourceFilter === 'chatbot' ? 'all' : 'chatbot')}
+              className={`h-9 px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
+                sourceFilter === 'chatbot'
+                  ? 'bg-stone-950 text-amber-400 border-amber-500'
+                  : 'bg-background text-foreground border-border'
+              }`}
+            >
+              <Bot className="w-3.5 h-3.5" />
+              AI Bot ({chatbotLeadsCount})
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSourceFilter(sourceFilter === 'offer_popup' ? 'all' : 'offer_popup')}
+              className={`h-9 px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
+                sourceFilter === 'offer_popup'
+                  ? 'bg-orange-600 text-white border-orange-500'
+                  : 'bg-background text-foreground border-border'
+              }`}
+            >
+              <Gift className="w-3.5 h-3.5" />
+              Offer Popups ({offerPopupLeadsCount})
+            </button>
           </div>
         </div>
 
-        {/* Main Grid: Table & Lead Detail Drawer */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          <div className={`space-y-4 ${selectedLead ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
-            <div className="bg-card border border-border rounded-2xl shadow-xs overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs border-collapse">
-                  <thead className="bg-muted/50 border-b border-border text-muted-foreground uppercase font-mono text-[10px]">
-                    <tr>
-                      <th className="p-3.5">Ref / Client &amp; Contact</th>
-                      <th className="p-3.5">Service</th>
-                      <th className="p-3.5">Enquiry Source</th>
-                      <th className="p-3.5">Status</th>
-                      <th className="p-3.5 text-right">View</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border">
-                    {filteredLeads.length === 0 ? (
-                      <tr>
-                        <td colSpan={5} className="p-8 text-center text-muted-foreground text-xs">
-                          No enquiries matching current search or filter.
-                        </td>
-                      </tr>
-                    ) : (
-                      filteredLeads.map((lead) => {
-                        const fromBot = isChatbotLead(lead.source);
-                        const fromOfferPopup = isOfferPopupLead(lead.source);
-                        const isSelected = selectedLead?.id === lead.id;
-                        return (
-                          <tr
-                            key={lead.id}
-                            onClick={() => setSelectedLead(lead)}
-                            className={`cursor-pointer transition-colors ${
-                              fromBot
-                                ? isSelected
-                                  ? 'bg-amber-100/80 dark:bg-amber-950/60 border-l-4 border-l-amber-500'
-                                  : 'bg-amber-50/50 dark:bg-amber-950/25 hover:bg-amber-100/60 border-l-4 border-l-amber-500'
-                                : fromOfferPopup
-                                ? isSelected
-                                  ? 'bg-orange-100/80 dark:bg-orange-950/60 border-l-4 border-l-orange-500'
-                                  : 'bg-orange-50/60 dark:bg-orange-950/25 hover:bg-orange-100/60 border-l-4 border-l-orange-500'
-                                : isSelected
-                                ? 'bg-stone-100 dark:bg-stone-800/60'
-                                : 'hover:bg-muted/30'
-                            }`}
-                          >
-                            <td className="p-3.5">
-                              <div className="flex items-center gap-1.5">
-                                <span className="font-mono text-[10px] text-amber-700 dark:text-amber-400 font-bold">
-                                  {lead.id}
-                                </span>
-                                {fromBot && (
-                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-stone-950 text-amber-400 text-[9px] font-mono font-bold">
-                                    <Bot className="w-2.5 h-2.5" />
-                                    AI BOT
-                                  </span>
-                                )}
-                                {fromOfferPopup && (
-                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white text-[9px] font-mono font-bold">
-                                    <Gift className="w-2.5 h-2.5" />
-                                    25% POPUP
-                                  </span>
-                                )}
-                              </div>
-                              <span className="font-bold text-foreground block text-xs mt-0.5">{lead.name}</span>
-                              <span className="text-[11px] text-muted-foreground block">{lead.email}</span>
-                              {lead.phone && (
-                                <span className="text-[11px] font-mono text-stone-700 dark:text-stone-300 font-semibold block">
-                                  {lead.phone}
-                                </span>
-                              )}
-                            </td>
-                            <td className="p-3.5 text-muted-foreground font-medium">
-                              {lead.serviceRequired}
-                            </td>
-                            <td className="p-3.5">
-                              {fromBot ? (
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-950 text-amber-400 border border-amber-500/60 font-bold text-[10px] shadow-xs">
-                                  <Bot className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                                  <span>Ecreation AI Assistant Chatbot</span>
-                                </div>
-                              ) : isEngagedIdleLead(lead.source) ? (
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#065F46] to-[#0F766E] text-amber-300 border border-amber-400/70 font-bold text-[10px] shadow-xs">
-                                  <Gift className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                                  <span>{lead.source}</span>
-                                </div>
-                              ) : fromOfferPopup ? (
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white border border-amber-300/70 font-bold text-[10px] shadow-xs">
-                                  <Gift className="w-3.5 h-3.5 text-white shrink-0" />
-                                  <span>{lead.source}</span>
-                                </div>
-                              ) : (
-                                <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-muted text-muted-foreground">
-                                  {lead.source || 'direct'}
-                                </span>
-                              )}
-                            </td>
-                            <td className="p-3.5">
-                              <Badge variant="outline" className="text-[10px] uppercase font-mono">
-                                {lead.status}
-                              </Badge>
-                            </td>
-                            <td className="p-3.5 text-right">
-                              <Button variant="ghost" size="icon" className="h-7 w-7 rounded-lg">
-                                <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                              </Button>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    )}
-                  </tbody>
-                </table>
+        {/* Split View: Leads List + Direct Reply Drawer */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left: Enquiries List */}
+          <div className="lg:col-span-5 space-y-2.5 max-h-[760px] overflow-y-auto pr-1">
+            {filteredLeads.length === 0 ? (
+              <div className="subsection-bordered-card bg-card p-8 rounded-2xl text-center text-xs text-muted-foreground">
+                No matching enquiries found.
               </div>
-            </div>
+            ) : (
+              filteredLeads.map((lead) => {
+                const isSelected = selectedLead?.id === lead.id;
+                const fromBot = isChatbotLead(lead.source);
+                const fromPopup = isOfferPopupLead(lead.source);
+                return (
+                  <button
+                    key={lead.id}
+                    type="button"
+                    onClick={() => setSelectedLead(lead)}
+                    className={`w-full text-left p-4 rounded-2xl border transition-all cursor-pointer space-y-2 ${
+                      isSelected
+                        ? 'bg-amber-50/90 dark:bg-amber-950/30 border-amber-500 shadow-md'
+                        : 'bg-card border-border hover:border-amber-400/60'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-mono text-[11px] font-bold text-amber-700 dark:text-amber-400">
+                        {lead.id}
+                      </span>
+                      <Badge variant="outline" className="text-[10px] capitalize">
+                        {lead.status}
+                      </Badge>
+                    </div>
+                    <div className="font-bold text-sm text-foreground">{lead.name}</div>
+                    <div className="text-xs text-muted-foreground truncate">{lead.serviceRequired}</div>
+                    <div className="flex items-center justify-between text-[11px] pt-1">
+                      <span className="font-mono text-foreground font-semibold">{lead.phone || lead.email}</span>
+                      {fromBot ? (
+                        <span className="text-[10px] font-bold text-amber-700">AI Bot</span>
+                      ) : fromPopup ? (
+                        <span className="text-[10px] font-bold text-orange-600">25% Popup</span>
+                      ) : (
+                        <span className="text-[10px] text-muted-foreground">{lead.source}</span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })
+            )}
           </div>
 
-          {/* Lead Detail Panel */}
-          {selectedLead && (
-            <div className="lg:col-span-5 bg-card border border-border rounded-2xl p-6 shadow-md space-y-5 animate-in fade-in-50">
-              {/* Highlighted Banner if Lead came from Exit-Intent / 25% Offer Popup */}
-              {isOfferPopupLead(selectedLead.source) && (
-                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-[#EA580C] via-[#D97706] to-[#B45309] text-white border border-amber-300/70 flex items-center justify-between gap-3 shadow-md">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0">
-                      <Gift className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-amber-100 font-bold block">
-                        HIGHLIGHTED CONVERSION POPUP SOURCE
+          {/* Right: Selected Lead Details + Instant Reply Panel */}
+          <div className="lg:col-span-7">
+            {selectedLead ? (
+              <div className="subsection-bordered-card bg-card rounded-3xl p-5 sm:p-7 space-y-6">
+                {/* Lead Top Header */}
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-4 border-b border-border">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-black text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-md border border-amber-200">
+                        {selectedLead.id}
                       </span>
-                      <span className="text-xs font-black text-white">
-                        {selectedLead.source}
+                      <span className="text-[11px] text-muted-foreground flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {selectedLead.createdAt ? new Date(selectedLead.createdAt).toLocaleString() : 'Recent'}
+                      </span>
+                    </div>
+                    <h2 className="text-xl font-black text-foreground">{selectedLead.name}</h2>
+                    {selectedLead.company && (
+                      <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+                        <Building className="w-3.5 h-3.5 text-amber-600" />
+                        {selectedLead.company}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Status Maintenance Selector */}
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-mono font-bold uppercase text-muted-foreground block">
+                      Maintain Status
+                    </label>
+                    <select
+                      value={selectedLead.status}
+                      onChange={(e) => handleStatusChange(selectedLead.id, e.target.value as Lead['status'])}
+                      className="h-9 rounded-xl border border-amber-500/40 bg-amber-50/50 dark:bg-stone-900 px-3 text-xs font-bold text-foreground"
+                    >
+                      <option value="new">New</option>
+                      <option value="contacted">Contacted</option>
+                      <option value="qualified">Qualified</option>
+                      <option value="converted">Converted (Won)</option>
+                      <option value="archived">Archived</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Contact Info Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border flex items-center gap-3">
+                    <Mail className="w-4 h-4 text-amber-600 shrink-0" />
+                    <div className="min-w-0">
+                      <span className="text-[10px] uppercase font-mono text-muted-foreground block">Email</span>
+                      <a href={`mailto:${selectedLead.email}`} className="text-xs font-bold text-foreground truncate block hover:underline">
+                        {selectedLead.email}
+                      </a>
+                    </div>
+                  </div>
+                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border flex items-center gap-3">
+                    <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <div className="min-w-0">
+                      <span className="text-[10px] uppercase font-mono text-muted-foreground block">Phone / WhatsApp</span>
+                      <span className="text-xs font-mono font-bold text-foreground block">
+                        {selectedLead.phone || 'Not provided'}
                       </span>
                     </div>
                   </div>
                 </div>
-              )}
-              {isChatbotLead(selectedLead.source) && (
-                <div className="p-3.5 rounded-2xl bg-stone-950 text-white border border-amber-500/60 flex items-center justify-between gap-3 shadow-md">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center shrink-0">
-                      <Bot className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold block">
-                        HIGHLIGHTED ENQUIRY SOURCE
-                      </span>
-                      <span className="text-xs font-black text-white">
-                        Ecreation AI Assistant Chatbot
-                      </span>
-                    </div>
+
+                {/* Enquiry Message */}
+                <div className="p-4 rounded-2xl bg-[#FAF8F5] dark:bg-stone-900 border border-amber-500/20 space-y-1.5">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="font-bold text-amber-800 dark:text-amber-400">{selectedLead.serviceRequired}</span>
+                    <span className="font-mono text-muted-foreground">{selectedLead.source}</span>
                   </div>
-                  <Link href="/admin/chats">
-                    <Button size="sm" className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-[11px] h-8 px-3 rounded-xl">
-                      View Chat
-                    </Button>
-                  </Link>
+                  <p className="text-xs sm:text-sm text-foreground leading-relaxed">{selectedLead.message}</p>
                 </div>
-              )}
 
-              <div className="flex items-center justify-between border-b border-border pb-4">
-                <div>
-                  <span className="text-[10px] font-mono text-amber-700 dark:text-amber-400 font-bold block">
-                    {selectedLead.id}
-                  </span>
-                  <h3 className="text-lg font-bold text-foreground">{selectedLead.name}</h3>
-                </div>
-                <Button variant="ghost" size="sm" onClick={() => setSelectedLead(null)} className="text-xs h-7">
-                  Close
-                </Button>
-              </div>
-
-              <div className="space-y-4 text-xs">
-                <div className="space-y-1.5">
-                  <span className="text-muted-foreground font-semibold block">Captured Contact Details</span>
-                  <p className="flex items-center gap-2 text-foreground font-semibold">
-                    <Mail className="w-3.5 h-3.5 text-amber-600" />
-                    <a href={`mailto:${selectedLead.email}`} className="hover:underline">{selectedLead.email}</a>
-                  </p>
-                  {selectedLead.phone && (
-                    <p className="flex items-center gap-2 text-foreground font-mono font-bold">
-                      <Phone className="w-3.5 h-3.5 text-amber-600" />
-                      <span>{selectedLead.phone}</span>
-                    </p>
-                  )}
-                  <p className="flex items-center gap-2 text-muted-foreground pt-1">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                    <span>
-                      Enquiry Source:{' '}
-                      <strong className="text-foreground">{selectedLead.source || 'Direct Website'}</strong>
+                {/* Direct Reply Composer (Mobile & Web) */}
+                <div className="space-y-3 pt-2 border-t border-border">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-xs font-black text-foreground flex items-center gap-1.5">
+                      <MessageSquareText className="w-4 h-4 text-amber-600" />
+                      Reply Directly to Client
                     </span>
-                  </p>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-muted-foreground font-semibold block">Service &amp; Package</span>
-                  <p className="text-foreground font-bold">{selectedLead.serviceRequired}</p>
-                  <p className="font-mono text-muted-foreground">{selectedLead.budgetRange}</p>
-                </div>
-
-                <div className="space-y-1 bg-muted/40 p-3.5 rounded-xl border border-border">
-                  <span className="text-muted-foreground font-semibold block">Enquiry Summary &amp; Chat Context:</span>
-                  <p className="text-foreground whitespace-pre-wrap leading-relaxed">{selectedLead.message}</p>
-                </div>
-
-                <div className="space-y-2 pt-2 border-t border-border">
-                  <span className="text-muted-foreground font-semibold block">Update Enquiry Status:</span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {(['new', 'contacted', 'qualified', 'converted', 'archived'] as Lead['status'][]).map((st) => (
-                      <button
-                        key={st}
-                        onClick={() => handleStatusChange(selectedLead.id, st)}
-                        className={`px-2.5 py-1 rounded-lg font-mono text-[11px] capitalize transition-colors ${
-                          selectedLead.status === st
-                            ? 'bg-stone-950 text-amber-400 font-bold border border-amber-500/50'
-                            : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                        }`}
-                      >
-                        {st}
-                      </button>
-                    ))}
+                    <div className="flex flex-wrap gap-1.5">
+                      {REPLY_TEMPLATES.map((tpl) => (
+                        <button
+                          key={tpl.label}
+                          type="button"
+                          onClick={() => applyTemplate(tpl.text)}
+                          className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300/70 cursor-pointer"
+                        >
+                          + {tpl.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
+
+                  <textarea
+                    rows={3}
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value)}
+                    placeholder="Type your reply message here (or tap a quick template above)..."
+                    className="w-full rounded-2xl border border-border bg-background p-3 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <Button
+                      type="button"
+                      size="sm"
+                      disabled={sendingReply || !selectedLead.phone}
+                      onClick={() => handleSendReply('whatsapp')}
+                      className="rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold cursor-pointer"
+                    >
+                      <Send className="w-3.5 h-3.5 mr-1.5" />
+                      WhatsApp
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      disabled={sendingReply || !selectedLead.email}
+                      onClick={() => handleSendReply('email')}
+                      className="rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold cursor-pointer"
+                    >
+                      <Mail className="w-3.5 h-3.5 mr-1.5" />
+                      Email Reply
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      disabled={sendingReply || !selectedLead.phone}
+                      onClick={() => handleSendReply('call')}
+                      className="rounded-xl bg-stone-900 hover:bg-stone-800 text-amber-400 text-xs font-bold cursor-pointer"
+                    >
+                      <Phone className="w-3.5 h-3.5 mr-1.5" />
+                      Call Client
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      disabled={sendingReply || !replyText.trim()}
+                      onClick={() => handleSendReply('note')}
+                      className="rounded-xl text-xs font-bold cursor-pointer"
+                    >
+                      Save Note
+                    </Button>
+                  </div>
+
+                  {replyFeedback && (
+                    <div className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 shrink-0" />
+                      <span>{replyFeedback}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Reply History */}
+                <div className="space-y-2.5 pt-3 border-t border-border">
+                  <span className="text-[11px] font-mono font-bold uppercase text-muted-foreground block">
+                    Reply &amp; Follow-up Timeline ({selectedReplies.length})
+                  </span>
+                  {selectedReplies.length === 0 ? (
+                    <p className="text-xs text-muted-foreground">No replies logged yet for this enquiry.</p>
+                  ) : (
+                    <div className="space-y-2 max-h-48 overflow-y-auto">
+                      {selectedReplies.map((r) => (
+                        <div key={r.id} className="p-3 rounded-xl bg-muted/40 border border-border text-xs space-y-1">
+                          <div className="flex items-center justify-between text-[10px] font-mono">
+                            <span className="uppercase font-bold text-amber-700">{r.channel}</span>
+                            <span className="text-muted-foreground">{new Date(r.created_at).toLocaleString()}</span>
+                          </div>
+                          <p className="text-foreground">{r.message}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="subsection-bordered-card bg-card p-12 rounded-3xl text-center text-sm text-muted-foreground">
+                Select an enquiry on the left to view full details and reply.
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

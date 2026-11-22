@@ -4,9 +4,16 @@ import {
   createAdminSupabaseClient,
   isAdminRequest
 } from '@/lib/supabase/server';
-import { getStoredLeads, updateStoredLeadStatus, StoredLead } from '@/lib/data/localStore';
+import {
+  getStoredLeads,
+  updateStoredLeadStatus,
+  getStoredLeadReplies,
+  addStoredLeadReply,
+  StoredLead,
+  StoredLeadReply
+} from '@/lib/data/localStore';
 
-// GET /api/leads - Retrieve all leads (admin only when Supabase is connected)
+// GET /api/leads - Retrieve all leads + reply history (admin only when Supabase is connected)
 export async function GET(req: NextRequest) {
   try {
     if (!(await isAdminRequest())) {
@@ -27,8 +34,19 @@ export async function GET(req: NextRequest) {
 
         const { data, error } = await query;
         if (!error && data) {
-          // Supabase is the source of truth once connected (even when empty).
-          return NextResponse.json({ success: true, leads: data });
+          let replies: StoredLeadReply[] = [];
+          try {
+            const { data: replyRows } = await supabase
+              .from('lead_replies')
+              .select('*')
+              .order('created_at', { ascending: false });
+            if (Array.isArray(replyRows)) {
+              replies = replyRows as StoredLeadReply[];
+            }
+          } catch {
+            replies = getStoredLeadReplies();
+          }
+          return NextResponse.json({ success: true, leads: data, replies });
         }
         console.error('[Supabase GET Leads Error]', error);
       } catch (err) {
@@ -38,9 +56,11 @@ export async function GET(req: NextRequest) {
 
     // Local development store fallback
     const leads = getStoredLeads(status);
+    const replies = getStoredLeadReplies();
     return NextResponse.json({
       success: true,
-      leads
+      leads,
+      replies
     });
   } catch (err: unknown) {
     console.error('[Get Leads API Error]', err);
@@ -48,47 +68,65 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// PATCH /api/leads - Update lead status (admin only when Supabase is connected)
+// PATCH /api/leads - Update lead status and/or record an admin reply
 export async function PATCH(req: NextRequest) {
   try {
     if (!(await isAdminRequest())) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id, status } = await req.json();
+    const body = await req.json();
+    const { id, status, replyMessage, replyChannel, sentBy } = body;
 
-    if (!id || !status) {
-      return NextResponse.json({ error: 'Lead ID and status are required' }, { status: 400 });
+    if (!id) {
+      return NextResponse.json({ error: 'Lead id is required' }, { status: 400 });
     }
 
-    const allowed = ['new', 'contacted', 'qualified', 'converted', 'archived'];
-    if (!allowed.includes(status)) {
-      return NextResponse.json({ error: 'Invalid status value' }, { status: 400 });
-    }
+    let savedReply: StoredLeadReply | null = null;
+    if (replyMessage && typeof replyMessage === 'string' && replyMessage.trim()) {
+      const replyObj: StoredLeadReply = {
+        id: `REP-${Date.now().toString().slice(-6)}`,
+        lead_id: String(id),
+        channel: (['whatsapp', 'email', 'call', 'note'].includes(replyChannel)
+          ? replyChannel
+          : 'note') as StoredLeadReply['channel'],
+        message: replyMessage.trim(),
+        sent_by: typeof sentBy === 'string' && sentBy ? sentBy : 'admin@ecreation.in',
+        created_at: new Date().toISOString()
+      };
 
-    updateStoredLeadStatus(id, status as StoredLead['status']);
-
-    if (isSupabaseConfigured()) {
-      try {
-        const supabase = createAdminSupabaseClient();
-        const { data, error } = await supabase
-          .from('leads')
-          .update({ status })
-          .eq('id', id)
-          .select()
-          .single();
-
-        if (!error && data) {
-          return NextResponse.json({ success: true, lead: data });
+      if (isSupabaseConfigured()) {
+        try {
+          const supabase = createAdminSupabaseClient();
+          await supabase.from('lead_replies').insert([replyObj]);
+        } catch (err) {
+          console.error('[Supabase Insert Reply Fallback]', err);
         }
-      } catch (err) {
-        console.error('[Supabase PATCH Lead Fallback]', err);
       }
+      savedReply = addStoredLeadReply(replyObj);
     }
 
-    return NextResponse.json({ success: true, message: 'Status updated' });
+    const nextStatus = status as StoredLead['status'] | undefined;
+    if (nextStatus) {
+      if (isSupabaseConfigured()) {
+        try {
+          const supabase = createAdminSupabaseClient();
+          await supabase.from('leads').update({ status: nextStatus }).eq('id', id);
+        } catch (err) {
+          console.error('[Supabase Update Lead Fallback]', err);
+        }
+      }
+      updateStoredLeadStatus(id, nextStatus);
+    }
+
+    return NextResponse.json({
+      success: true,
+      id,
+      status: nextStatus,
+      reply: savedReply
+    });
   } catch (err: unknown) {
-    console.error('[Update Lead Status API Error]', err);
-    return NextResponse.json({ error: 'Failed to update lead status' }, { status: 500 });
+    console.error('[Update Lead API Error]', err);
+    return NextResponse.json({ error: 'Failed to update lead' }, { status: 500 });
   }
 }

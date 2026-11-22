@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Users,
@@ -10,18 +10,39 @@ import {
   ArrowUpRight,
   ShieldCheck,
   Bot,
-  ExternalLink,
   MessageSquare,
-  Gift
+  Gift,
+  TrendingUp,
+  BarChart3,
+  Download,
+  Smartphone,
+  Sparkles,
+  Settings,
+  CheckCircle2,
+  Clock,
+  Share2,
+  PhoneCall
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SERVICES_DATA, PROJECTS_DATA, BLOG_POSTS_DATA } from '@/lib/data/seedData';
+import { APP_VERSION, APK_DOWNLOAD_PATH } from '@/lib/appVersion';
 import { Lead } from '@/types';
+
+interface SocialPostSummary {
+  id: string;
+  title: string;
+  platforms: string[];
+  status: string;
+  created_at: string;
+}
 
 export default function AdminDashboardPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [chatCount, setChatCount] = useState<number>(2);
+  const [chatCount, setChatCount] = useState<number>(0);
+  const [socialPosts, setSocialPosts] = useState<SocialPostSummary[]>([]);
+  const [connectedSocialCount, setConnectedSocialCount] = useState<number>(0);
+  const [lastUpdated, setLastUpdated] = useState<string>('');
 
   const isChatbotLead = (source?: string) => {
     if (!source) return false;
@@ -41,10 +62,17 @@ export default function AdminDashboardPage() {
     return lower.includes('1-2 min') || lower.includes('engaged visitor');
   };
 
-  useEffect(() => {
-    fetch('/api/leads')
-      .then((res) => res.json())
-      .then((data) => {
+  const loadDashboardData = useCallback(async () => {
+    try {
+      const [leadsRes, chatsRes, postsRes, settingsRes] = await Promise.allSettled([
+        fetch('/api/leads', { cache: 'no-store' }),
+        fetch('/api/chat-logs', { cache: 'no-store' }),
+        fetch('/api/social/publish', { cache: 'no-store' }),
+        fetch('/api/social/settings', { cache: 'no-store' })
+      ]);
+
+      if (leadsRes.status === 'fulfilled' && leadsRes.value.ok) {
+        const data = await leadsRes.value.json();
         if (Array.isArray(data.leads)) {
           const normalized = data.leads.map((l: Record<string, unknown>) => ({
             id: String(l.id || ''),
@@ -61,23 +89,46 @@ export default function AdminDashboardPage() {
           }));
           setLeads(normalized);
         }
-      })
-      .catch((err) => console.error(err));
+      }
 
-    fetch('/api/chat-logs')
-      .then((res) => res.json())
-      .then((data) => {
+      if (chatsRes.status === 'fulfilled' && chatsRes.value.ok) {
+        const data = await chatsRes.value.json();
         if (Array.isArray(data.sessions)) {
           setChatCount(data.sessions.length);
         }
-      })
-      .catch((err) => console.error(err));
+      }
+
+      if (postsRes.status === 'fulfilled' && postsRes.value.ok) {
+        const data = await postsRes.value.json();
+        if (Array.isArray(data.posts)) {
+          setSocialPosts(data.posts);
+        }
+      }
+
+      if (settingsRes.status === 'fulfilled' && settingsRes.value.ok) {
+        const data = await settingsRes.value.json();
+        if (Array.isArray(data.accounts)) {
+          setConnectedSocialCount(
+            data.accounts.filter((a: { is_connected?: boolean }) => a.is_connected).length
+          );
+        }
+      }
+
+      setLastUpdated(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
 
+  useEffect(() => {
+    loadDashboardData();
+    const handleSync = () => loadDashboardData();
+    window.addEventListener('ecreation:admin-sync', handleSync);
+    return () => window.removeEventListener('ecreation:admin-sync', handleSync);
+  }, [loadDashboardData]);
+
   const updateStatus = async (id: string, newStatus: Lead['status']) => {
-    setLeads((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l))
-    );
+    setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l)));
     try {
       await fetch('/api/leads', {
         method: 'PATCH',
@@ -89,37 +140,86 @@ export default function AdminDashboardPage() {
     }
   };
 
+  // Analytics Calculations
+  const totalLeads = leads.length;
+  const newCount = leads.filter((l) => l.status === 'new').length;
+  const contactedCount = leads.filter((l) => l.status === 'contacted').length;
+  const qualifiedCount = leads.filter((l) => l.status === 'qualified').length;
+  const convertedCount = leads.filter((l) => l.status === 'converted').length;
+  const conversionRate = totalLeads > 0 ? Math.round(((qualifiedCount + convertedCount) / totalLeads) * 100) : 0;
+
   const botLeadsCount = leads.filter((l) => isChatbotLead(l.source)).length;
   const offerPopupLeadsCount = leads.filter((l) => isOfferPopupLead(l.source)).length;
+  const directLeadsCount = Math.max(0, totalLeads - botLeadsCount - offerPopupLeadsCount);
+
+  const exportAnalyticsReport = () => {
+    const lines = [
+      ['Ecreation IT Solution — Live ERP Analytics Report'],
+      [`Generated At: ${new Date().toISOString()}`, `App Version: v${APP_VERSION}`],
+      [],
+      ['METRIC', 'VALUE'],
+      ['Total Inbound Enquiries', String(totalLeads)],
+      ['New / Pending Action', String(newCount)],
+      ['Contacted', String(contactedCount)],
+      ['Qualified', String(qualifiedCount)],
+      ['Converted', String(convertedCount)],
+      ['Qualification + Conversion Rate', `${conversionRate}%`],
+      ['AI Chatbot Leads', String(botLeadsCount)],
+      ['25% Offer Popup Leads', String(offerPopupLeadsCount)],
+      ['Direct / Organic / Campaign Leads', String(directLeadsCount)],
+      ['AI Assistant Chat Sessions', String(chatCount)],
+      ['Social Campaigns Published', String(socialPosts.length)],
+      ['Connected Social Accounts', String(connectedSocialCount)],
+      [],
+      ['REF ID', 'NAME', 'EMAIL', 'PHONE', 'SERVICE', 'SOURCE', 'STATUS', 'DATE'],
+      ...leads.map((l) => [
+        l.id,
+        `"${l.name}"`,
+        l.email,
+        l.phone || '',
+        `"${l.serviceRequired}"`,
+        `"${l.source}"`,
+        l.status,
+        l.createdAt
+      ])
+    ];
+    const csv = 'data:text/csv;charset=utf-8,' + lines.map((r) => r.join(',')).join('\n');
+    const link = document.createElement('a');
+    link.setAttribute('href', encodeURI(csv));
+    link.setAttribute('download', `ecreation-analytics-report-${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const stats = [
     {
-      label: 'Total Inbound Enquiries',
-      value: `${leads.length}`,
-      change: `${botLeadsCount} AI Bot • ${offerPopupLeadsCount} Offer Popup`,
+      label: 'Total Enquiries',
+      value: `${totalLeads}`,
+      sub: `${newCount} new pending reply`,
       icon: Users,
-      color: 'text-amber-600'
+      accent: 'text-amber-600 bg-amber-50 dark:bg-amber-950/40'
     },
     {
-      label: 'AI Assistant Chat Logs',
+      label: 'Conversion & Pipeline',
+      value: `${conversionRate}%`,
+      sub: `${qualifiedCount} qualified • ${convertedCount} won`,
+      icon: TrendingUp,
+      accent: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40'
+    },
+    {
+      label: 'AI Chat Sessions',
       value: `${chatCount}`,
-      change: 'Saved for full analysis',
+      sub: `${botLeadsCount} bot leads captured`,
       icon: Bot,
-      color: 'text-amber-500'
+      accent: 'text-indigo-600 bg-indigo-50 dark:bg-indigo-950/40'
     },
     {
-      label: 'Active Services',
-      value: `${SERVICES_DATA.length}`,
-      change: 'Active catalog',
-      icon: Layers,
-      color: 'text-emerald-600'
-    },
-    {
-      label: 'Case Studies & Blogs',
-      value: `${PROJECTS_DATA.length + BLOG_POSTS_DATA.length}`,
-      change: 'SEO indexed',
-      icon: Briefcase,
-      color: 'text-stone-700 dark:text-stone-300'
+      label: 'Social Promotion Hub',
+      value: `${socialPosts.length}`,
+      sub: `${connectedSocialCount} accounts connected`,
+      icon: Share2,
+      accent: 'text-rose-600 bg-rose-50 dark:bg-rose-950/40'
     }
   ];
 
@@ -138,99 +238,233 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const funnelStages = [
+    { label: 'New Enquiries', count: newCount, color: 'bg-amber-500' },
+    { label: 'Contacted', count: contactedCount, color: 'bg-blue-500' },
+    { label: 'Qualified', count: qualifiedCount, color: 'bg-emerald-500' },
+    { label: 'Converted', count: convertedCount, color: 'bg-purple-600' }
+  ];
+
+  const sourceChannels = [
+    { label: '25% Offer Popups', count: offerPopupLeadsCount, color: 'bg-orange-500' },
+    { label: 'AI Assistant Chatbot', count: botLeadsCount, color: 'bg-amber-500' },
+    { label: 'Organic / Direct / Ads', count: directLeadsCount, color: 'bg-emerald-600' }
+  ];
+
   return (
-    <div className="pt-8 pb-20 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <div className="pt-6 pb-20 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-border">
           <div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-amber-600" />
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                Ecreation Management ERP
+                Overview Dashboard &amp; Live Reports {lastUpdated ? `• Synced ${lastUpdated}` : ''}
               </span>
             </div>
-            <h1 className="text-3xl font-extrabold text-foreground mt-1">Admin Operations Center</h1>
-            <p className="text-sm text-muted-foreground">
-              Manage client enquiries, analyze Ecreation AI Assistant chat logs, and update website content.
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-1">
+              Admin Operations &amp; Promotion Center
+            </h1>
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              Live mobile-synced enquiries, instant reply CRM, analytics reports &amp; Google Flow social auto-uploader.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <Link href="/admin/chats">
-              <Button size="sm" className="bg-stone-950 hover:bg-stone-900 text-white border border-amber-500/50 rounded-xl text-xs font-bold">
-                <Bot className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
-                Analyze AI Chat Logs ({chatCount})
-              </Button>
-            </Link>
-            <Link href="/admin/leads">
-              <Button variant="outline" size="sm" className="rounded-xl text-xs">
-                Open Full Leads CRM
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={exportAnalyticsReport}
+              className="rounded-xl text-xs font-bold cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5 mr-1.5 text-amber-600" />
+              Export Report (CSV)
+            </Button>
+            <Link href="/admin/social-studio">
+              <Button size="sm" className="bg-amber-500 hover:bg-amber-400 text-stone-950 rounded-xl text-xs font-black cursor-pointer">
+                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                Create &amp; Auto-Share Promo
               </Button>
             </Link>
           </div>
         </div>
 
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* KPI Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {stats.map((s) => {
             const Icon = s.icon;
             return (
-              <div key={s.label} className="bg-card border border-border p-6 rounded-2xl shadow-xs space-y-2">
+              <div key={s.label} className="subsection-bordered-card bg-card p-5 rounded-2xl shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-muted-foreground">{s.label}</span>
-                  <Icon className={`w-4 h-4 ${s.color}`} />
+                  <span className="text-[11px] sm:text-xs font-bold text-muted-foreground">{s.label}</span>
+                  <span className={`w-8 h-8 rounded-xl flex items-center justify-center ${s.accent}`}>
+                    <Icon className="w-4 h-4" />
+                  </span>
                 </div>
-                <div className="text-2xl font-black text-foreground">{s.value}</div>
-                <p className="text-[11px] text-muted-foreground">{s.change}</p>
+                <div className="text-2xl sm:text-3xl font-black text-foreground">{s.value}</div>
+                <p className="text-[11px] text-muted-foreground font-medium">{s.sub}</p>
               </div>
             );
           })}
         </div>
 
-        {/* Leads Management CRM */}
-        <div className="bg-card border border-border rounded-2xl shadow-xs overflow-hidden space-y-4 p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h2 className="text-xl font-bold text-foreground">Inbound Enquiries &amp; AI Chatbot Leads</h2>
-              <p className="text-xs text-muted-foreground">
-                Enquiries captured via Ecreation AI Assistant Chatbot are highlighted automatically.
+        {/* Reports & Analytics Visual Grid + Mobile App Banner */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Funnel & Pipeline Report */}
+          <div className="subsection-bordered-card bg-card p-6 rounded-2xl space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-amber-600" />
+                <h2 className="text-sm font-extrabold text-foreground">Enquiry Pipeline Funnel</h2>
+              </div>
+              <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">
+                LIVE SYNC
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {funnelStages.map((stage) => {
+                const pct = totalLeads > 0 ? Math.round((stage.count / totalLeads) * 100) : 0;
+                return (
+                  <div key={stage.label} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-foreground">{stage.label}</span>
+                      <span className="font-mono font-bold text-muted-foreground">
+                        {stage.count} ({pct}%)
+                      </span>
+                    </div>
+                    <div className="h-2.5 w-full rounded-full bg-muted overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${stage.color} transition-all duration-500`}
+                        style={{ width: `${Math.max(pct, stage.count > 0 ? 8 : 0)}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Lead Sources Breakdown */}
+          <div className="subsection-bordered-card bg-card p-6 rounded-2xl space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-emerald-600" />
+                <h2 className="text-sm font-extrabold text-foreground">Lead Source Analytics</h2>
+              </div>
+              <Link href="/admin/leads" className="text-[11px] font-bold text-amber-700 hover:underline">
+                Open CRM →
+              </Link>
+            </div>
+
+            <div className="space-y-3">
+              {sourceChannels.map((ch) => {
+                const pct = totalLeads > 0 ? Math.round((ch.count / totalLeads) * 100) : 0;
+                return (
+                  <div key={ch.label} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-foreground">{ch.label}</span>
+                      <span className="font-mono font-bold text-muted-foreground">
+                        {ch.count} ({pct}%)
+                      </span>
+                    </div>
+                    <div className="h-2.5 w-full rounded-full bg-muted overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${ch.color} transition-all duration-500`}
+                        style={{ width: `${Math.max(pct, ch.count > 0 ? 8 : 0)}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="pt-2 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground">
+              <span>Catalog: {SERVICES_DATA.length} Services • {PROJECTS_DATA.length} Projects</span>
+              <span>{BLOG_POSTS_DATA.length} Blogs</span>
+            </div>
+          </div>
+
+          {/* Mobile App (APK + PWA) OTA Auto-Update Card */}
+          <div className="subsection-bordered-card bg-gradient-to-br from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-black uppercase px-2.5 py-1 rounded-full bg-white text-emerald-800 border border-emerald-200">
+                  <Smartphone className="w-3.5 h-3.5 text-emerald-600" />
+                  Mobile App v{APP_VERSION}
+                </span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  OTA Auto-Update
+                </span>
+              </div>
+              <h2 className="text-base font-black text-stone-950">
+                Ecreation Admin Android .APK &amp; PWA
+              </h2>
+              <p className="text-xs text-stone-700 leading-relaxed">
+                Install once on your phone. Any code or feature update auto-syncs live inside the app without reinstalling! Reply to enquiries &amp; auto-upload Google Flow videos on the go.
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <Link href="/admin/leads">
-                <Button variant="outline" size="sm" className="text-xs rounded-xl">
-                  View All &amp; Filter ({leads.length})
+
+            <div className="flex flex-wrap gap-2">
+              <a href={APK_DOWNLOAD_PATH} download={`Ecreation-Admin-ERP-v${APP_VERSION}.apk`} className="flex-1">
+                <Button size="sm" className="w-full rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold cursor-pointer">
+                  <Download className="w-3.5 h-3.5 mr-1.5" />
+                  Download .APK
+                </Button>
+              </a>
+              <Link href="/admin/settings" className="flex-1">
+                <Button size="sm" variant="outline" className="w-full rounded-xl bg-white text-stone-900 border-amber-500/40 text-xs font-bold cursor-pointer">
+                  <Settings className="w-3.5 h-3.5 mr-1.5 text-amber-600" />
+                  Social Settings
                 </Button>
               </Link>
             </div>
           </div>
+        </div>
 
-          {/* Leads Table */}
+        {/* Recent Enquiries with Mobile-Friendly Quick Actions */}
+        <div className="subsection-bordered-card bg-card rounded-2xl shadow-xs overflow-hidden space-y-4 p-5 sm:p-7">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg sm:text-xl font-bold text-foreground">Live Inbound Enquiries &amp; Quick Reply</h2>
+              <p className="text-xs text-muted-foreground">
+                Auto-syncs every 30s. Tap WhatsApp/Reply or update status directly from mobile or desktop.
+              </p>
+            </div>
+            <Link href="/admin/leads">
+              <Button variant="outline" size="sm" className="text-xs rounded-xl font-bold">
+                Full Enquiries &amp; Reply CRM ({leads.length})
+              </Button>
+            </Link>
+          </div>
+
           <div className="overflow-x-auto border border-border rounded-xl">
             <table className="w-full text-left text-xs border-collapse">
               <thead className="bg-muted/50 border-b border-border text-muted-foreground uppercase tracking-wider font-mono text-[10px]">
                 <tr>
                   <th className="p-3.5">Ref ID / Client</th>
-                  <th className="p-3.5">Captured Phone &amp; Email</th>
-                  <th className="p-3.5">Service Requested</th>
-                  <th className="p-3.5">Enquiry Source</th>
+                  <th className="p-3.5">Phone &amp; Email</th>
+                  <th className="p-3.5">Service</th>
+                  <th className="p-3.5">Source</th>
                   <th className="p-3.5">Status</th>
-                  <th className="p-3.5 text-right">Actions</th>
+                  <th className="p-3.5 text-right">Quick Reply &amp; Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border font-sans">
-                {leads.map((lead) => {
+                {leads.slice(0, 8).map((lead) => {
                   const fromBot = isChatbotLead(lead.source);
                   const fromOfferPopup = isOfferPopupLead(lead.source);
+                  const cleanPhone = (lead.phone || '').replace(/[^\d+]/g, '');
                   return (
                     <tr
                       key={lead.id}
                       className={`transition-colors ${
                         fromBot
-                          ? 'bg-amber-50/60 dark:bg-amber-950/30 hover:bg-amber-100/60 border-l-4 border-l-amber-500'
+                          ? 'bg-amber-50/50 dark:bg-amber-950/20 border-l-4 border-l-amber-500'
                           : fromOfferPopup
-                          ? 'bg-orange-50/70 dark:bg-orange-950/30 hover:bg-orange-100/60 border-l-4 border-l-orange-500'
+                          ? 'bg-orange-50/50 dark:bg-orange-950/20 border-l-4 border-l-orange-500'
                           : 'hover:bg-muted/30'
                       }`}
                     >
@@ -245,47 +479,58 @@ export default function AdminDashboardPage() {
                         </a>
                         <span className="text-foreground font-mono font-bold">{lead.phone || 'No phone'}</span>
                       </td>
-                      <td className="p-3.5 max-w-[220px]">
-                        <span className="font-medium text-foreground block">{lead.serviceRequired}</span>
+                      <td className="p-3.5 max-w-[200px]">
+                        <span className="font-medium text-foreground block truncate">{lead.serviceRequired}</span>
                         <span className="text-[11px] text-muted-foreground truncate block">{lead.message}</span>
                       </td>
                       <td className="p-3.5">
                         {fromBot ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-950 text-amber-400 border border-amber-500/60 font-bold text-[10px] shadow-xs">
-                            <Bot className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                            <span>Ecreation AI Assistant Chatbot</span>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-stone-950 text-amber-400 font-bold text-[10px]">
+                            <Bot className="w-3 h-3" /> AI Bot
                           </span>
-                        ) : isEngagedIdleLead(lead.source) ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#065F46] to-[#0F766E] text-amber-300 border border-amber-400/70 font-bold text-[10px] shadow-xs">
-                            <Gift className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                            <span>{lead.source}</span>
-                          </span>
-                        ) : fromOfferPopup ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#EA580C] to-[#D97706] text-white border border-amber-300/70 font-bold text-[10px] shadow-xs">
-                            <Gift className="w-3.5 h-3.5 text-white shrink-0" />
-                            <span>{lead.source}</span>
+                        ) : isEngagedIdleLead(lead.source) || fromOfferPopup ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-600 text-white font-bold text-[10px]">
+                            <Gift className="w-3 h-3" /> Offer Popup
                           </span>
                         ) : (
-                          <span className="font-mono text-[11px] bg-muted px-2 py-0.5 rounded text-muted-foreground">
+                          <span className="font-mono text-[10px] bg-muted px-2 py-0.5 rounded text-muted-foreground">
                             {lead.source}
                           </span>
                         )}
                       </td>
-                      <td className="p-3.5">
-                        {getStatusBadge(lead.status)}
-                      </td>
-                      <td className="p-3.5 text-right space-x-1.5">
-                        <select
-                          value={lead.status}
-                          onChange={(e) => updateStatus(lead.id, e.target.value as Lead['status'])}
-                          className="text-[11px] bg-background border border-border rounded-lg px-2 py-1 text-foreground focus-visible:outline-hidden"
-                        >
-                          <option value="new">New</option>
-                          <option value="contacted">Contacted</option>
-                          <option value="qualified">Qualified</option>
-                          <option value="converted">Converted</option>
-                          <option value="archived">Archived</option>
-                        </select>
+                      <td className="p-3.5">{getStatusBadge(lead.status)}</td>
+                      <td className="p-3.5 text-right">
+                        <div className="inline-flex items-center gap-1.5">
+                          {cleanPhone && (
+                            <a
+                              href={`https://wa.me/${cleanPhone.replace(/^\+/, '')}?text=${encodeURIComponent(
+                                `Hello ${lead.name}, thank you for contacting Ecreation IT Solution regarding ${lead.serviceRequired}. How can we assist you today?`
+                              )}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold"
+                            >
+                              WhatsApp
+                            </a>
+                          )}
+                          <Link
+                            href="/admin/leads"
+                            className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-900 dark:text-amber-300 text-[10px] font-bold"
+                          >
+                            Reply
+                          </Link>
+                          <select
+                            value={lead.status}
+                            onChange={(e) => updateStatus(lead.id, e.target.value as Lead['status'])}
+                            className="text-[11px] bg-background border border-border rounded-lg px-2 py-1 text-foreground"
+                          >
+                            <option value="new">New</option>
+                            <option value="contacted">Contacted</option>
+                            <option value="qualified">Qualified</option>
+                            <option value="converted">Converted</option>
+                            <option value="archived">Archived</option>
+                          </select>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -295,59 +540,59 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* CMS Quick Links Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="subsection-bordered-card bg-gradient-to-br from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 p-6 rounded-2xl space-y-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center shadow-2xs">
+        {/* Quick Command Modules Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <Link href="/admin/social-studio" className="subsection-bordered-card bg-gradient-to-br from-amber-50 to-orange-50/70 dark:from-stone-900 dark:to-stone-900 p-5 rounded-2xl space-y-2.5 block">
+            <div className="w-9 h-9 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <h3 className="text-sm font-black text-foreground">Google Flow Social Studio</h3>
+            <p className="text-xs text-muted-foreground">
+              Generate creatives/videos with Google Flow &amp; auto-upload to Instagram, YouTube &amp; Facebook.
+            </p>
+            <span className="text-xs font-bold text-amber-700 inline-flex items-center gap-1">
+              Launch Studio <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+          </Link>
+
+          <Link href="/admin/settings" className="subsection-bordered-card bg-card p-5 rounded-2xl space-y-2.5 block">
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+              <Settings className="w-4 h-4" />
+            </div>
+            <h3 className="text-sm font-black text-foreground">Social Accounts Settings</h3>
+            <p className="text-xs text-muted-foreground">
+              Save &amp; connect Instagram, YouTube, Facebook, LinkedIn &amp; X accounts for 1-click auto-share.
+            </p>
+            <span className="text-xs font-bold text-emerald-700 inline-flex items-center gap-1">
+              Configure Accounts ({connectedSocialCount}) <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+          </Link>
+
+          <Link href="/admin/chats" className="subsection-bordered-card bg-card p-5 rounded-2xl space-y-2.5 block">
+            <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center">
               <MessageSquare className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-stone-950">AI Assistant Chat Logs</h3>
-            <p className="text-xs text-stone-700 font-medium">
-              Inspect all visitor chat transcripts, questions asked, and phone/email leads captured by the AI Bot.
-            </p>
-            <Link href="/admin/chats" className="text-xs font-bold text-emerald-800 hover:underline inline-flex items-center gap-1 pt-1">
-              Open Chat Logs &amp; Analysis <ArrowUpRight className="w-3 h-3" />
-            </Link>
-          </div>
-
-          <div className="bg-card border border-border p-6 rounded-2xl shadow-xs space-y-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center">
-              <Layers className="w-4 h-4" />
-            </div>
-            <h3 className="text-base font-bold text-foreground">Services Catalog CMS</h3>
+            <h3 className="text-sm font-black text-foreground">AI Assistant Chat Logs</h3>
             <p className="text-xs text-muted-foreground">
-              Modify deliverables, technology tags, and feature bullets across the {SERVICES_DATA.length} active service offerings.
+              Review all {chatCount} visitor chat sessions and auto-captured phone/email leads.
             </p>
-            <Link href="/admin/services" className="text-xs font-semibold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1 pt-1">
-              Manage Services CMS <ArrowUpRight className="w-3 h-3" />
-            </Link>
-          </div>
+            <span className="text-xs font-bold text-indigo-700 inline-flex items-center gap-1">
+              Open Chat Analysis <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+          </Link>
 
-          <div className="bg-card border border-border p-6 rounded-2xl shadow-xs space-y-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center">
-              <FileText className="w-4 h-4" />
-            </div>
-            <h3 className="text-base font-bold text-foreground">Blog CMS &amp; Metadata</h3>
-            <p className="text-xs text-muted-foreground">
-              Publish technical write-ups, maintain reading times, and edit structured JSON-LD Article descriptions.
-            </p>
-            <Link href="/admin/blog" className="text-xs font-semibold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1 pt-1">
-              Manage Articles CMS <ArrowUpRight className="w-3 h-3" />
-            </Link>
-          </div>
-
-          <div className="bg-card border border-border p-6 rounded-2xl shadow-xs space-y-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center">
+          <Link href="/admin/projects" className="subsection-bordered-card bg-card p-5 rounded-2xl space-y-2.5 block">
+            <div className="w-9 h-9 rounded-xl bg-stone-100 text-stone-800 flex items-center justify-center">
               <Briefcase className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-foreground">Project Case Studies</h3>
+            <h3 className="text-sm font-black text-foreground">Portfolio &amp; Services CMS</h3>
             <p className="text-xs text-muted-foreground">
-              Manage client metrics, challenge/solution narratives, and portfolio spotlight selections.
+              Manage {SERVICES_DATA.length} services, {PROJECTS_DATA.length} portfolio projects &amp; {BLOG_POSTS_DATA.length} blogs.
             </p>
-            <Link href="/admin/projects" className="text-xs font-semibold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1 pt-1">
-              Manage Case Studies CMS <ArrowUpRight className="w-3 h-3" />
-            </Link>
-          </div>
+            <span className="text-xs font-bold text-stone-800 dark:text-stone-300 inline-flex items-center gap-1">
+              Manage Content <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+          </Link>
         </div>
       </div>
     </div>

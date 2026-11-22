@@ -43,3 +43,7 @@ next-env.d.ts
 
 # local runtime data store
 /.data/
+
+# android apk intermediate build & keystore
+/android-admin-app/build/
+/android-admin-app/*.keystore

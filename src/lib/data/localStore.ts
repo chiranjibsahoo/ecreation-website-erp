@@ -15,6 +15,15 @@ export interface StoredLead {
   created_at: string;
 }
 
+export interface StoredLeadReply {
+  id: string;
+  lead_id: string;
+  channel: 'whatsapp' | 'email' | 'call' | 'note';
+  message: string;
+  sent_by: string;
+  created_at: string;
+}
+
 export interface StoredChatMessage {
   id: string;
   sender: 'bot' | 'user';
@@ -35,13 +44,138 @@ export interface StoredChatSession {
   updatedAt: string;
 }
 
+export type SocialPlatform = 'instagram' | 'youtube' | 'facebook' | 'linkedin' | 'x' | 'google_flow';
+
+export interface StoredSocialAccount {
+  platform: SocialPlatform;
+  display_name: string;
+  account_handle: string;
+  account_id: string;
+  page_or_channel_id: string;
+  credential_secret: string;
+  webhook_url: string;
+  is_connected: boolean;
+  auto_share_enabled: boolean;
+  last_status: string;
+  last_tested_at?: string;
+  updated_at: string;
+}
+
+export interface SocialPublishResult {
+  platform: SocialPlatform;
+  status: 'published' | 'queued_mobile_share' | 'webhook_sent' | 'failed';
+  detail: string;
+  postUrl?: string;
+}
+
+export interface StoredSocialPost {
+  id: string;
+  title: string;
+  caption: string;
+  hashtags: string;
+  media_url: string;
+  media_type: 'video' | 'image';
+  source_tool: string;
+  flow_prompt: string;
+  platforms: SocialPlatform[];
+  status: 'draft' | 'scheduled' | 'published' | 'partial' | 'failed';
+  publish_results: SocialPublishResult[];
+  scheduled_at?: string;
+  published_at?: string;
+  created_at: string;
+}
+
 interface LocalDatabase {
   leads: StoredLead[];
+  leadReplies: StoredLeadReply[];
   chatSessions: StoredChatSession[];
+  socialAccounts: StoredSocialAccount[];
+  socialPosts: StoredSocialPost[];
 }
 
 const DATA_DIR = path.join(process.cwd(), '.data');
 const DB_FILE = path.join(DATA_DIR, 'ecreation_store.json');
+
+export const DEFAULT_SOCIAL_ACCOUNTS: StoredSocialAccount[] = [
+  {
+    platform: 'instagram',
+    display_name: 'Instagram Business',
+    account_handle: '',
+    account_id: '',
+    page_or_channel_id: '',
+    credential_secret: '',
+    webhook_url: '',
+    is_connected: false,
+    auto_share_enabled: true,
+    last_status: 'Not configured',
+    updated_at: new Date().toISOString()
+  },
+  {
+    platform: 'youtube',
+    display_name: 'YouTube Channel & Shorts',
+    account_handle: '',
+    account_id: '',
+    page_or_channel_id: '',
+    credential_secret: '',
+    webhook_url: '',
+    is_connected: false,
+    auto_share_enabled: true,
+    last_status: 'Not configured',
+    updated_at: new Date().toISOString()
+  },
+  {
+    platform: 'facebook',
+    display_name: 'Facebook Business Page',
+    account_handle: '',
+    account_id: '',
+    page_or_channel_id: '',
+    credential_secret: '',
+    webhook_url: '',
+    is_connected: false,
+    auto_share_enabled: true,
+    last_status: 'Not configured',
+    updated_at: new Date().toISOString()
+  },
+  {
+    platform: 'linkedin',
+    display_name: 'LinkedIn Company Page',
+    account_handle: '',
+    account_id: '',
+    page_or_channel_id: '',
+    credential_secret: '',
+    webhook_url: '',
+    is_connected: false,
+    auto_share_enabled: true,
+    last_status: 'Not configured',
+    updated_at: new Date().toISOString()
+  },
+  {
+    platform: 'x',
+    display_name: 'X (Twitter) Official',
+    account_handle: '',
+    account_id: '',
+    page_or_channel_id: '',
+    credential_secret: '',
+    webhook_url: '',
+    is_connected: false,
+    auto_share_enabled: false,
+    last_status: 'Not configured',
+    updated_at: new Date().toISOString()
+  },
+  {
+    platform: 'google_flow',
+    display_name: 'Google Flow AI Studio',
+    account_handle: '',
+    account_id: '',
+    page_or_channel_id: '',
+    credential_secret: '',
+    webhook_url: '',
+    is_connected: false,
+    auto_share_enabled: true,
+    last_status: 'Ready for Google Flow creative sync',
+    updated_at: new Date().toISOString()
+  }
+];
 
 const INITIAL_DATA: LocalDatabase = {
   leads: [
@@ -116,6 +250,7 @@ const INITIAL_DATA: LocalDatabase = {
       created_at: '2026-11-09T09:15:00Z'
     }
   ],
+  leadReplies: [],
   chatSessions: [
     {
       sessionId: 'CHAT-782341',
@@ -196,7 +331,9 @@ const INITIAL_DATA: LocalDatabase = {
         }
       ]
     }
-  ]
+  ],
+  socialAccounts: DEFAULT_SOCIAL_ACCOUNTS,
+  socialPosts: []
 };
 
 function readDb(): LocalDatabase {
@@ -209,10 +346,16 @@ function readDb(): LocalDatabase {
       return INITIAL_DATA;
     }
     const raw = fs.readFileSync(DB_FILE, 'utf-8');
-    const parsed = JSON.parse(raw) as LocalDatabase;
+    const parsed = JSON.parse(raw) as Partial<LocalDatabase>;
     return {
       leads: Array.isArray(parsed.leads) ? parsed.leads : INITIAL_DATA.leads,
-      chatSessions: Array.isArray(parsed.chatSessions) ? parsed.chatSessions : INITIAL_DATA.chatSessions
+      leadReplies: Array.isArray(parsed.leadReplies) ? parsed.leadReplies : [],
+      chatSessions: Array.isArray(parsed.chatSessions) ? parsed.chatSessions : INITIAL_DATA.chatSessions,
+      socialAccounts:
+        Array.isArray(parsed.socialAccounts) && parsed.socialAccounts.length > 0
+          ? parsed.socialAccounts
+          : DEFAULT_SOCIAL_ACCOUNTS,
+      socialPosts: Array.isArray(parsed.socialPosts) ? parsed.socialPosts : []
     };
   } catch (err) {
     console.error('[LocalStore Read Error]', err);
@@ -260,6 +403,21 @@ export function updateStoredLeadStatus(id: string, status: StoredLead['status'])
   return updated;
 }
 
+export function getStoredLeadReplies(leadId?: string): StoredLeadReply[] {
+  const db = readDb();
+  if (leadId) {
+    return db.leadReplies.filter((r) => r.lead_id === leadId);
+  }
+  return db.leadReplies;
+}
+
+export function addStoredLeadReply(reply: StoredLeadReply): StoredLeadReply {
+  const db = readDb();
+  db.leadReplies = [reply, ...db.leadReplies];
+  writeDb(db);
+  return reply;
+}
+
 export function getStoredChatSessions(): StoredChatSession[] {
   const db = readDb();
   return db.chatSessions.sort(
@@ -290,3 +448,37 @@ export function upsertStoredChatSession(session: StoredChatSession): StoredChatS
   return session;
 }
 
+export function getStoredSocialAccounts(): StoredSocialAccount[] {
+  const db = readDb();
+  // Ensure all default platforms always exist
+  const map = new Map(db.socialAccounts.map((a) => [a.platform, a]));
+  return DEFAULT_SOCIAL_ACCOUNTS.map((def) => map.get(def.platform) || def);
+}
+
+export function upsertStoredSocialAccount(account: StoredSocialAccount): StoredSocialAccount {
+  const db = readDb();
+  const current = getStoredSocialAccounts();
+  const idx = current.findIndex((a) => a.platform === account.platform);
+  if (idx >= 0) {
+    current[idx] = { ...current[idx], ...account, updated_at: new Date().toISOString() };
+  } else {
+    current.push({ ...account, updated_at: new Date().toISOString() });
+  }
+  db.socialAccounts = current;
+  writeDb(db);
+  return current.find((a) => a.platform === account.platform)!;
+}
+
+export function getStoredSocialPosts(): StoredSocialPost[] {
+  const db = readDb();
+  return db.socialPosts.sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+}
+
+export function addStoredSocialPost(post: StoredSocialPost): StoredSocialPost {
+  const db = readDb();
+  db.socialPosts = [post, ...db.socialPosts];
+  writeDb(db);
+  return post;
+}
