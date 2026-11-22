@@ -23,8 +23,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { SERVICES_DATA, PROJECTS_DATA } from '@/lib/data/seedData';
-import { BLOG_COVER_IMAGES } from '@/lib/blog/blogEngine';
-import type { ManagedBlogPost, AutoBlogSettings, CoverTheme } from '@/lib/blog/blogEngine';
+import { BLOG_COVER_IMAGES } from '@/lib/blog/blogMedia';
+import type { ManagedBlogPost, AutoBlogSettings, CoverTheme } from '@/lib/blog/blogMedia';
 
 const COVER_THEME_OPTIONS: { value: CoverTheme; label: string }[] = [
   { value: 'emerald-gold', label: 'Emerald & 24K Gold' },

@@ -16,11 +16,8 @@ import {
   ShieldCheck,
   ArrowUpRight
 } from 'lucide-react';
-import {
-  getBlogPostBySlug,
-  getSeedManagedBlogs,
-  resolveBlogCoverImage
-} from '@/lib/blog/blogEngine';
+import { getBlogPostBySlug, getSeedManagedBlogs } from '@/lib/blog/blogEngine';
+import { resolveBlogCoverImage } from '@/lib/blog/blogMedia';
 import { SERVICES_DATA, PROJECTS_DATA, BLOG_POSTS_DATA } from '@/lib/data/seedData';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 import { Button } from '@/components/ui/button';

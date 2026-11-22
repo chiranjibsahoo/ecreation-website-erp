@@ -13,7 +13,7 @@ import {
   BookOpen,
   ArrowUpRight
 } from 'lucide-react';
-import { ManagedBlogPost, resolveBlogCoverImage } from '@/lib/blog/blogEngine';
+import { ManagedBlogPost, resolveBlogCoverImage } from '@/lib/blog/blogMedia';
 import { CardHover } from '@/components/animations/CardHover';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
