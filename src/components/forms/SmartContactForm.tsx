@@ -14,6 +14,7 @@ export const SmartContactForm = () => {
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [leadId, setLeadId] = useState('');
+  const [formStartedAt] = useState<number>(() => Date.now());
 
   // Form State
   const [formData, setFormData] = useState({
@@ -72,7 +73,7 @@ export const SmartContactForm = () => {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, formStartedAt })
       });
 
       const data = await res.json();

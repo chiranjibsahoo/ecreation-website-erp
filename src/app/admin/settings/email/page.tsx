@@ -419,7 +419,7 @@ export default function AdminEmailSettingsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="text-[11px] font-bold text-foreground">
-                    Sender SMTP Email (Kis mail se jayega) *
+                    Sender SMTP Email (Outgoing Mailbox) *
                   </label>
                   <Input
                     type="email"
@@ -467,7 +467,7 @@ export default function AdminEmailSettingsPage() {
                 </div>
                 <div className="space-y-1">
                   <label className="text-[11px] font-bold text-foreground">
-                    Admin Receiver Email(s) (Jahan notification aayega) *
+                    Admin Recipient Email(s) (Notification Inbox) *
                   </label>
                   <Input
                     value={form.admin_notify_emails}

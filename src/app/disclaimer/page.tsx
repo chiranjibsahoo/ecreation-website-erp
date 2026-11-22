@@ -1,31 +1,47 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { AlertCircle, CheckCircle2, ShieldCheck, ArrowRight } from 'lucide-react';
+import { AlertCircle, CheckCircle2, ShieldCheck, ArrowRight, FileWarning, Cookie } from 'lucide-react';
 import { COMPANY_INFO } from '@/lib/data/seedData';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: 'Disclaimer | Ecreation IT Solution',
-  description: 'Corporate, technical, and project estimation disclaimer for Ecreation IT Solution.'
+  title: 'Disclaimer, Copyright & Intellectual Property Notice | Ecreation IT Solution',
+  description:
+    'Official legal disclaimer, original content & media copyright statement, DMCA good-faith takedown policy, cookie consent, and technical notice for Ecreation IT Solution.'
 };
 
 export default function DisclaimerPage() {
   const sections = [
     {
-      title: '1. General Information & Project Estimates',
+      title: '1. Original Content, Images, Videos, JavaScript & Source Code',
       content:
-        'The information, interactive cost estimators, and timeline calculators provided on the Ecreation IT Solution website are intended for general planning and preliminary budgeting purposes. Final project pricing and sprint schedules are confirmed in a formal written Statement of Work (SOW) after a complimentary technical discovery session with our Solutions Architects.'
+        'All text copy, UI architecture, SVG illustrations, visual showcase graphics, promotional videos, JavaScript/TypeScript source code, CSS stylesheets, and interactive software components published on Ecreation IT Solution are either original bespoke works created in-house by our engineering and design teams, custom-generated visual assets, or open-source libraries used strictly under their respective permissive licenses (such as MIT and Apache 2.0). We do not knowingly copy, scrape, or republish any third-party copyrighted content, images, videos, or proprietary code.'
     },
     {
-      title: '2. Case Studies, SEO Rankings & Growth Metrics',
+      title: '2. Zero Copyright Infringement, Fair Use & Good-Faith Takedown Policy (DMCA Safe Harbor)',
       content:
-        'Case study metrics displayed on our website reflect verified historical outcomes achieved for specific enterprise clients. While our engineering and digital growth teams apply the same battle-tested methodologies to every engagement, search engine ranking timelines and ad conversion rates may vary depending on industry competition, market conditions, and ad spend.'
+        'Ecreation IT Solution fully respects global intellectual property and copyright laws. All visual previews, architectural mockups, and demonstrative portfolio screens are original illustrative works produced for showcasing our engineering capabilities. If any individual, brand, or rights holder believes in good faith that any text, image, video, icon, script, or code snippet on this website inadvertently resembles or overlaps with their protected intellectual property, please notify us directly at contact@ecreation.in with the exact page URL and proof of ownership. Upon receipt of a valid notice, we commit to reviewing and promptly removing, replacing, or attributing the material within 48 business hours in complete good faith, without requiring formal legal escalation or complaint.'
     },
     {
-      title: '3. Third-Party Platforms & Trademarks',
+      title: '3. Third-Party Trademarks & Technical References',
       content:
-        'References to third-party technologies, frameworks, or cloud providers (such as Next.js, React, AWS, Google Cloud, Supabase, Vercel, Razorpay, or Stripe) are for technical specification purposes only. All respective trademarks belong to their rightful owners.'
+        'Any mention of third-party platforms, frameworks, or cloud infrastructure providers (such as Next.js, React, Node.js, PostgreSQL, Supabase, AWS, Google Cloud, Vercel, Stripe, or Razorpay) is made strictly for nominative technical specification and compatibility purposes. All product names, logos, and trademarks remain the sole property of their respective owners, and their mention does not imply endorsement or affiliation.'
+    },
+    {
+      title: '4. User Data Privacy, Cookies & Explicit Consent',
+      content:
+        'We respect every visitor’s privacy and comply with modern data-protection principles (including GDPR and India’s Digital Personal Data Protection Act, 2023). Essential and optional analytics/offer cookies are governed by our interactive Cookie Consent Banner, allowing visitors to accept, customize, or restrict cookies to Essential Only at any time. Personal contact details submitted through our enquiry forms are used exclusively to respond to your requested project consultation and are never sold or shared with unauthorized third parties.'
+    },
+    {
+      title: '5. General Information, Project Estimates & Case Study Metrics',
+      content:
+        'Interactive cost estimators, timeline calculators, and case study metrics displayed on this website are provided for preliminary planning and represent verified historical client engagements. Final project pricing, deliverables, and SLA commitments are confirmed in a formal written Statement of Work (SOW) following a technical discovery session. Search engine rankings, digital marketing ROI, and ad conversion metrics vary based on industry competition, budget, and market dynamics.'
+    },
+    {
+      title: '6. Anti-Spam & Genuine Enquiry Protection',
+      content:
+        'To protect our engineering team and ensure rapid response times for genuine businesses, all enquiry forms on this website are protected by automated anti-spam verification, disposable-email filtering, rate limiting, and bot-detection mechanisms. Automated spam, abusive submissions, or fraudulent enquiries are automatically blocked.'
     }
   ];
 
@@ -36,10 +52,10 @@ export default function DisclaimerPage() {
         <div className="subsection-bordered-card rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] p-7 sm:p-10 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 border border-amber-500/40 text-xs font-mono font-bold uppercase tracking-wider text-emerald-800">
             <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
-            <span>Corporate &amp; Technical Notice</span>
+            <span>Legal, Copyright &amp; Compliance Notice</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-stone-950">
-            Disclaimer
+            Disclaimer &amp; Copyright Policy
           </h1>
           <p className="text-xs sm:text-sm text-stone-700 font-medium">
             Effective Date: November 2026 · Ecreation IT Solution ({COMPANY_INFO.email})
@@ -64,6 +80,29 @@ export default function DisclaimerPage() {
           ))}
         </div>
 
+        {/* Copyright / Good-Faith Resolution Box */}
+        <div className="subsection-bordered-card bg-white dark:bg-stone-900 rounded-2xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-l-4 border-l-amber-500">
+          <div className="space-y-1">
+            <h3 className="text-base font-bold text-stone-950 dark:text-white flex items-center gap-2">
+              <FileWarning className="w-4 h-4 text-amber-600" />
+              <span>Copyright &amp; Good-Faith Takedown Desk</span>
+            </h3>
+            <p className="text-xs text-stone-600 dark:text-stone-400">
+              For any intellectual property inquiry, attribution request, or good-faith removal notice, email{' '}
+              <a href={`mailto:${COMPANY_INFO.email}`} className="font-bold text-amber-700 underline">
+                {COMPANY_INFO.email}
+              </a>{' '}
+              for guaranteed review and resolution within 48 hours.
+            </p>
+          </div>
+          <Link href="/cookie-policy" className="shrink-0">
+            <Button variant="outline" size="sm" className="rounded-xl text-xs font-bold">
+              <Cookie className="w-3.5 h-3.5 mr-1.5 text-amber-600" />
+              Cookie Consent Policy
+            </Button>
+          </Link>
+        </div>
+
         {/* Related Policies Footer */}
         <div className="subsection-bordered-card rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1 text-center sm:text-left">
@@ -79,6 +118,8 @@ export default function DisclaimerPage() {
               <Link href="/refund-policy" className="underline hover:text-stone-950">Refund Policy</Link>
               <span>•</span>
               <Link href="/cookie-policy" className="underline hover:text-stone-950">Cookie Policy</Link>
+              <span>•</span>
+              <Link href="/sla-security" className="underline hover:text-stone-950">SLA &amp; Security</Link>
             </div>
           </div>
 

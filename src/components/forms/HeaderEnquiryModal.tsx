@@ -59,6 +59,7 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [leadId, setLeadId] = useState('');
+  const [formStartedAt] = useState<number>(() => Date.now());
 
   const [formData, setFormData] = useState({
     phone: '',
@@ -108,6 +109,8 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
           serviceRequired: 'Flat 25% Special Business Offer',
           budgetRange: '25% Special Offer Claimed',
           source: sourceLabel,
+          honeypot: formData.honeypot,
+          formStartedAt,
           message: `Quick Enquiry submitted via ${sourceLabel}. Phone: ${trimmedPhone} | Email: ${trimmedEmail}`
         })
       });

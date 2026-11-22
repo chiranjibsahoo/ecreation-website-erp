@@ -242,6 +242,7 @@ export const ExitOfferPopup = () => {
           serviceRequired: 'Flat 25% Special Business Offer',
           budgetRange: '25% Special Offer Claimed',
           source: sourceLabel,
+          formStartedAt: pageLoadedAtRef.current,
           message: `Visitor claimed Flat 25% Special Offer via [${sourceLabel}]. Validated Phone: ${trimmedPhone} | Validated Email: ${trimmedEmail}`
         })
       });

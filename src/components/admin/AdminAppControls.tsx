@@ -148,7 +148,7 @@ export const AdminAppControls: React.FC<AdminAppControlsProps> = ({ onManualSync
         setDeferredPrompt(null);
       }
     } else {
-      setPwaMessage('Browser menu (⋮) → "Add to Home Screen / Install App" par tap karein, ya Android .APK download karein.');
+      setPwaMessage('Open your browser menu (⋮) → tap "Install App / Add to Home Screen", or download the Android .APK directly.');
       setTimeout(() => setPwaMessage(''), 7000);
     }
   };

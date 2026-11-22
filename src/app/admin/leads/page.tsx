@@ -35,7 +35,7 @@ interface LeadReply {
 const REPLY_TEMPLATES = [
   {
     label: '25% Offer + Demo',
-    text: 'Namaste {name}! Thank you for reaching out to Ecreation IT Solution regarding {service}. Your Flat 25% Special Business Offer is reserved. When is a good time for a quick 10-min live demo today?'
+    text: 'Hello {name}! Thank you for reaching out to Ecreation IT Solution regarding {service}. Your Flat 25% Special Business Offer is reserved. When is a good time for a quick 10-minute live demo today?'
   },
   {
     label: 'Pricing & Roadmap',
