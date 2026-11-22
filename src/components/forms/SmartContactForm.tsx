@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Send, CheckCircle2, AlertCircle, Loader2, ShieldCheck, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,11 @@ export const SmartContactForm = () => {
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [leadId, setLeadId] = useState('');
-  const [formStartedAt] = useState<number>(() => Date.now());
+  const formStartedAtRef = useRef<number>(0);
+
+  useEffect(() => {
+    formStartedAtRef.current = Date.now();
+  }, []);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -73,7 +77,7 @@ export const SmartContactForm = () => {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, formStartedAt })
+        body: JSON.stringify({ ...formData, formStartedAt: formStartedAtRef.current })
       });
 
       const data = await res.json();

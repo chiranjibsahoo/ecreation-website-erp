@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Send,
   CheckCircle2,
@@ -59,7 +59,11 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [leadId, setLeadId] = useState('');
-  const [formStartedAt] = useState<number>(() => Date.now());
+  const formStartedAtRef = useRef<number>(0);
+
+  useEffect(() => {
+    formStartedAtRef.current = Date.now();
+  }, [open]);
 
   const [formData, setFormData] = useState({
     phone: '',
@@ -110,7 +114,7 @@ export const HeaderEnquiryModal: React.FC<HeaderEnquiryModalProps> = ({
           budgetRange: '25% Special Offer Claimed',
           source: sourceLabel,
           honeypot: formData.honeypot,
-          formStartedAt,
+          formStartedAt: formStartedAtRef.current,
           message: `Quick Enquiry submitted via ${sourceLabel}. Phone: ${trimmedPhone} | Email: ${trimmedEmail}`
         })
       });

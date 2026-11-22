@@ -110,10 +110,11 @@ export const Navbar = () => {
     }
   ];
 
-  // Clean, executive 4-item navigation (About Us, Insights, 25% Offer, Solutions Gallery removed as requested)
+  // Clean, executive 5-item navigation including SEO Blogs hub
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Portfolio', href: '/projects' },
+    { label: 'Blogs', href: '/blog' },
     { label: 'Contact', href: '/contact' }
   ];
 

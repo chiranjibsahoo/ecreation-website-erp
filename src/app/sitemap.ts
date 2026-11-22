@@ -1,9 +1,11 @@
 import { MetadataRoute } from 'next';
-import { SERVICES_DATA, PROJECTS_DATA, BLOG_POSTS_DATA } from '@/lib/data/seedData';
+import { SERVICES_DATA, PROJECTS_DATA } from '@/lib/data/seedData';
+import { loadAllBlogPosts } from '@/lib/blog/blogEngine';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ecreation.vercel.app').replace(/\/$/, '');
   const buildDate = new Date('2026-11-22T00:00:00.000Z');
+  const allBlogs = await loadAllBlogPosts(false);
 
   // Static public SEO routes
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -38,12 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  // Dynamic technical blog articles
-  const blogRoutes: MetadataRoute.Sitemap = BLOG_POSTS_DATA.map((post) => ({
+  // Dynamic technical blog articles (manual + auto-published)
+  const blogRoutes: MetadataRoute.Sitemap = allBlogs.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.publishedAt),
     changeFrequency: 'monthly',
-    priority: 0.8,
+    priority: 0.85,
   }));
 
   return [...staticRoutes, ...serviceRoutes, ...projectRoutes, ...blogRoutes];

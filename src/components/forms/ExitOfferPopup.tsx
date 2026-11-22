@@ -36,7 +36,7 @@ export const ExitOfferPopup = () => {
 
   const popupStepRef = useRef(0);
   const nextTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const pageLoadedAtRef = useRef<number>(Date.now());
+  const pageLoadedAtRef = useRef<number>(0);
   const isOpenRef = useRef(false);
   const hasShownExitRef = useRef(false);
   const hasConvertedRef = useRef(false);
