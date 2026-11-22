@@ -1,15 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
-import { LeftSocialRail } from '@/components/layout/LeftSocialRail';
-import { RightFloatingDock } from '@/components/layout/RightFloatingDock';
-import { OpeningPreloader } from '@/components/animations/OpeningPreloader';
-import { AiChatbot } from '@/components/support/AiChatbot';
-import { ExitOfferPopup } from '@/components/forms/ExitOfferPopup';
-import { GoldGradientToggle } from '@/components/layout/GoldGradientToggle';
-import { CookieConsent } from '@/components/layout/CookieConsent';
+import { PublicSiteShell } from '@/components/layout/PublicSiteShell';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 
 const inter = Inter({
@@ -102,16 +94,7 @@ export default function RootLayout({
         <SchemaMarkup type="WebSite" />
       </head>
       <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen selection:bg-amber-500 selection:text-stone-950">
-        <OpeningPreloader />
-        <RightFloatingDock />
-        <LeftSocialRail />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <AiChatbot />
-        <ExitOfferPopup />
-        <GoldGradientToggle />
-        <CookieConsent />
+        <PublicSiteShell>{children}</PublicSiteShell>
       </body>
     </html>
   );

@@ -89,7 +89,7 @@ export default function AdminLayout({
   const mobileBottomNav = adminNav.slice(0, 5);
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] dark:bg-stone-950 flex flex-col pt-[84px] sm:pt-[92px] pb-20 md:pb-6">
+    <div className="min-h-screen bg-[#FAF8F5] dark:bg-stone-950 flex flex-col pt-3 sm:pt-5 pb-20 md:pb-8">
       {/* Executive Admin ERP Command Sub-Header */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-3">
         <div className="subsection-bordered-card rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 p-4 sm:p-5 space-y-3.5">
