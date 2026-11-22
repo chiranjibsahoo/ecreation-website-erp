@@ -1,10 +1,32 @@
 import React from 'react';
 import Link from 'next/link';
-import { Mail, MapPin, ArrowUpRight } from 'lucide-react';
+import { Mail, MapPin, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { COMPANY_INFO, SERVICES_DATA } from '@/lib/data/seedData';
 import { Logo } from '@/components/common/Logo';
 
 export const Footer = () => {
+  const companyLinks = [
+    { label: 'About Ecreation', href: '/about' },
+    { label: 'Case Studies & Portfolio', href: '/projects' },
+    { label: 'FAQs & Help Center', href: '/faq' },
+    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Refund & Cancellation Policy', href: '/refund-policy' },
+    { label: 'Cookie Policy', href: '/cookie-policy' },
+    { label: 'SLA & Security Compliance', href: '/sla-security' },
+    { label: 'Legal Disclaimer', href: '/disclaimer' }
+  ];
+
+  const bottomLegalLinks = [
+    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Refund Policy', href: '/refund-policy' },
+    { label: 'Cookie Policy', href: '/cookie-policy' },
+    { label: 'SLA & Security', href: '/sla-security' },
+    { label: 'Disclaimer', href: '/disclaimer' },
+    { label: 'FAQs', href: '/faq' }
+  ];
+
   return (
     <footer className="bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-800 border-t-2 border-amber-500/40 pt-16 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,7 +44,7 @@ export const Footer = () => {
                 href={COMPANY_INFO.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
+                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 hover:text-amber-700 flex items-center justify-center"
                 aria-label="LinkedIn"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -33,7 +55,7 @@ export const Footer = () => {
                 href={COMPANY_INFO.socials.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
+                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 hover:text-amber-700 flex items-center justify-center"
                 aria-label="Twitter / X"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -44,7 +66,7 @@ export const Footer = () => {
                 href={COMPANY_INFO.socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
+                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 hover:text-amber-700 flex items-center justify-center"
                 aria-label="GitHub"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -53,7 +75,7 @@ export const Footer = () => {
               </a>
               <a
                 href={`mailto:${COMPANY_INFO.email}`}
-                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 flex items-center justify-center"
+                className="subsection-bordered-item w-9 h-9 rounded-full bg-white/90 text-stone-800 hover:text-amber-700 flex items-center justify-center"
                 aria-label="Official Email"
               >
                 <Mail className="w-4 h-4 text-emerald-700" />
@@ -62,18 +84,19 @@ export const Footer = () => {
           </div>
 
           {/* Column 2: Engineering Services (3 Cols) */}
-          <div className="lg:col-span-3 space-y-3">
-            <h3 className="text-xs sm:text-sm font-extrabold tracking-tight text-stone-950">
+          <div className="lg:col-span-3 space-y-3.5">
+            <h3 className="text-xs font-black uppercase tracking-wider text-stone-950 pb-2 border-b border-amber-500/30">
               Engineering Services
             </h3>
-            <ul className="space-y-2 text-xs sm:text-sm font-medium">
+            <ul className="space-y-2 text-xs sm:text-sm">
               {SERVICES_DATA.map((service) => (
                 <li key={service.id}>
                   <Link
                     href={`/services/${service.slug}`}
-                    className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
+                    className="group inline-flex items-center gap-1.5 font-semibold text-stone-800 hover:text-amber-800 underline-offset-4 hover:underline decoration-amber-600/70 transition-all duration-200"
                   >
-                    {service.title}
+                    <ChevronRight className="w-3.5 h-3.5 text-amber-600 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    <span>{service.title}</span>
                   </Link>
                 </li>
               ))}
@@ -81,89 +104,28 @@ export const Footer = () => {
           </div>
 
           {/* Column 3: Company & Policies (3 Cols) */}
-          <div className="lg:col-span-3 space-y-3">
-            <h3 className="text-xs sm:text-sm font-extrabold tracking-tight text-stone-950">
+          <div className="lg:col-span-3 space-y-3.5">
+            <h3 className="text-xs font-black uppercase tracking-wider text-stone-950 pb-2 border-b border-amber-500/30">
               Company &amp; Policies
             </h3>
-            <ul className="space-y-2 text-xs sm:text-sm font-medium">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  About Ecreation
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/projects"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  Case Studies &amp; Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/faq"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  FAQs &amp; Help Center
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terms"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  Terms &amp; Conditions
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/privacy-policy"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/refund-policy"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  Refund &amp; Cancellation Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/cookie-policy"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  Cookie Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/sla-security"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  SLA &amp; Security Compliance
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/disclaimer"
-                  className="text-stone-700 hover:text-stone-950 inline-block transition-transform duration-200 hover:translate-x-1"
-                >
-                  Legal Disclaimer
-                </Link>
-              </li>
+            <ul className="space-y-2 text-xs sm:text-sm">
+              {companyLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="group inline-flex items-center gap-1.5 font-semibold text-stone-800 hover:text-amber-800 underline-offset-4 hover:underline decoration-amber-600/70 transition-all duration-200"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5 text-amber-600 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 4: Headquarters & Studio (Option 3 Enclosed Card + Pill) (3 Cols) */}
+          {/* Column 4: Headquarters & Studio (3 Cols) */}
           <div className="lg:col-span-3 space-y-3.5">
-            <h3 className="text-xs sm:text-sm font-extrabold tracking-tight text-stone-950">
+            <h3 className="text-xs font-black uppercase tracking-wider text-stone-950 pb-2 border-b border-amber-500/30">
               Headquarters &amp; Studio
             </h3>
             <div className="subsection-bordered-card rounded-2xl bg-white/90 p-4 text-xs sm:text-sm text-stone-800 leading-relaxed flex items-start gap-2.5">
@@ -174,7 +136,7 @@ export const Footer = () => {
             <div className="flex flex-wrap items-center gap-2">
               <a
                 href={`mailto:${COMPANY_INFO.email}`}
-                className="subsection-bordered-item inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5EFE0] text-stone-900 font-bold text-xs"
+                className="subsection-bordered-item inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5EFE0] hover:bg-amber-100 text-stone-900 font-bold text-xs transition-colors"
               >
                 <Mail className="w-3.5 h-3.5 text-amber-700" />
                 <span>{COMPANY_INFO.email}</span>
@@ -182,7 +144,7 @@ export const Footer = () => {
 
               <Link
                 href="/login"
-                className="subsection-bordered-item inline-flex items-center gap-1 px-3.5 py-2 rounded-full bg-white/90 text-stone-800 font-bold text-xs"
+                className="subsection-bordered-item inline-flex items-center gap-1 px-3.5 py-2 rounded-full bg-white/90 hover:bg-amber-50 text-stone-900 font-bold text-xs transition-colors"
               >
                 <span>Staff Login</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-amber-700" />
@@ -191,59 +153,22 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar: Operational Pill on Left, Copyright & All Legal Links on Right */}
-        <div className="pt-7 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-stone-700 font-medium">
-          <div className="subsection-bordered-item inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 text-[11px] font-semibold text-stone-800">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>All Systems Operational</span>
-            <span className="text-stone-400">•</span>
-            <span>99.99% Cloud Infrastructure SLA</span>
-          </div>
+        {/* Bottom Bar: Copyright on Left, Clearly Clickable Legal Menu Links on Right */}
+        <div className="pt-7 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-stone-800">
+          <span className="font-bold text-stone-900">
+            © 2026 Ecreation IT Solution. All rights reserved.
+          </span>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11px] sm:text-xs">
-            <span className="font-semibold text-stone-800">© 2026 Ecreation IT Solution.</span>
-            <Link
-              href="/terms"
-              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              Terms &amp; Conditions
-            </Link>
-            <Link
-              href="/privacy-policy"
-              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/refund-policy"
-              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              Refund Policy
-            </Link>
-            <Link
-              href="/cookie-policy"
-              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              Cookie Policy
-            </Link>
-            <Link
-              href="/sla-security"
-              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              SLA &amp; Security
-            </Link>
-            <Link
-              href="/disclaimer"
-              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              Disclaimer
-            </Link>
-            <Link
-              href="/faq"
-              className="hover:text-stone-950 underline-offset-4 hover:underline transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              FAQs
-            </Link>
+          <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] sm:text-xs">
+            {bottomLegalLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-2.5 py-1 rounded-lg bg-white/75 hover:bg-white border border-amber-500/25 hover:border-amber-500/60 font-semibold text-stone-800 hover:text-amber-800 transition-all duration-200"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
