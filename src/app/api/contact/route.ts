@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isSupabaseConfigured, createAdminSupabaseClient } from '@/lib/supabase/server';
 import { addStoredLead } from '@/lib/data/localStore';
+import { sendEnquiryNotificationEmail } from '@/lib/email/enquiryEmail';
 
 export async function POST(req: NextRequest) {
   try {
@@ -80,10 +81,18 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Always persist to local store so Admin Panel sees real-time enquiries immediately
-    addStoredLead({
+    const savedLead = {
       id: generatedId,
       ...leadRecord
-    });
+    };
+    addStoredLead(savedLead);
+
+    // 5. Instant Admin Email Notification (uses saved SMTP & anti-spam inline-CSS template)
+    try {
+      await sendEnquiryNotificationEmail(savedLead);
+    } catch (mailErr) {
+      console.error('[Enquiry Notification Email Warning]', mailErr);
+    }
 
     return NextResponse.json({
       success: true,

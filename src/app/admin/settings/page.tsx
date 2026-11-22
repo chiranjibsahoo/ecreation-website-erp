@@ -203,6 +203,22 @@ export default function AdminSettingsPage() {
           </Link>
         </div>
 
+        {/* Settings Subpage Switcher */}
+        <div className="flex flex-wrap items-center gap-2">
+          <Link
+            href="/admin/settings"
+            className="px-4 py-2 rounded-xl text-xs font-black bg-amber-500 text-stone-950 shadow-xs"
+          >
+            Social Accounts &amp; Mobile App
+          </Link>
+          <Link
+            href="/admin/settings/email"
+            className="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-border text-foreground hover:border-amber-500/60 transition-colors"
+          >
+            Email SMTP &amp; Enquiry Notification Template
+          </Link>
+        </div>
+
         {/* Mobile App (.APK + PWA) & OTA Auto-Update Panel */}
         <div className="subsection-bordered-card rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 p-6 space-y-5">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
