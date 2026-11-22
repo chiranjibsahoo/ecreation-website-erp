@@ -34,13 +34,18 @@ export const ExitOfferPopup = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [countdownSeconds, setCountdownSeconds] = useState(299); // 04:59 VIP Offer timer
 
-  const hasShownInitialRef = useRef(false);
-  const hasShownOneMinRef = useRef(false);
-  const hasShownTwoMinRef = useRef(false);
+  const popupStepRef = useRef(0);
+  const nextTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pageLoadedAtRef = useRef<number>(Date.now());
+  const isOpenRef = useRef(false);
   const hasShownExitRef = useRef(false);
   const hasConvertedRef = useRef(false);
 
-  const isAdminRoute = pathname?.startsWith('/admin');
+  const isSuppressedRoute = pathname?.startsWith('/admin') || pathname?.startsWith('/login');
+
+  useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
 
   // Strict Validation Helpers
   const validatePhone = (val: string): { valid: boolean; message: string } => {
@@ -103,50 +108,56 @@ export const ExitOfferPopup = () => {
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
+  // Progressive non-intrusive schedule: 1st at 30s, 2nd after 1m 30s (90s), 3rd after 3m (180s)
+  const PROGRESSIVE_DELAYS_MS = [30000, 90000, 180000];
+
+  const scheduleNextPopup = (stepIndex: number) => {
+    if (nextTimerRef.current) {
+      clearTimeout(nextTimerRef.current);
+      nextTimerRef.current = null;
+    }
+    if (hasConvertedRef.current || stepIndex >= PROGRESSIVE_DELAYS_MS.length) return;
+
+    nextTimerRef.current = setTimeout(() => {
+      if (!hasConvertedRef.current && !isOpenRef.current) {
+        popupStepRef.current = stepIndex + 1;
+        setSubmittedRef(null);
+        setErrorMsg(null);
+        setPopupMode('engaged_idle');
+        setIsOpen(true);
+      }
+    }, PROGRESSIVE_DELAYS_MS[stepIndex]);
+  };
+
+  const handleClosePopup = () => {
+    setIsOpen(false);
+    // Schedule the next progressive reminder only after the visitor dismisses the current one
+    if (!hasConvertedRef.current && popupStepRef.current < PROGRESSIVE_DELAYS_MS.length) {
+      scheduleNextPopup(popupStepRef.current);
+    }
+  };
+
   useEffect(() => {
-    if (isAdminRoute) return;
+    if (isSuppressedRoute) return;
+
+    pageLoadedAtRef.current = Date.now();
 
     const handleGlobalEnquirySubmitted = () => {
       hasConvertedRef.current = true;
+      if (nextTimerRef.current) {
+        clearTimeout(nextTimerRef.current);
+        nextTimerRef.current = null;
+      }
     };
     window.addEventListener('ecreation-enquiry-submitted', handleGlobalEnquirySubmitted);
 
-    // 0. Initial Commercial Offer Popup on Visit (opens after 4 seconds)
-    const initialTimer = setTimeout(() => {
-      if (!hasConvertedRef.current && !hasShownInitialRef.current) {
-        hasShownInitialRef.current = true;
-        setSubmittedRef(null);
-        setErrorMsg(null);
-        setPopupMode('engaged_idle');
-        setIsOpen(true);
-      }
-    }, 4000);
+    // 1st popup appears after 30 seconds (then 1m 30s after dismiss, then 3m after dismiss)
+    scheduleNextPopup(0);
 
-    // 1. Engaged Visitor Popup at 1 Minute (60s) if visitor is on website without enquiring
-    const oneMinuteTimer = setTimeout(() => {
-      if (!hasConvertedRef.current && !hasShownOneMinRef.current) {
-        hasShownOneMinRef.current = true;
-        setSubmittedRef(null);
-        setErrorMsg(null);
-        setPopupMode('engaged_idle');
-        setIsOpen(true);
-      }
-    }, 60000);
-
-    // 2. Engaged Visitor Follow-up at 2 Minutes (120s) if still no enquiry submitted
-    const twoMinuteTimer = setTimeout(() => {
-      if (!hasConvertedRef.current && !hasShownTwoMinRef.current) {
-        hasShownTwoMinRef.current = true;
-        setSubmittedRef(null);
-        setErrorMsg(null);
-        setPopupMode('engaged_idle');
-        setIsOpen(true);
-      }
-    }, 120000);
-
-    // 3. Exit-Intent Detection (when visitor moves cursor to top browser bar to close/leave website)
+    // Exit-Intent Detection (only after 30s on page & never while already open)
     const handleMouseLeave = (e: MouseEvent) => {
-      if (hasConvertedRef.current) return;
+      if (hasConvertedRef.current || isOpenRef.current) return;
+      if (Date.now() - pageLoadedAtRef.current < 30000) return;
       if (e.clientY <= 20 && !hasShownExitRef.current) {
         hasShownExitRef.current = true;
         setSubmittedRef(null);
@@ -157,7 +168,8 @@ export const ExitOfferPopup = () => {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (hasConvertedRef.current) return;
+      if (hasConvertedRef.current || isOpenRef.current) return;
+      if (Date.now() - pageLoadedAtRef.current < 30000) return;
       if (e.clientY <= 10 && e.movementY < -4 && !hasShownExitRef.current) {
         hasShownExitRef.current = true;
         setSubmittedRef(null);
@@ -180,17 +192,16 @@ export const ExitOfferPopup = () => {
     window.addEventListener('open-offer-popup', handleCustomOpen);
 
     return () => {
-      clearTimeout(initialTimer);
-      clearTimeout(oneMinuteTimer);
-      clearTimeout(twoMinuteTimer);
+      if (nextTimerRef.current) clearTimeout(nextTimerRef.current);
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('open-offer-popup', handleCustomOpen);
       window.removeEventListener('ecreation-enquiry-submitted', handleGlobalEnquirySubmitted);
     };
-  }, [isAdminRoute]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuppressedRoute]);
 
-  if (isAdminRoute || !isOpen) return null;
+  if (isSuppressedRoute || !isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -264,7 +275,7 @@ export const ExitOfferPopup = () => {
       {/* Backdrop click to dismiss */}
       <div
         className="absolute inset-0"
-        onClick={() => setIsOpen(false)}
+        onClick={handleClosePopup}
         aria-hidden="true"
       />
 
@@ -276,7 +287,7 @@ export const ExitOfferPopup = () => {
         <div className="relative w-full max-w-2xl rounded-3xl overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FFF9EE] to-[#FDF4DE] border-2 border-amber-400/90 shadow-[0_28px_80px_-15px_rgba(217,119,6,0.42)] animate-in zoom-in-95 duration-200 grid grid-cols-1 md:grid-cols-12">
           {/* Close Button */}
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={handleClosePopup}
             className="absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-full bg-amber-900/10 hover:bg-amber-900/20 text-stone-800 flex items-center justify-center transition-all duration-200 hover:rotate-90 cursor-pointer"
             aria-label="Close Offer Popup"
           >
@@ -364,7 +375,7 @@ export const ExitOfferPopup = () => {
                   We have verified and saved your number (<strong className="text-amber-800">{phone}</strong>) &amp; email (<strong className="text-amber-800">{email}</strong>). Our Senior Architect will reach out shortly.
                 </p>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClosePopup}
                   className="mt-1 px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#B45309] text-white font-black text-xs uppercase tracking-wider shadow-md cursor-pointer"
                 >
                   Continue Exploring
@@ -531,7 +542,7 @@ export const ExitOfferPopup = () => {
                   </span>
                   <button
                     type="button"
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleClosePopup}
                     className="text-stone-500 hover:text-stone-900 underline cursor-pointer"
                   >
                     Maybe later
@@ -556,7 +567,7 @@ export const ExitOfferPopup = () => {
               </span>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={handleClosePopup}
               className="w-6 h-6 rounded-full bg-black/15 hover:bg-black/30 text-white flex items-center justify-center transition-all duration-200 hover:rotate-90 cursor-pointer"
               aria-label="Close Offer Popup"
             >
@@ -581,7 +592,7 @@ export const ExitOfferPopup = () => {
                   We have registered your contact details (<strong className="text-amber-800">{phone}</strong> &amp; <strong className="text-amber-800">{email}</strong>). Our Senior Solutions Architect will reach out with your 25% discount voucher.
                 </p>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClosePopup}
                   className="mt-1 px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#B45309] text-white font-black text-xs uppercase tracking-wider shadow-md cursor-pointer"
                 >
                   Continue Exploring Website
@@ -735,7 +746,7 @@ export const ExitOfferPopup = () => {
                   </span>
                   <button
                     type="button"
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleClosePopup}
                     className="text-stone-500 hover:text-stone-900 underline underline-offset-2 cursor-pointer"
                   >
                     Maybe later
