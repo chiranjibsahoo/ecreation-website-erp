@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { BookOpen, Sparkles, ShieldCheck } from 'lucide-react';
-import { loadAllBlogPosts } from '@/lib/blog/blogEngine';
+import { getSeedManagedBlogs } from '@/lib/blog/blogEngine';
 import BlogListClient from './BlogListClient';
 
 export const metadata: Metadata = {
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   ]
 };
 
-export default async function BlogPage() {
-  const initialPosts = await loadAllBlogPosts(false);
+export default function BlogPage() {
+  const initialPosts = getSeedManagedBlogs();
 
   return (
     <div className="pt-32 sm:pt-36 pb-24 bg-[#FAF8F5] dark:bg-stone-950">

@@ -1,11 +1,10 @@
 import { MetadataRoute } from 'next';
-import { SERVICES_DATA, PROJECTS_DATA } from '@/lib/data/seedData';
-import { loadAllBlogPosts } from '@/lib/blog/blogEngine';
+import { SERVICES_DATA, PROJECTS_DATA, BLOG_POSTS_DATA } from '@/lib/data/seedData';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ecreation.vercel.app').replace(/\/$/, '');
   const buildDate = new Date('2026-11-22T00:00:00.000Z');
-  const allBlogs = await loadAllBlogPosts(false);
+  const allBlogs = BLOG_POSTS_DATA;
 
   // Static public SEO routes
   const staticRoutes: MetadataRoute.Sitemap = [

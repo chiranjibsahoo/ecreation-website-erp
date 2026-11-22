@@ -111,7 +111,7 @@ export function calculateKeywordMetrics(content: string, title: string, primaryK
   };
 }
 
-function getSeedManagedBlogs(): ManagedBlogPost[] {
+export function getSeedManagedBlogs(): ManagedBlogPost[] {
   const themes: CoverTheme[] = ['emerald-gold', 'indigo-slate', 'amber-obsidian'];
   const services = ['enterprise-erp-crm', 'cloud-devops-infrastructure', 'ai-automation-workflows'];
   const projects = ['nsfs-erp-system', 'duragrit-qr-erp', 'insurance-tracker-suite'];
@@ -148,10 +148,10 @@ const DEFAULT_AUTOMATION: AutoBlogSettings = {
   enabled: true,
   intervalDays: 3,
   lastAutoPublishedAt: null,
-  nextScheduledAt: new Date(Date.now() + 3 * 86400 * 1000).toISOString(),
+  nextScheduledAt: null,
   defaultAuthorName: 'Ecreation Engineering Editorial',
   defaultAuthorRole: 'Principal Solutions Architecture Team',
-  updatedAt: new Date().toISOString()
+  updatedAt: '2026-11-22T00:00:00.000Z'
 };
 
 function readLocalBlogDb(): LocalBlogDb {

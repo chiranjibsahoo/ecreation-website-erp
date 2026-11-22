@@ -13,8 +13,8 @@ import {
   Sparkles,
   CheckCircle2
 } from 'lucide-react';
-import { getBlogPostBySlug, loadAllBlogPosts } from '@/lib/blog/blogEngine';
-import { SERVICES_DATA, PROJECTS_DATA } from '@/lib/data/seedData';
+import { getBlogPostBySlug, getSeedManagedBlogs } from '@/lib/blog/blogEngine';
+import { SERVICES_DATA, PROJECTS_DATA, BLOG_POSTS_DATA } from '@/lib/data/seedData';
 import { SchemaMarkup } from '@/components/seo/SchemaMarkup';
 import { BlogCoverArt } from '@/components/blog/BlogCoverArt';
 import { Button } from '@/components/ui/button';
@@ -24,15 +24,15 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const posts = await loadAllBlogPosts(false);
-  return posts.map((post) => ({
+  return BLOG_POSTS_DATA.map((post) => ({
     slug: post.slug
   }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getBlogPostBySlug(slug);
+  const seedPost = getSeedManagedBlogs().find((p) => p.slug === slug);
+  const post = seedPost || (await getBlogPostBySlug(slug));
   if (!post) return { title: 'Article Not Found | Ecreation IT Solution' };
 
   return {
@@ -97,14 +97,14 @@ function renderInlineRichText(text: string): React.ReactNode[] {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-  const post = await getBlogPostBySlug(slug);
+  const seedBlogs = getSeedManagedBlogs();
+  const post = seedBlogs.find((p) => p.slug === slug) || (await getBlogPostBySlug(slug));
 
   if (!post) {
     notFound();
   }
 
-  const allPosts = await loadAllBlogPosts(false);
-  const relatedPosts = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  const relatedPosts = seedBlogs.filter((p) => p.slug !== post.slug).slice(0, 3);
   const relatedService =
     SERVICES_DATA.find((s) => s.slug === post.relatedServiceSlug) || SERVICES_DATA[0];
   const relatedProject =
