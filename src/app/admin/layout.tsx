@@ -15,10 +15,24 @@ import {
   Bot,
   LayoutDashboard,
   Sparkles,
-  Settings
+  Settings,
+  Mail,
+  Menu,
+  X,
+  ChevronRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/common/Logo';
 import { AdminAppControls } from '@/components/admin/AdminAppControls';
+
+interface NavGroup {
+  heading: string;
+  items: {
+    label: string;
+    href: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }[];
+}
 
 export default function AdminLayout({
   children
@@ -27,6 +41,7 @@ export default function AdminLayout({
 }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [userEmail, setUserEmail] = useState<string>('admin@ecreation.in');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -43,6 +58,10 @@ export default function AdminLayout({
     }
   }, [pathname, router]);
 
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
+
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
@@ -58,7 +77,7 @@ export default function AdminLayout({
 
   if (isAuthenticated === null || isAuthenticated === false) {
     return (
-      <div className="min-h-screen pt-36 pb-20 flex flex-col items-center justify-center bg-[#FAF8F5] dark:bg-stone-950 px-4 text-center space-y-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FAF8F5] dark:bg-stone-950 px-4 text-center space-y-4">
         <div className="w-12 h-12 rounded-2xl bg-stone-950 border border-amber-500/50 flex items-center justify-center text-amber-400 shadow-lg">
           <Lock className="w-6 h-6 animate-pulse" />
         </div>
@@ -75,88 +94,185 @@ export default function AdminLayout({
     );
   }
 
-  const adminNav = [
-    { label: 'Overview & Reports', shortLabel: 'Home', href: '/admin', icon: LayoutDashboard },
-    { label: 'Enquiries & Reply CRM', shortLabel: 'Enquiries', href: '/admin/leads', icon: Users },
-    { label: 'Social Promotion Studio', shortLabel: 'Promote', href: '/admin/social-studio', icon: Sparkles },
-    { label: 'AI Chat Logs', shortLabel: 'Chats', href: '/admin/chats', icon: Bot },
-    { label: 'Social & App Settings', shortLabel: 'Settings', href: '/admin/settings', icon: Settings },
-    { label: 'Services CMS', shortLabel: 'Services', href: '/admin/services', icon: Layers },
-    { label: 'Projects CMS', shortLabel: 'Projects', href: '/admin/projects', icon: Briefcase },
-    { label: 'Blog CMS', shortLabel: 'Blog', href: '/admin/blog', icon: FileText }
+  const navGroups: NavGroup[] = [
+    {
+      heading: 'Operations & CRM',
+      items: [
+        { label: 'Overview & Reports', href: '/admin', icon: LayoutDashboard },
+        { label: 'Enquiries & Reply CRM', href: '/admin/leads', icon: Users },
+        { label: 'AI Chat Logs', href: '/admin/chats', icon: Bot }
+      ]
+    },
+    {
+      heading: 'Marketing & Promotion',
+      items: [{ label: 'Social Promotion Studio', href: '/admin/social-studio', icon: Sparkles }]
+    },
+    {
+      heading: 'Website CMS',
+      items: [
+        { label: 'Services CMS', href: '/admin/services', icon: Layers },
+        { label: 'Projects CMS', href: '/admin/projects', icon: Briefcase },
+        { label: 'Blog CMS', href: '/admin/blog', icon: FileText }
+      ]
+    },
+    {
+      heading: 'System Settings',
+      items: [
+        { label: 'Social & Mobile App', href: '/admin/settings', icon: Settings },
+        { label: 'Email SMTP & Templates', href: '/admin/settings/email', icon: Mail }
+      ]
+    }
   ];
 
-  const mobileBottomNav = adminNav.slice(0, 5);
+  const mobileBottomNav = [
+    { shortLabel: 'Home', href: '/admin', icon: LayoutDashboard },
+    { shortLabel: 'Enquiries', href: '/admin/leads', icon: Users },
+    { shortLabel: 'Promote', href: '/admin/social-studio', icon: Sparkles },
+    { shortLabel: 'Email', href: '/admin/settings/email', icon: Mail },
+    { shortLabel: 'Settings', href: '/admin/settings', icon: Settings }
+  ];
 
-  return (
-    <div className="min-h-screen bg-[#FAF8F5] dark:bg-stone-950 flex flex-col pt-3 sm:pt-5 pb-20 md:pb-8">
-      {/* Executive Admin ERP Command Sub-Header */}
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-3">
-        <div className="subsection-bordered-card rounded-3xl bg-gradient-to-r from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 p-4 sm:p-5 space-y-3.5">
-          {/* Top Row: Session Telemetry & Prominent Logout Button */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-amber-500/30">
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="subsection-bordered-item inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-emerald-800 font-mono text-[11px] font-bold">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>ECREATION ADMIN ERP</span>
-              </div>
-              <span className="font-mono text-xs text-stone-700 font-medium hidden sm:inline">
-                Signed in: <strong className="text-amber-800">{userEmail}</strong>
-              </span>
-            </div>
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full bg-gradient-to-b from-[#E3F1EB] via-[#EFF4EC] to-[#F5EFE0] text-stone-950 border-r border-amber-500/35">
+      {/* Sidebar Brand Header */}
+      <div className="p-4 border-b border-amber-500/25 space-y-3">
+        <div className="flex items-center justify-between">
+          <Link href="/admin" className="inline-block">
+            <Logo size="sm" theme="light" />
+          </Link>
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden w-8 h-8 rounded-xl bg-white/80 text-stone-700 flex items-center justify-center border border-amber-500/30 cursor-pointer"
+            aria-label="Close Sidebar Menu"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
 
-            <div className="flex items-center gap-2">
-              <Link href="/">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="subsection-bordered-item h-8 sm:h-9 text-xs font-bold bg-white text-stone-800 rounded-xl"
-                >
-                  <ExternalLink className="w-3.5 h-3.5 sm:mr-1.5 text-amber-600" />
-                  <span className="hidden sm:inline">Public Website</span>
-                </Button>
-              </Link>
-
-              <Button
-                size="sm"
-                onClick={handleLogout}
-                className="h-8 sm:h-9 px-3.5 text-xs font-black bg-red-600 hover:bg-red-500 text-white border border-red-400/50 rounded-xl shadow-md transition-all cursor-pointer"
-              >
-                <LogOut className="w-3.5 h-3.5 mr-1" />
-                Logout
-              </Button>
-            </div>
+        <div className="px-3 py-2 rounded-xl bg-white/85 border border-amber-500/25 space-y-0.5">
+          <div className="flex items-center gap-1.5 text-[10px] font-mono font-black text-emerald-800 uppercase">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Admin ERP Portal</span>
           </div>
-
-          {/* Mobile App (APK & PWA), Live Version & Auto-Sync Bar */}
-          <AdminAppControls />
-
-          {/* Navigation Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1 pb-0.5">
-            {adminNav.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`subsection-bordered-item px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-2 ${
-                    isActive
-                      ? 'bg-amber-500 text-stone-950 font-black shadow-2xs'
-                      : 'bg-white/90 text-stone-700 hover:text-stone-950'
-                  }`}
-                >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-stone-950' : 'text-amber-600'}`} />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+          <div className="text-[11px] font-mono font-semibold text-stone-700 truncate">
+            {userEmail}
           </div>
         </div>
       </div>
 
-      {/* Main Admin Page Content */}
-      <div className="flex-1">{children}</div>
+      {/* Left Menu Navigation Groups */}
+      <nav aria-label="Admin Sidebar Navigation" className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
+        {navGroups.map((group) => (
+          <div key={group.heading} className="space-y-1.5">
+            <div className="px-2.5 text-[10px] font-mono font-black uppercase tracking-wider text-stone-500">
+              {group.heading}
+            </div>
+            <div className="space-y-1">
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`group flex items-center justify-between gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-150 ${
+                      isActive
+                        ? 'bg-stone-950 text-amber-400 shadow-md border border-amber-500/40'
+                        : 'text-stone-800 hover:bg-white/90 hover:text-stone-950 border border-transparent hover:border-amber-500/30'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2.5 min-w-0">
+                      <Icon
+                        className={`w-4 h-4 shrink-0 ${
+                          isActive ? 'text-amber-400' : 'text-amber-700 group-hover:text-amber-600'
+                        }`}
+                      />
+                      <span className="truncate">{item.label}</span>
+                    </span>
+                    <ChevronRight
+                      className={`w-3.5 h-3.5 shrink-0 transition-transform ${
+                        isActive
+                          ? 'text-amber-400 opacity-100'
+                          : 'text-stone-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5'
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      {/* Sidebar Bottom Actions */}
+      <div className="p-3 border-t border-amber-500/25 space-y-2 bg-white/50">
+        <Link href="/" className="block">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full justify-start h-9 text-xs font-bold bg-white text-stone-800 border-amber-500/30 hover:bg-amber-50 rounded-xl cursor-pointer"
+          >
+            <ExternalLink className="w-3.5 h-3.5 mr-2 text-amber-600" />
+            View Public Website
+          </Button>
+        </Link>
+
+        <Button
+          size="sm"
+          onClick={handleLogout}
+          className="w-full justify-start h-9 text-xs font-black bg-red-600 hover:bg-red-500 text-white rounded-xl shadow-xs cursor-pointer"
+        >
+          <LogOut className="w-3.5 h-3.5 mr-2" />
+          Logout Admin Session
+        </Button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-[#FAF8F5] dark:bg-stone-950 flex">
+      {/* Desktop Sticky Left Sidebar */}
+      <aside className="hidden lg:block w-64 xl:w-72 shrink-0 sticky top-0 h-screen z-30">
+        <SidebarContent />
+      </aside>
+
+      {/* Mobile / Tablet Slide-Over Left Sidebar Drawer */}
+      {sidebarOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div
+            className="fixed inset-0 bg-stone-950/60 backdrop-blur-xs"
+            onClick={() => setSidebarOpen(false)}
+          />
+          <aside className="relative w-72 max-w-[85vw] h-full z-10 shadow-2xl">
+            <SidebarContent />
+          </aside>
+        </div>
+      )}
+
+      {/* Right Main Workspace */}
+      <div className="flex-1 min-w-0 flex flex-col pb-20 md:pb-8">
+        {/* Top Utility Bar: Mobile Menu Toggle + Live Version, Auto-Sync & APK/PWA Download */}
+        <header className="sticky top-0 z-20 bg-[#FAF8F5]/95 dark:bg-stone-950/95 backdrop-blur-md border-b border-amber-500/25 px-4 sm:px-6 py-3">
+          <div className="max-w-7xl mx-auto flex items-start sm:items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden mt-0.5 sm:mt-0 w-9 h-9 rounded-xl bg-white border border-amber-500/40 text-stone-900 flex items-center justify-center shrink-0 shadow-2xs cursor-pointer"
+              aria-label="Open Admin Menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
+            <div className="flex-1 min-w-0">
+              <AdminAppControls />
+            </div>
+          </div>
+        </header>
+
+        {/* Active Admin Page Content */}
+        <div className="flex-1">{children}</div>
+      </div>
 
       {/* Native-Style Mobile Bottom Navigation Bar (APK & PWA) */}
       <nav
