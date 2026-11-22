@@ -23,6 +23,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { SERVICES_DATA, PROJECTS_DATA } from '@/lib/data/seedData';
+import { BLOG_COVER_IMAGES } from '@/lib/blog/blogEngine';
 import type { ManagedBlogPost, AutoBlogSettings, CoverTheme } from '@/lib/blog/blogEngine';
 
 const COVER_THEME_OPTIONS: { value: CoverTheme; label: string }[] = [
@@ -544,7 +545,24 @@ export default function AdminBlogPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-foreground">Original Cover Art Theme (Copyright-Free)</label>
+                  <label className="text-xs font-bold text-foreground">Editorial Cover Image (Original Copyright-Free)</label>
+                  <select
+                    value={editingPost.coverImage || BLOG_COVER_IMAGES[0].url}
+                    onChange={(e) =>
+                      setEditingPost({ ...editingPost, coverImage: e.target.value })
+                    }
+                    className="w-full h-9 rounded-xl border border-border bg-background px-3 text-xs font-semibold"
+                  >
+                    {BLOG_COVER_IMAGES.map((img) => (
+                      <option key={img.url} value={img.url}>
+                        {img.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-foreground">Original Cover Art Theme</label>
                   <select
                     value={editingPost.coverTheme}
                     onChange={(e) =>

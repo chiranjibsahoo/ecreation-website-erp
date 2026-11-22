@@ -64,6 +64,7 @@ export async function POST(req: NextRequest) {
       seoDescription:
         body.seoDescription?.trim() || body.excerpt?.trim() || body.title.trim(),
       coverTheme: body.coverTheme || 'emerald-gold',
+      coverImage: body.coverImage || undefined,
       author: {
         name: body.author?.name?.trim() || 'Ecreation Engineering Editorial',
         role: body.author?.role?.trim() || 'Solutions Architecture Team'
